@@ -12,4 +12,5 @@
 - Добавление/редактирование проекта
 
 [Идеи](https://disk.yandex.ru/i/0zKm7nr43Z5kCA)
+
 [Цветовая палитра](https://color.romanuke.com/czvetovaya-palitra-4555/)
