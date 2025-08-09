@@ -2,4 +2,7 @@
     <string name="app_name">TestApp</string>
     <string name="enter_text">Войти</string>
     <string name="auth_text">Авторизация</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="reg">Регистрация</string>
 </resources>

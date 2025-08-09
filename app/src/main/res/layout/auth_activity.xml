@@ -14,30 +14,35 @@
         android:textSize="40sp"
         android:textStyle="bold"
         android:fontFamily="sans-serif-condensed-medium"
+        android:textColor="@color/white"
         />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Логин"
+            android:text="@string/login"
             android:layout_marginTop="50dp"
+            android:textSize="20sp"
+            android:textColor="@color/dark_plum"
             />
         <EditText
             android:id="@+id/loginTxtBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Логин"
+            android:hint="@string/login"
             android:layout_marginTop="5dp"
             />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Пароль"
+        android:text="@string/password"
         android:layout_marginTop="50dp"
+        android:textSize="20sp"
+        android:textColor="@color/dark_plum"
         />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Пароль"
+        android:hint="@string/password"
         android:layout_marginTop="5dp"
         android:inputType="textPassword"
         />
@@ -47,7 +52,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="@string/enter_text"
+        android:textSize="30sp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/dark_blue"
+        android:backgroundTint="@color/light_blueberry"
+        />
+    <Button
+        android:id="@+id/regBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/reg"
+        android:textSize="30sp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/light_blueberry"
         />
 </LinearLayout>
