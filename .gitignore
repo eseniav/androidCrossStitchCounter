@@ -63,3 +63,6 @@ Thumbs.db
 
 # Environment variables
 .env
+
+# Binary resources
+/app/src/main/res/font

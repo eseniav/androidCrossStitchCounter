@@ -5,4 +5,19 @@
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
     <string name="reg">Регистрация</string>
+    <string name="Lname">Фамилия</string>
+    <string name="nameHint">не более 30 символов</string>
+    <string name="name">Имя</string>
+    <string name="patrName">Отчество</string>
+    <string name="logHint">минимум 3 символа без специальных</string>
+    <string name="passHint">минимум 8 символов, латинские буквы, цифра, заглавная буква</string>
+    <string name="repeatPass">Повторите пароль</string>
+    <string name="repPassHint">должен совпадать с паролем выше</string>
+    <string name="phone">Телефон</string>
+    <string name="phoneHint">(999) 999 99 99</string>
+    <string name="email">Email</string>
+    <string name="emailHint">example@mail.com</string>
+    <string name="bDate">Дата рождения</string>
+    <string name="bDateHint">дд.мм.гггг</string>
+    <string name="regBtn">Зарегистрироваться</string>
 </resources>
