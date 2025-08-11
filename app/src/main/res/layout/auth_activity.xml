@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:textSize="40sp"
         android:textStyle="bold"
-        android:fontFamily="sans-serif-condensed-medium"
+        android:fontFamily="@font/anticva"
         android:textColor="@color/white"
         />
         <TextView
