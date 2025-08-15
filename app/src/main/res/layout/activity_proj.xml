@@ -18,32 +18,142 @@
             android:contentDescription="@string/avatar"
             android:src="@drawable/test"
             android:scaleType="centerCrop"
+            android:layout_marginEnd="10dp"
             />
         <TextView
+            android:id="@+id/logProj"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login"
-            style="@style/label"
-            android:padding="10dp"
+            android:text="anna"
+            style="@style/labelCakra"
+            android:textSize="25sp"
             android:layout_toEndOf="@id/imgAvatar"
             android:textStyle="italic|bold"
             />
         <TextView
+            android:id="@+id/nameProj"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/emailVal"
-            android:layout_alignBottom="@id/imgAvatar"
-            style="@style/label"
-            android:textSize="20sp"
-            android:padding="10dp"
+            android:text="@string/nameProjLine"
+            style="@style/labelAcherus"
             android:layout_toEndOf="@id/imgAvatar"
+            android:layout_below="@id/logProj"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Анна"
+            style="@style/labelAcherus"
+            android:textColor="@color/dark_plum"
+            android:layout_toEndOf="@id/nameProj"
+            android:layout_below="@id/logProj"
+            />
+        <TextView
+            android:id="@+id/regDateProj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/regDateLine"
+            style="@style/labelAcherus"
+            android:layout_toEndOf="@id/imgAvatar"
+            android:layout_below="@id/nameProj"
+            />
+        <TextView
+            android:id="@+id/regDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 18.02.2025"
+            style="@style/labelAcherus"
+            android:textColor="@color/dark_plum"
+            android:layout_toEndOf="@id/imgAvatar"
+            android:layout_below="@id/regDateProj"
+            />
+        <TextView
+            android:id="@+id/ageProj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ageLine"
+            style="@style/labelAcherus"
+            android:layout_toEndOf="@id/imgAvatar"
+            android:layout_below="@id/regDate"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 30"
+            style="@style/labelAcherus"
+            android:textColor="@color/dark_plum"
+            android:layout_toEndOf="@id/ageProj"
+            android:layout_below="@id/regDate"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userBox"
+        android:layout_centerHorizontal="true"
+        >
+        <TextView
+            android:id="@+id/avgSpeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Средняя скорость: "
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            style="@style/labelRose"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/avgSpeed"
+            android:text="239 кр./день"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            style="@style/labelAcherus"
+            android:textSize="20sp"
+            android:textColor="@color/dark_plum"
+            android:layout_centerHorizontal="true"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/projNavig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layoutSpeed"
+        >
+    <TextView
+        android:id="@+id/future"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Будущие "
+        style="@style/projNames"
+        android:layout_centerHorizontal="true"
+        />
+        <TextView
+            android:id="@+id/present"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Текущие "
+            style="@style/projNames"
+            android:layout_below="@id/future"
+            android:layout_centerHorizontal="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Завершенные "
+            style="@style/projNames"
+            android:layout_below="@id/present"
+            android:layout_centerHorizontal="true"
             />
     </RelativeLayout>
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/userBox"
+        android:layout_below="@id/projNavig"
         android:layout_centerHorizontal="true"
+        android:fillViewport="true"
         >
         <HorizontalScrollView
             android:layout_width="wrap_content"

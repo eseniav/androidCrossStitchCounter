@@ -20,4 +20,28 @@
         <item name="android:background">@color/light_green</item>
         <item name="android:padding">25dp</item>
     </style>
+    <style name="labelCakra">
+        <item name="android:textColor">@color/dark_blue</item>
+        <item name="android:textSize">20sp</item>
+        <item name="fontFamily">@font/cakra</item>
+    </style>
+    <style name="labelAcherus">
+        <item name="android:textColor">@color/dark_green</item>
+        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/acherus_feral</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="labelRose">
+        <item name="android:textColor">@color/dark_green</item>
+        <item name="android:textSize">20sp</item>
+        <item name="fontFamily">@font/rose_versailles2</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="projNames">
+        <item name="android:background">@drawable/blue_rect</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/rose_versailles2</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
 </resources>
