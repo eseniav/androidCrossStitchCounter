@@ -23,6 +23,8 @@ class MainActivity : AppCompatActivity() {
         loginBtn.setOnClickListener {
             val userName = loginBox.text.toString()
             Toast.makeText(this, "Добро пожаловать, $userName!", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this@MainActivity, ProjActivity::class.java)
+            startActivity(intent)
         }
         val regBtn = findViewById<Button>(R.id.regBtn)
         regBtn.setOnClickListener {

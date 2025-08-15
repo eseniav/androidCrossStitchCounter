@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/projLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/layout"
+    >
+    <RelativeLayout
+        android:id="@+id/userBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/frame"
+        >
+        <ImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:contentDescription="@string/avatar"
+            android:src="@drawable/test"
+            android:scaleType="centerCrop"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            style="@style/label"
+            android:padding="10dp"
+            android:layout_toEndOf="@id/imgAvatar"
+            android:textStyle="italic|bold"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/emailVal"
+            android:layout_alignBottom="@id/imgAvatar"
+            style="@style/label"
+            android:textSize="20sp"
+            android:padding="10dp"
+            android:layout_toEndOf="@id/imgAvatar"
+            />
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userBox"
+        android:layout_centerHorizontal="true"
+        >
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            >
+            <TableLayout
+                android:id="@+id/projTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="*"
+                >
+                <TableRow android:padding="5dp" android:background="#CCCCCC">
+                    <TextView android:text="Размер" android:padding="2dp"/>
+                    <TextView android:text="Начало" android:padding="2dp"/>
+                    <TextView android:text="Окончание" android:padding="2dp"/>
+                    <TextView android:text="Вышито" android:padding="2dp"/>
+                </TableRow>
+                <TableRow android:padding="5dp">
+                    <TextView android:text="Пума"
+                        android:padding="5dp"
+                        android:layout_span="4"
+                        android:gravity="center"
+                        />
+                </TableRow>
+                <TableRow android:padding="5dp" >
+                    <TextView android:text="104Х205" android:padding="5dp"/>
+                    <TextView android:text="18.03.2025" android:padding="5dp"/>
+                    <TextView android:text="20.05.2025" android:padding="5dp"/>
+                    <TextView android:text="2500" android:padding="5dp"/>
+                </TableRow>
+                <View android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/white"
+                    />
+                <TableRow android:padding="5dp">
+                    <TextView android:text="Пума"
+                        android:padding="5dp"
+                        android:layout_span="4"
+                        android:gravity="center"
+                        />
+                </TableRow>
+                <TableRow android:padding="5dp" >
+                    <TextView android:text="104Х205" android:padding="5dp"/>
+                    <TextView android:text="18.03.2025" android:padding="5dp"/>
+                    <TextView android:text="20.05.2025" android:padding="5dp"/>
+                    <TextView android:text="2500" android:padding="5dp"/>
+                </TableRow>
+                <View android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/white"
+                    />
+            </TableLayout>
+        </HorizontalScrollView>
+    </ScrollView>
+</RelativeLayout>
