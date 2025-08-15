@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidCrossStitchCounter">
         <activity
+            android:name=".ProjActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegActivity"
             android:exported="false" />
         <activity

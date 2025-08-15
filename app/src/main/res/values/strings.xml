@@ -20,4 +20,6 @@
     <string name="bDate">Дата рождения</string>
     <string name="bDateHint">дд.мм.гггг</string>
     <string name="regBtn">Зарегистрироваться</string>
+    <string name="avatar">Аватарка</string>
+    <string name="emailVal"><u>login@mail.ru</u></string>
 </resources>
