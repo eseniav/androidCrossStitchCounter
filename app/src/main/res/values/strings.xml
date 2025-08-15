@@ -22,4 +22,7 @@
     <string name="regBtn">Зарегистрироваться</string>
     <string name="avatar">Аватарка</string>
     <string name="emailVal"><u>login@mail.ru</u></string>
+    <string name="nameProjLine"><u>Имя:</u></string>
+    <string name="regDateLine"><u>Дата регистрации:</u></string>
+    <string name="ageLine"><u>Возраст:</u></string>
 </resources>
