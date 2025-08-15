@@ -5,31 +5,38 @@
     android:layout_height="match_parent"
     style="@style/layout"
     >
-<ImageView
-    android:id="@+id/imgAvatar"
-    android:layout_width="150dp"
-    android:layout_height="150dp"
-    android:contentDescription="@string/avatar"
-    android:src="@drawable/test"
-    android:scaleType="centerCrop"
-    />
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login"
-        style="@style/label"
-        android:padding="10dp"
-        android:layout_toEndOf="@id/imgAvatar"
-        android:textStyle="italic|bold"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/emailVal"
-        android:layout_alignBottom="@id/imgAvatar"
-        style="@style/label"
-        android:textSize="20sp"
-        android:padding="10dp"
-        android:layout_toEndOf="@id/imgAvatar"
-        />
+        android:background="@drawable/frame"
+        >
+        <ImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:contentDescription="@string/avatar"
+            android:src="@drawable/test"
+            android:scaleType="centerCrop"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            style="@style/label"
+            android:padding="10dp"
+            android:layout_toEndOf="@id/imgAvatar"
+            android:textStyle="italic|bold"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/emailVal"
+            android:layout_alignBottom="@id/imgAvatar"
+            style="@style/label"
+            android:textSize="20sp"
+            android:padding="10dp"
+            android:layout_toEndOf="@id/imgAvatar"
+            />
+    </RelativeLayout>
+
 </RelativeLayout>
