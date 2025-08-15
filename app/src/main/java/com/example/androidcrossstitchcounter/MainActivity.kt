@@ -1,5 +1,6 @@
 package com.example.androidcrossstitchcounter
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -22,6 +23,11 @@ class MainActivity : AppCompatActivity() {
         loginBtn.setOnClickListener {
             val userName = loginBox.text.toString()
             Toast.makeText(this, "Добро пожаловать, $userName!", Toast.LENGTH_SHORT).show()
+        }
+        val regBtn = findViewById<Button>(R.id.regBtn)
+        regBtn.setOnClickListener {
+            val intent = Intent(this@MainActivity, RegActivity::class.java)
+            startActivity(intent)
         }
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
 //            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
