@@ -116,12 +116,76 @@
             android:layout_centerHorizontal="true"
             />
     </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/projNavig"
-        android:layout_width="match_parent"
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/layoutSpeed"
+        android:layout_centerHorizontal="true"
+        android:fillViewport="true"
         >
+        <RelativeLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userBox"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:id="@+id/present"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Текущие "
+                style="@style/projNames"
+                android:layout_centerHorizontal="true"
+                />
+            <TableLayout
+                android:id="@+id/currentProj"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="*"
+                android:layout_below="@id/present"
+                >
+                <TableRow android:padding="3dp" android:background="@color/white_50">
+                    <TextView android:text="Размер" style="@style/tableStyle"/>
+                    <TextView android:text="Начало" style="@style/tableStyle"/>
+                    <TextView android:text="Планируется\nвышить к" style="@style/tableStyle"/>
+                    <TextView android:text="Вышито" style="@style/tableStyle"/>
+                </TableRow>
+                <TableRow android:padding="5dp">
+                    <TextView android:text="Пума"
+                        android:padding="5dp"
+                        android:layout_span="4"
+                        style="@style/tableStyle.BlueText"
+                        />
+                </TableRow>
+                <TableRow android:padding="5dp" >
+                    <TextView android:text="104Х205" style="@style/tableStyle"/>
+                    <TextView android:text="18.03.2025" style="@style/tableStyle"/>
+                    <TextView android:text="20.05.2025" style="@style/tableStyle"/>
+                    <TextView android:text="2500" style="@style/tableStyle"/>
+                </TableRow>
+                <View android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/white"
+                    />
+                <TableRow android:padding="5dp">
+                    <TextView android:text="Пума"
+                        android:padding="5dp"
+                        android:layout_span="4"
+                        style="@style/tableStyle.BlueText"
+                        />
+                </TableRow>
+                <TableRow android:padding="5dp" >
+                    <TextView android:text="104Х205" style="@style/tableStyle"/>
+                    <TextView android:text="18.03.2025" style="@style/tableStyle"/>
+                    <TextView android:text="20.05.2025" style="@style/tableStyle"/>
+                    <TextView android:text="2500" style="@style/tableStyle"/>
+                </TableRow>
+                <View android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/white"
+                    />
+            </TableLayout>
     <TextView
         android:id="@+id/future"
         android:layout_width="wrap_content"
@@ -129,61 +193,84 @@
         android:text=" Будущие "
         style="@style/projNames"
         android:layout_centerHorizontal="true"
+        android:layout_below="@id/currentProj"
         />
-        <TextView
-            android:id="@+id/present"
-            android:layout_width="wrap_content"
+        <TableLayout
+            android:id="@+id/projTable"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" Текущие "
-            style="@style/projNames"
+            android:stretchColumns="*"
             android:layout_below="@id/future"
-            android:layout_centerHorizontal="true"
-            />
+            >
+            <TableRow android:padding="3dp" android:background="@color/white_50">
+                <TextView android:text="Размер" style="@style/tableStyle"/>
+                <TextView android:text="Планируется\nвышить к" style="@style/tableStyle"/>
+            </TableRow>
+            <TableRow android:padding="3dp">
+                <TextView android:text="Пума"
+                    android:padding="3dp"
+                    android:layout_span="2"
+                    style="@style/tableStyle.BlueText"
+                    />
+            </TableRow>
+            <TableRow android:padding="3dp" >
+                <TextView android:text="104Х205" style="@style/tableStyle"/>
+                <TextView android:text="18.03.2025" style="@style/tableStyle"/>
+            </TableRow>
+            <View android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white"
+                />
+            <TableRow android:padding="3dp">
+                <TextView android:text="Пума"
+                    android:padding="3dp"
+                    android:layout_span="2"
+                    style="@style/tableStyle.BlueText"
+                    />
+            </TableRow>
+            <TableRow android:padding="3dp" >
+                <TextView android:text="104Х205" style="@style/tableStyle"/>
+                <TextView android:text="18.03.2025" style="@style/tableStyle"/>
+            </TableRow>
+            <View android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white"
+                />
+        </TableLayout>
         <TextView
+            android:id="@+id/finishProj"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" Завершенные "
             style="@style/projNames"
-            android:layout_below="@id/present"
+            android:layout_below="@id/projTable"
             android:layout_centerHorizontal="true"
             />
-    </RelativeLayout>
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/projNavig"
-        android:layout_centerHorizontal="true"
-        android:fillViewport="true"
-        >
-        <HorizontalScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fillViewport="true"
-            >
             <TableLayout
-                android:id="@+id/projTable"
+                android:id="@+id/finishProjTable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:stretchColumns="*"
+                android:layout_below="@id/finishProj"
                 >
-                <TableRow android:padding="5dp" android:background="#CCCCCC">
-                    <TextView android:text="Размер" android:padding="2dp"/>
-                    <TextView android:text="Начало" android:padding="2dp"/>
-                    <TextView android:text="Окончание" android:padding="2dp"/>
-                    <TextView android:text="Вышито" android:padding="2dp"/>
+                <TableRow android:padding="3dp" android:background="@color/white_50">
+                    <TextView android:text="Размер" style="@style/tableStyle"/>
+                    <TextView android:text="Начало" style="@style/tableStyle"/>
+                    <TextView android:text="Завершен" style="@style/tableStyle"/>
+                    <TextView android:text="Вышито" style="@style/tableStyle"/>
                 </TableRow>
                 <TableRow android:padding="5dp">
                     <TextView android:text="Пума"
                         android:padding="5dp"
                         android:layout_span="4"
-                        android:gravity="center"
+                        style="@style/tableStyle.BlueText"
                         />
                 </TableRow>
                 <TableRow android:padding="5dp" >
-                    <TextView android:text="104Х205" android:padding="5dp"/>
-                    <TextView android:text="18.03.2025" android:padding="5dp"/>
-                    <TextView android:text="20.05.2025" android:padding="5dp"/>
-                    <TextView android:text="2500" android:padding="5dp"/>
+                    <TextView android:text="104Х205" style="@style/tableStyle"/>
+                    <TextView android:text="18.03.2025" style="@style/tableStyle"/>
+                    <TextView android:text="20.05.2025" style="@style/tableStyle"/>
+                    <TextView android:text="2500" style="@style/tableStyle"/>
                 </TableRow>
                 <View android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -193,20 +280,20 @@
                     <TextView android:text="Пума"
                         android:padding="5dp"
                         android:layout_span="4"
-                        android:gravity="center"
+                        style="@style/tableStyle.BlueText"
                         />
                 </TableRow>
                 <TableRow android:padding="5dp" >
-                    <TextView android:text="104Х205" android:padding="5dp"/>
-                    <TextView android:text="18.03.2025" android:padding="5dp"/>
-                    <TextView android:text="20.05.2025" android:padding="5dp"/>
-                    <TextView android:text="2500" android:padding="5dp"/>
+                    <TextView android:text="104Х205" style="@style/tableStyle"/>
+                    <TextView android:text="18.03.2025" style="@style/tableStyle"/>
+                    <TextView android:text="20.05.2025" style="@style/tableStyle"/>
+                    <TextView android:text="2500" style="@style/tableStyle"/>
                 </TableRow>
                 <View android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/white"
                     />
             </TableLayout>
-        </HorizontalScrollView>
+        </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

@@ -32,7 +32,7 @@
         <item name="android:textStyle">bold</item>
     </style>
     <style name="labelRose">
-        <item name="android:textColor">@color/dark_green</item>
+        <item name="android:textColor">@color/dark_blue</item>
         <item name="android:textSize">20sp</item>
         <item name="fontFamily">@font/rose_versailles2</item>
         <item name="android:textStyle">bold</item>
@@ -40,8 +40,28 @@
     <style name="projNames">
         <item name="android:background">@drawable/blue_rect</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:fontFamily">@font/rose_versailles2</item>
+        <item name="android:fontFamily">@font/adventure_indiana</item>
         <item name="android:textSize">25sp</item>
         <item name="android:layout_margin">8dp</item>
+    </style>
+    <style name="tableStyle">
+        <item name="paddingStart">1dp</item>
+        <item name="paddingEnd">1dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="fontFamily">@font/acherus_feral</item>
+        <item name="android:textSize">15sp </item>
+        <item name="android:textColor">@color/dark_plum</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="tableStyle.BlueText" parent="tableStyle">
+        <item name="paddingStart">1dp</item>
+        <item name="paddingEnd">1dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="fontFamily">@font/acherus_feral</item>
+        <item name="android:textSize">18sp </item>
+        <item name="android:textColor">@color/dark_blue</item>
+        <item name="android:gravity">center</item>
     </style>
 </resources>
