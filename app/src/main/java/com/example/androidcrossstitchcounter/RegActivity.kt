@@ -1,8 +1,11 @@
 package com.example.androidcrossstitchcounter
 
+import android.app.DatePickerDialog
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Button
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -19,6 +22,22 @@ class RegActivity : AppCompatActivity() {
         val password = findViewById<EditText>(R.id.etxtPass)
         val repeatPass = findViewById<EditText>(R.id.etxtPassRep)
         val email = findViewById<EditText>(R.id.etxtEmail)
+
+        val date = findViewById<EditText>(R.id.etxtBDate)
+        date.isFocusable = false
+        date.isClickable = true
+        date.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerdialog = DatePickerDialog(this, {_, selectedYear, selectedMonth, selectedDay ->
+                val formatedDate = String.format("%02d.%02d.%04d", selectedDay, selectedMonth + 1, selectedYear)
+                date.setText(formatedDate)
+            }, year, month, day)
+            datePickerdialog.show()
+        }
         registrBtn.setOnClickListener {
             var isValid = true
 
