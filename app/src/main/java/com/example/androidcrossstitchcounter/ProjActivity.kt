@@ -13,6 +13,10 @@ class ProjActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_proj)
+
+        val login = intent.getStringExtra("LOGIN")
+        val loginVal = findViewById<TextView>(R.id.logProj)
+        loginVal.text = login
 //        val projects = listOf(
 //            listOf("Пума", "102x302", "12.03.2025", "05.05.2025", "2500"),
 //            listOf("Nike", "Air Max 90", "15.04.2025", "20.06.2025", "8990"),
