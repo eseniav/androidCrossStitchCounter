@@ -1,6 +1,7 @@
 package com.example.androidcrossstitchcounter
 
 import android.os.Bundle
+import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -15,8 +16,47 @@ class RegActivity : AppCompatActivity() {
         setContentView(R.layout.reg_activity)
         val registrBtn = findViewById<Button>(R.id.regBtnRegAct)
         val login = findViewById<EditText>(R.id.etxtLog)
+        val password = findViewById<EditText>(R.id.etxtPass)
+        val repeatPass = findViewById<EditText>(R.id.etxtPassRep)
+        val email = findViewById<EditText>(R.id.etxtEmail)
         registrBtn.setOnClickListener {
-            if(login.text.isNotEmpty()) {
+            var isValid = true
+
+            val loginText = login.text.toString()
+            if(loginText.isBlank()) {
+                isValid = false
+                login.error = "Поле Логин должно быть заполнено!"
+            } else if (loginText.length < 3 || loginText.length > 30) {
+                isValid = false
+                login.error = "Логин должен быть от 3 до 30 символов!"
+            } else if (loginText.any { it.isWhitespace() }) {
+                isValid = false
+                login.error = "Логин не должен содержать пробелов!"
+            }
+
+            val passwordText = password.text.toString()
+            val passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,30}\$"
+            if(passwordText.isBlank()) {
+                isValid = false
+                password.error = "Поле Пароль должно быть заполнено!"
+            } else if (!passwordText.matches(passwordPattern.toRegex())) {
+                isValid = false
+                password.error = "Пароль должен быть без пробелов и содержать от 8 до 30 символов, цифру, буквы в обоих регистрах и спецсимвол!"
+            } else if (repeatPass.text.toString() != passwordText) {
+                isValid = false
+                repeatPass.error = "Пароли должны совпадать!"
+            }
+
+            val emailText = email.text.toString()
+            if(emailText.isBlank()) {
+                isValid = false
+                email.error = "Поле Email должно быть заполнено!"
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
+                isValid = false
+                email.error = "Проверьте правильность заполнения поля!"
+            }
+
+            if(isValid) {
                 Toast.makeText(this, "Регистрация успешно выполнена!",
                     Toast.LENGTH_SHORT).show()
                 finish()
