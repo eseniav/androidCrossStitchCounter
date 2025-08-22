@@ -29,29 +29,15 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("LOGIN", userName)
             startActivity(intent)
         }
+
         val regBtn = findViewById<Button>(R.id.regBtn)
         regBtn.setOnClickListener {
             val intent = Intent(this@MainActivity, RegActivity::class.java)
             startActivity(intent)
         }
 
-        val visToggle = findViewById<ImageView>(R.id.visibilityToggle)
-        val passEdit = findViewById<EditText>(R.id.passEditTxt)
-
-        var isVisible = false
-
-        visToggle.setOnClickListener {
-            if(!isVisible) {
-                visToggle.setImageResource(R.drawable.eye_open)
-                passEdit.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-            }
-            else {
-                visToggle.setImageResource(R.drawable.eye_close)
-                passEdit.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            }
-            isVisible = !isVisible
-            passEdit.setSelection(passEdit.text.length)
-        }
+        val passWidget = findViewById<PassVisWidget>(R.id.pWid)
+        val password = passWidget.getText()
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
 //            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)

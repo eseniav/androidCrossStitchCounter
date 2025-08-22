@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <EditText
+        android:id="@+id/passEditTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/password"
+        android:layout_marginTop="5dp"
+        android:inputType="textPassword"
+        android:paddingEnd="40dp"
+        />
+    <ImageView
+        android:id="@+id/visibilityToggle"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/eye_close"
+        android:contentDescription="Переключить видимость пароля"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_gravity="end|center_vertical"
+        />
+</FrameLayout>
