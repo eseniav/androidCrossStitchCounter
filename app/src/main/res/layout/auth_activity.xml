@@ -33,13 +33,10 @@
         android:layout_marginTop="50dp"
         style="@style/label"
         />
-    <EditText
+    <com.example.androidcrossstitchcounter.PassVisWidget
+        android:id="@+id/pWid"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/password"
-        android:layout_marginTop="5dp"
-        android:inputType="textPassword"
-        />
+        android:layout_height="wrap_content"/>
     <Button
         android:id="@+id/enterBtn"
         android:layout_width="match_parent"

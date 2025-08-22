@@ -2,8 +2,10 @@ package com.example.androidcrossstitchcounter
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -27,11 +29,15 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("LOGIN", userName)
             startActivity(intent)
         }
+
         val regBtn = findViewById<Button>(R.id.regBtn)
         regBtn.setOnClickListener {
             val intent = Intent(this@MainActivity, RegActivity::class.java)
             startActivity(intent)
         }
+
+        val passWidget = findViewById<PassVisWidget>(R.id.pWid)
+        val password = passWidget.getText()
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
 //            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
