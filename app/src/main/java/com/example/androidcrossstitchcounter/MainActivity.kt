@@ -2,8 +2,10 @@ package com.example.androidcrossstitchcounter
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -31,6 +33,24 @@ class MainActivity : AppCompatActivity() {
         regBtn.setOnClickListener {
             val intent = Intent(this@MainActivity, RegActivity::class.java)
             startActivity(intent)
+        }
+
+        val visToggle = findViewById<ImageView>(R.id.visibilityToggle)
+        val passEdit = findViewById<EditText>(R.id.passEditTxt)
+
+        var isVisible = false
+
+        visToggle.setOnClickListener {
+            if(!isVisible) {
+                visToggle.setImageResource(R.drawable.eye_open)
+                passEdit.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            }
+            else {
+                visToggle.setImageResource(R.drawable.eye_close)
+                passEdit.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            }
+            isVisible = !isVisible
+            passEdit.setSelection(passEdit.text.length)
         }
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
 //            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

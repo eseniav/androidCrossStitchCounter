@@ -33,13 +33,30 @@
         android:layout_marginTop="50dp"
         style="@style/label"
         />
-    <EditText
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/password"
-        android:layout_marginTop="5dp"
-        android:inputType="textPassword"
-        />
+        >
+        <EditText
+            android:id="@+id/passEditTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:layout_marginTop="5dp"
+            android:inputType="textPassword"
+            />
+        <ImageView
+            android:id="@+id/visibilityToggle"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/eye_close"
+            android:contentDescription="Переключить видимость пароля"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_gravity="end|center_vertical"
+            />
+    </FrameLayout>
+
     <Button
         android:id="@+id/enterBtn"
         android:layout_width="match_parent"
