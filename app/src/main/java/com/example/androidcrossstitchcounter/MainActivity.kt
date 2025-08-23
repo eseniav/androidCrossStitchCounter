@@ -21,9 +21,17 @@ class MainActivity : AppCompatActivity() {
 
         val loginBtn = findViewById<Button>(R.id.enterBtn)
         val loginBox = findViewById<EditText>(R.id.loginTxtBox)
+        val userLogin = "anna"
+        val userPass = "Anna111$"
+        val passWidget = findViewById<PassVisWidget>(R.id.pWid)
+        val password = passWidget.getText()
 
         loginBtn.setOnClickListener {
             val userName = loginBox.text.toString()
+            if(userName != userLogin || password.toString() != userPass) {
+                Toast.makeText(this, "Проверьте правильность вводимых данных!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             Toast.makeText(this, "Добро пожаловать, $userName!", Toast.LENGTH_SHORT).show()
             val intent = Intent(this@MainActivity, ProjActivity::class.java)
             intent.putExtra("LOGIN", userName)
@@ -36,8 +44,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val passWidget = findViewById<PassVisWidget>(R.id.pWid)
-        val password = passWidget.getText()
+
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
 //            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
