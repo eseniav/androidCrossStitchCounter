@@ -38,6 +38,7 @@ class RegActivity : AppCompatActivity() {
             }, year, month, day)
             datePickerdialog.show()
         }
+
         registrBtn.setOnClickListener {
             var isValid = true
 
