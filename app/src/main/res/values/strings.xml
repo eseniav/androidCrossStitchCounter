@@ -25,4 +25,6 @@
     <string name="nameProjLine"><u>Имя:</u></string>
     <string name="regDateLine"><u>Дата регистрации:</u></string>
     <string name="ageLine"><u>Возраст:</u></string>
+    <string name="profile">Профиль</string>
+    <string name="edit">Редактировать</string>
 </resources>
