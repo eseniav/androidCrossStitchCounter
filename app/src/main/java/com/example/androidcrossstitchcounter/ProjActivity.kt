@@ -23,6 +23,12 @@ class ProjActivity : AppCompatActivity() {
             val intent = Intent(this@ProjActivity, ProfileActivity::class.java)
             startActivity(intent)
         }
+
+        val projName = findViewById<TextView>(R.id.projName)
+        projName.setOnClickListener {
+            val intent = Intent(this@ProjActivity, ProjDiaryActivity::class.java)
+            startActivity(intent)
+        }
 //        val projects = listOf(
 //            listOf("Пума", "102x302", "12.03.2025", "05.05.2025", "2500"),
 //            listOf("Nike", "Air Max 90", "15.04.2025", "20.06.2025", "8990"),
