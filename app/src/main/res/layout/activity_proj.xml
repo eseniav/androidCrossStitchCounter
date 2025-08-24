@@ -130,20 +130,31 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/userBox"
             android:layout_centerHorizontal="true">
-            <TextView
-                android:id="@+id/present"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/presentLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=" Текущие "
-                style="@style/projNames"
-                android:layout_centerHorizontal="true"
-                />
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/present"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Текущие"
+                    style="@style/projNames"
+                    android:layout_marginEnd="10dp" />
+                <ImageView
+                    android:id="@+id/imageAdd"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="Добавить"
+                    android:src="@drawable/add" />
+            </LinearLayout>
             <TableLayout
                 android:id="@+id/currentProj"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:stretchColumns="*"
-                android:layout_below="@id/present"
+                android:layout_below="@id/presentLayout"
                 >
                 <TableRow android:padding="3dp" android:background="@color/white_50">
                     <TextView android:text="Размер" style="@style/tableStyle"/>
@@ -188,21 +199,32 @@
                     android:background="@color/white"
                     />
             </TableLayout>
-    <TextView
-        android:id="@+id/future"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" Будущие "
-        style="@style/projNames"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/currentProj"
-        />
+            <LinearLayout
+                android:id="@+id/futureLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_below="@id/currentProj">
+                <TextView
+                    android:id="@+id/future"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Будущие"
+                    style="@style/projNames"
+                    android:layout_marginEnd="10dp" />
+                <ImageView
+                    android:id="@+id/imageAddF"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="Добавить"
+                    android:src="@drawable/add" />
+            </LinearLayout>
         <TableLayout
             android:id="@+id/projTable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stretchColumns="*"
-            android:layout_below="@id/future"
+            android:layout_below="@id/futureLayout"
             >
             <TableRow android:padding="3dp" android:background="@color/white_50">
                 <TextView android:text="Размер" style="@style/tableStyle"/>
@@ -239,21 +261,32 @@
                 android:background="@color/white"
                 />
         </TableLayout>
-        <TextView
-            android:id="@+id/finishProj"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" Завершенные "
-            style="@style/projNames"
-            android:layout_below="@id/projTable"
-            android:layout_centerHorizontal="true"
-            />
+            <LinearLayout
+                android:id="@+id/finishLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_below="@id/projTable">
+                <TextView
+                    android:id="@+id/finish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Завершенные"
+                    style="@style/projNames"
+                    android:layout_marginEnd="10dp" />
+                <ImageView
+                    android:id="@+id/imageAddFinish"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="Добавить"
+                    android:src="@drawable/add" />
+            </LinearLayout>
             <TableLayout
                 android:id="@+id/finishProjTable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:stretchColumns="*"
-                android:layout_below="@id/finishProj"
+                android:layout_below="@id/finishLayout"
                 >
                 <TableRow android:padding="3dp" android:background="@color/white_50">
                     <TextView android:text="Размер" style="@style/tableStyle"/>
