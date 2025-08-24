@@ -152,7 +152,9 @@
                     <TextView android:text="Вышито" style="@style/tableStyle"/>
                 </TableRow>
                 <TableRow android:padding="5dp">
-                    <TextView android:text="Пума"
+                    <TextView
+                        android:id="@+id/projName"
+                        android:text="Пума"
                         android:padding="5dp"
                         android:layout_span="4"
                         style="@style/tableStyle.BlueText"
