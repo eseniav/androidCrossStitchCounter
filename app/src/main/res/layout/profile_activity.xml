@@ -39,12 +39,34 @@
             >
             <TableRow android:padding="5dp">
                 <TextView android:text="@string/Lname" style="@style/label" android:paddingEnd="10sp"/>
-                <TextView android:text="Иванова" style="@style/labelAcherus"/>
+                <TextView android:id="@+id/value" android:text="Иванова" style="@style/labelAcherus"/>
                 <ImageView
+                    android:id="@+id/imageEdit"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:contentDescription="@string/edit"
                     android:src="@drawable/edit"
+                    android:paddingStart="10dp"
+                    />
+                <EditText
+                    android:id="@+id/edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+                <ImageView
+                    android:id="@+id/imageCheck"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:contentDescription="Подтвердить изменения"
+                    android:src="@drawable/check"
+                    android:paddingStart="10dp"
+                    />
+                <ImageView
+                    android:id="@+id/imageCancel"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:contentDescription="Отмена"
+                    android:src="@drawable/cancel"
                     android:paddingStart="10dp"
                     />
             </TableRow>
