@@ -1,5 +1,6 @@
 package com.example.androidcrossstitchcounter
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TableLayout
 import android.widget.TableRow
@@ -17,6 +18,11 @@ class ProjActivity : AppCompatActivity() {
         val login = intent.getStringExtra("LOGIN")
         val loginVal = findViewById<TextView>(R.id.logProj)
         loginVal.text = login
+
+        loginVal.setOnClickListener {
+            val intent = Intent(this@ProjActivity, ProfileActivity::class.java)
+            startActivity(intent)
+        }
 //        val projects = listOf(
 //            listOf("Пума", "102x302", "12.03.2025", "05.05.2025", "2500"),
 //            listOf("Nike", "Air Max 90", "15.04.2025", "20.06.2025", "8990"),

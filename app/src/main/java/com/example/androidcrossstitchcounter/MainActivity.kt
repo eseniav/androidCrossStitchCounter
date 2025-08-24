@@ -24,10 +24,10 @@ class MainActivity : AppCompatActivity() {
         val userLogin = "anna"
         val userPass = "Anna111$"
         val passWidget = findViewById<PassVisWidget>(R.id.pWid)
-        val password = passWidget.getText()
 
         loginBtn.setOnClickListener {
             val userName = loginBox.text.toString()
+            val password = passWidget.getText()
             if(userName != userLogin || password.toString() != userPass) {
                 Toast.makeText(this, "Проверьте правильность вводимых данных!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
