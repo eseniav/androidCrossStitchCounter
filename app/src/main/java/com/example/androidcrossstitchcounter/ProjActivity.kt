@@ -2,6 +2,7 @@ package com.example.androidcrossstitchcounter
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -27,6 +28,22 @@ class ProjActivity : AppCompatActivity() {
         val projName = findViewById<TextView>(R.id.projName)
         projName.setOnClickListener {
             val intent = Intent(this@ProjActivity, ProjDiaryActivity::class.java)
+            startActivity(intent)
+        }
+
+        val addPresent = findViewById<ImageView>(R.id.imageAdd)
+        val addFuture = findViewById<ImageView>(R.id.imageAddF)
+        val addFinish = findViewById<ImageView>(R.id.imageAddFinish)
+        addPresent.setOnClickListener {
+            val intent = Intent(this@ProjActivity, AddProjActivity::class.java)
+            startActivity(intent)
+        }
+        addFuture.setOnClickListener {
+            val intent = Intent(this@ProjActivity, AddProjActivity::class.java)
+            startActivity(intent)
+        }
+        addFinish.setOnClickListener {
+            val intent = Intent(this@ProjActivity, AddProjActivity::class.java)
             startActivity(intent)
         }
 //        val projects = listOf(
