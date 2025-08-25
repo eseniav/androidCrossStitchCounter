@@ -28,7 +28,8 @@ class MainActivity : AppCompatActivity() {
         loginBtn.setOnClickListener {
             val userName = loginBox.text.toString()
             val password = passWidget.getText()
-            if(userName != userLogin || password.toString() != userPass) {
+            // || password.toString() != userPass
+            if(userName != userLogin) {
                 Toast.makeText(this, "Проверьте правильность вводимых данных!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
