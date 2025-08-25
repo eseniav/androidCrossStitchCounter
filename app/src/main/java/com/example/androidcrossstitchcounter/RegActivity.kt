@@ -3,6 +3,8 @@ package com.example.androidcrossstitchcounter
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Patterns
 import android.widget.Button
 import android.widget.DatePicker
@@ -22,6 +24,26 @@ class RegActivity : AppCompatActivity() {
         val password = findViewById<EditText>(R.id.etxtPass)
         val repeatPass = findViewById<EditText>(R.id.etxtPassRep)
         val email = findViewById<EditText>(R.id.etxtEmail)
+        val phone = findViewById<EditText>(R.id.etxtPhone)
+
+        phone.addTextChangedListener(PhoneMaskWatcher())
+
+        phone.addTextChangedListener(object: TextWatcher{
+            private val phonePattern = Regex("""^(\+7|7|8)?[\s\-]?\(?[0-9]{3}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$""")
+            fun checkPhone(input: String) = phonePattern.matches(input)
+            override fun afterTextChanged(s: Editable?) {
+                val input = s.toString()
+                if(!checkPhone(input)) {
+                    phone.error = "Проверьте правильность вводимых данных!"
+                } else {
+                    phone.error = null
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
+        })
 
         val date = findViewById<EditText>(R.id.etxtBDate)
         date.isFocusable = false
