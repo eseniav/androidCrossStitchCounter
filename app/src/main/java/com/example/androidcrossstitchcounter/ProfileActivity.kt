@@ -1,6 +1,7 @@
 package com.example.androidcrossstitchcounter
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity

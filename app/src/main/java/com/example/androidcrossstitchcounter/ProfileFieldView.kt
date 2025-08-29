@@ -38,6 +38,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
 
     fun setupListeners() {
         imgEdit.setOnClickListener {
+            //TODO При нажатии на редактирование пароля должно появляться поле Повторите пароль
             setValue(valueText)
             changeVisibility()
         }

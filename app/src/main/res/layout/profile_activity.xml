@@ -62,7 +62,9 @@
             <com.example.androidcrossstitchcounter.ProfileFieldView
                 android:id="@+id/repeatPassRow"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                />
             <com.example.androidcrossstitchcounter.ProfileFieldView
                 android:id="@+id/phoneRow"
                 android:layout_width="match_parent"
