@@ -13,12 +13,14 @@ import android.widget.TextView
 import androidx.transition.Visibility
 
 class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
-    private val profileValue: TextView
+    private var profileValue: TextView
     private val imgEdit: ImageView
     private val imgCheck: ImageView
     private val profileEditText: EditText
     private val imgCancel: ImageView
     private val label: TextView
+
+    private var valueText: String
 
     init {
         orientation = HORIZONTAL
@@ -30,6 +32,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
         profileEditText = findViewById<EditText>(R.id.edit)
         imgCancel = findViewById<ImageView>(R.id.imageCancel)
         label = findViewById<TextView>(R.id.label)
+        valueText = profileValue.text.toString()
 
         setupListeners()
     }
@@ -39,9 +42,12 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
             changeVisibility()
         }
         imgCheck.setOnClickListener {
+            valueText = getValue()
+            setValue(valueText)
             changeVisibility()
         }
         imgCancel.setOnClickListener {
+            setValue(valueText)
             changeVisibility()
         }
     }
