@@ -20,7 +20,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
     private val imgCancel: ImageView
     private val label: TextView
 
-    private var valueText: String
+    private var valueText = ""
 
     init {
         orientation = HORIZONTAL
@@ -32,13 +32,13 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
         profileEditText = findViewById<EditText>(R.id.edit)
         imgCancel = findViewById<ImageView>(R.id.imageCancel)
         label = findViewById<TextView>(R.id.label)
-        valueText = profileValue.text.toString()
 
         setupListeners()
     }
 
     fun setupListeners() {
         imgEdit.setOnClickListener {
+            setValue(valueText)
             changeVisibility()
         }
         imgCheck.setOnClickListener {
@@ -66,6 +66,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
     fun getValue() = profileEditText.text.toString()
 
     fun setValue(s: String) {
+        valueText = s
         profileValue.text = s
         profileEditText.setText(s)
     }
