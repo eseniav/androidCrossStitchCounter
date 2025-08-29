@@ -28,6 +28,10 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
         profileEditText = findViewById<EditText>(R.id.edit)
         imgCancel = findViewById<ImageView>(R.id.imageCancel)
 
+        setupListeners()
+    }
+
+    fun setupListeners() {
         imgEdit.setOnClickListener {
             changeVisibility(true)
         }
@@ -38,7 +42,6 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
             changeVisibility(false)
         }
     }
-
     fun changeVisibility(isEdit: Boolean) {
         if(isEdit) {
             imgCheck.visibility = VISIBLE
