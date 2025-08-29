@@ -28,48 +28,33 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
     <ScrollView
-        android:layout_width="wrap_content"
+        android:id="@+id/profileForm"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/imgAvatar"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <com.example.androidcrossstitchcounter.ProfileFieldView
+                android:id="@+id/surnameRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/profileForm"
         app:layout_constraintStart_toStartOf="parent"
         >
         <TableLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             >
-            <TableRow android:padding="5dp">
-                <TextView android:text="@string/Lname" style="@style/label" android:paddingEnd="10sp"/>
-                <TextView android:id="@+id/value" android:text="Иванова" style="@style/labelAcherus"/>
-                <ImageView
-                    android:id="@+id/imageEdit"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:contentDescription="@string/edit"
-                    android:src="@drawable/edit"
-                    android:paddingStart="10dp"
-                    />
-                <EditText
-                    android:id="@+id/edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-                <ImageView
-                    android:id="@+id/imageCheck"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:contentDescription="Подтвердить изменения"
-                    android:src="@drawable/check"
-                    android:paddingStart="10dp"
-                    />
-                <ImageView
-                    android:id="@+id/imageCancel"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:contentDescription="Отмена"
-                    android:src="@drawable/cancel"
-                    android:paddingStart="10dp"
-                    />
-            </TableRow>
             <TableRow android:padding="5dp">
                 <TextView android:text="@string/name" style="@style/label" android:paddingEnd="10sp"/>
             </TableRow>
