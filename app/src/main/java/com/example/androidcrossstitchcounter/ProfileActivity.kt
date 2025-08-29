@@ -1,6 +1,7 @@
 package com.example.androidcrossstitchcounter
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,5 +20,29 @@ class ProfileActivity: AppCompatActivity()  {
         val surnameWidget = findViewById<ProfileFieldView>(R.id.surnameRow)
         surnameWidget.setLabel("Фамилия")
         surnameWidget.setValue("Иванова")
+
+        val nameWidget = findViewById<ProfileFieldView>(R.id.nameRow)
+        nameWidget.setLabel("Имя")
+
+        val patrWidget = findViewById<ProfileFieldView>(R.id.patrRow)
+        patrWidget.setLabel("Отчество")
+
+        val logWidget = findViewById<ProfileFieldView>(R.id.logRow)
+        logWidget.setLabel("Логин")
+
+        val passWidget = findViewById<ProfileFieldView>(R.id.passRow)
+        passWidget.setLabel("Пароль")
+
+        val repeatPassWidget = findViewById<ProfileFieldView>(R.id.repeatPassRow)
+        repeatPassWidget.setLabel("Повторите пароль")
+
+        val phoneWidget = findViewById<ProfileFieldView>(R.id.phoneRow)
+        phoneWidget.setLabel("Телефон")
+
+        val emailWidget = findViewById<ProfileFieldView>(R.id.emailRow)
+        emailWidget.setLabel("Email")
+
+        val birthDateWidget = findViewById<ProfileFieldView>(R.id.birthDateRow)
+        birthDateWidget.setLabel("Дата рождения")
     }
 }

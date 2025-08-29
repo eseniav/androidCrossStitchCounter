@@ -43,45 +43,40 @@
                 android:id="@+id/surnameRow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+            <com.example.androidcrossstitchcounter.ProfileFieldView
+                android:id="@+id/nameRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <com.example.androidcrossstitchcounter.ProfileFieldView
+                android:id="@+id/patrRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <com.example.androidcrossstitchcounter.ProfileFieldView
+                android:id="@+id/logRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <com.example.androidcrossstitchcounter.ProfileFieldView
+                android:id="@+id/passRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <com.example.androidcrossstitchcounter.ProfileFieldView
+                android:id="@+id/repeatPassRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                />
+            <com.example.androidcrossstitchcounter.ProfileFieldView
+                android:id="@+id/phoneRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <com.example.androidcrossstitchcounter.ProfileFieldView
+                android:id="@+id/emailRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <com.example.androidcrossstitchcounter.ProfileFieldView
+                android:id="@+id/birthDateRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </ScrollView>
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/profileForm"
-        app:layout_constraintStart_toStartOf="parent"
-        >
-        <TableLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-            <TableRow android:padding="5dp">
-                <TextView android:text="@string/name" style="@style/label" android:paddingEnd="10sp"/>
-            </TableRow>
-            <TableRow android:padding="5dp">
-                <TextView android:text="@string/patrName" style="@style/label" android:paddingEnd="10sp"/>
-            </TableRow>
-            <TableRow android:padding="5dp">
-                <TextView android:text="@string/login" style="@style/label" android:paddingEnd="10sp"/>
-            </TableRow>
-            <TableRow android:padding="5dp">
-                <TextView android:text="@string/password" style="@style/label" android:paddingEnd="10sp"/>
-            </TableRow>
-            <TableRow android:padding="5dp">
-                <TextView android:text="@string/repeatPass" style="@style/label" android:paddingEnd="10sp"
-                    app:layout_constraintHorizontal_weight="1" android:layout_width="0dp"
-                    />
-            </TableRow>
-            <TableRow android:padding="5dp">
-                <TextView android:text="@string/phone" style="@style/label" android:paddingEnd="10sp"/>
-            </TableRow>
-            <TableRow android:padding="5dp">
-                <TextView android:text="@string/email" style="@style/label" android:paddingEnd="10sp"/>
-            </TableRow>
-            <TableRow android:padding="5dp">
-                <TextView android:text="@string/bDate" style="@style/label" android:paddingEnd="10sp"/>
-            </TableRow>
-        </TableLayout>
-    </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

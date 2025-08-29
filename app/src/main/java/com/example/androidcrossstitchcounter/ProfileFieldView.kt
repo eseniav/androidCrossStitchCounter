@@ -13,12 +13,14 @@ import android.widget.TextView
 import androidx.transition.Visibility
 
 class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
-    private val profileValue: TextView
+    private var profileValue: TextView
     private val imgEdit: ImageView
     private val imgCheck: ImageView
     private val profileEditText: EditText
     private val imgCancel: ImageView
     private val label: TextView
+
+    private var valueText = ""
 
     init {
         orientation = HORIZONTAL
@@ -36,12 +38,17 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
 
     fun setupListeners() {
         imgEdit.setOnClickListener {
+            //TODO При нажатии на редактирование пароля должно появляться поле Повторите пароль
+            setValue(valueText)
             changeVisibility()
         }
         imgCheck.setOnClickListener {
+            valueText = getValue()
+            setValue(valueText)
             changeVisibility()
         }
         imgCancel.setOnClickListener {
+            setValue(valueText)
             changeVisibility()
         }
     }
@@ -60,6 +67,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
     fun getValue() = profileEditText.text.toString()
 
     fun setValue(s: String) {
+        valueText = s
         profileValue.text = s
         profileEditText.setText(s)
     }
