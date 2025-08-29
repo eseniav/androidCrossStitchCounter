@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.transition.Visibility
 import androidx.viewpager2.widget.ViewPager2
 
 class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
@@ -42,19 +43,15 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
             changeVisibility(false)
         }
     }
+
+    private fun View.setVisible(isVisible: Boolean) {
+        visibility = if(isVisible) VISIBLE else GONE
+    }
     fun changeVisibility(isEdit: Boolean) {
-        if(isEdit) {
-            imgCheck.visibility = VISIBLE
-            profileEditText.visibility = VISIBLE
-            imgCancel.visibility = VISIBLE
-            profileValue.visibility = GONE
-            imgEdit.visibility = GONE
-        } else {
-            imgCheck.visibility = GONE
-            profileEditText.visibility = GONE
-            imgCancel.visibility = GONE
-            profileValue.visibility = VISIBLE
-            imgEdit.visibility = VISIBLE
-        }
+            imgCheck.setVisible(isEdit)
+            profileEditText.setVisible(isEdit)
+            imgCancel.setVisible(isEdit)
+            profileValue.setVisible(!isEdit)
+            imgEdit.setVisible(!isEdit)
     }
 }
