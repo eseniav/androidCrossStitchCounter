@@ -15,5 +15,9 @@ class ProfileActivity: AppCompatActivity()  {
         avatar.setOnClickListener {
             Toast.makeText(this, "Изменение картинки", Toast.LENGTH_SHORT).show()
         }
+
+        val surnameWidget = findViewById<ProfileFieldView>(R.id.surnameRow)
+        surnameWidget.setLabel("Фамилия")
+        surnameWidget.setValue("Иванова")
     }
 }

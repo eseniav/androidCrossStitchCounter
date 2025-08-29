@@ -1,6 +1,7 @@
 package com.example.androidcrossstitchcounter
 
 import android.content.Context
+import android.text.Editable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.transition.Visibility
-import androidx.viewpager2.widget.ViewPager2
 
 class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
     private val profileValue: TextView
@@ -18,6 +18,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
     private val imgCheck: ImageView
     private val profileEditText: EditText
     private val imgCancel: ImageView
+    private val label: TextView
 
     init {
         orientation = HORIZONTAL
@@ -28,6 +29,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
         imgCheck = findViewById<ImageView>(R.id.imageCheck)
         profileEditText = findViewById<EditText>(R.id.edit)
         imgCancel = findViewById<ImageView>(R.id.imageCancel)
+        label = findViewById<TextView>(R.id.label)
 
         setupListeners()
     }
@@ -53,5 +55,16 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
         imgCancel.toggleVisibility()
         profileValue.toggleVisibility()
         imgEdit.toggleVisibility()
+    }
+
+    fun getValue() = profileEditText.text.toString()
+
+    fun setValue(s: String) {
+        profileValue.text = s
+        profileEditText.setText(s)
+    }
+
+    fun setLabel(s: String) {
+        label.text = s
     }
 }

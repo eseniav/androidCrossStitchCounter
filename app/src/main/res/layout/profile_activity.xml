@@ -40,6 +40,7 @@
             android:orientation="vertical"
             >
             <com.example.androidcrossstitchcounter.ProfileFieldView
+                android:id="@+id/surnameRow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
