@@ -34,24 +34,24 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
 
     fun setupListeners() {
         imgEdit.setOnClickListener {
-            changeVisibility(true)
+            changeVisibility()
         }
         imgCheck.setOnClickListener {
-            changeVisibility(false)
+            changeVisibility()
         }
         imgCancel.setOnClickListener {
-            changeVisibility(false)
+            changeVisibility()
         }
     }
 
-    private fun View.setVisible(isVisible: Boolean) {
-        visibility = if(isVisible) VISIBLE else GONE
+    private fun View.toggleVisibility() {
+        visibility = if(visibility == VISIBLE) GONE else VISIBLE
     }
-    fun changeVisibility(isEdit: Boolean) {
-            imgCheck.setVisible(isEdit)
-            profileEditText.setVisible(isEdit)
-            imgCancel.setVisible(isEdit)
-            profileValue.setVisible(!isEdit)
-            imgEdit.setVisible(!isEdit)
+    fun changeVisibility() {
+        imgCheck.toggleVisibility()
+        profileEditText.toggleVisibility()
+        imgCancel.toggleVisibility()
+        profileValue.toggleVisibility()
+        imgEdit.toggleVisibility()
     }
 }
