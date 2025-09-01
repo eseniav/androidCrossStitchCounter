@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -21,8 +22,8 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
     private val profileEditText: EditText
     private val imgCancel: ImageView
     private val label: TextView
-
     private var valueText = ""
+    private var onValueChangeListener: ((String) -> Unit)? = null
 
     init {
         orientation = HORIZONTAL
@@ -46,6 +47,28 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
         typedArray.recycle()
 
         setupListeners()
+        profileEditText.addTextChangedListener(object: TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                onValueChangeListener?.invoke(s.toString())
+            }
+
+        })
     }
 
     fun setupListeners() {
@@ -90,5 +113,9 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
 
     fun setInputType(type: Int) {
         profileEditText.inputType = type
+    }
+
+    fun setOnValueChangeListener(listener: (String) -> Unit) {
+        onValueChangeListener = listener
     }
 }
