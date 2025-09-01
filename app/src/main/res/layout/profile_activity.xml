@@ -59,7 +59,8 @@
             <com.example.androidcrossstitchcounter.ProfileFieldView
                 android:id="@+id/passRow"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                app:inputType="129"/>
             <com.example.androidcrossstitchcounter.ProfileFieldView
                 android:id="@+id/repeatPassRow"
                 android:layout_width="match_parent"
@@ -69,11 +70,13 @@
             <com.example.androidcrossstitchcounter.ProfileFieldView
                 android:id="@+id/phoneRow"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                app:inputType="4"/>
             <com.example.androidcrossstitchcounter.ProfileFieldView
                 android:id="@+id/emailRow"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                app:inputType="33"/>
             <com.example.androidcrossstitchcounter.ProfileFieldView
                 android:id="@+id/birthDateRow"
                 android:layout_width="match_parent"

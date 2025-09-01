@@ -3,5 +3,6 @@
     <declare-styleable name="ProfileFieldView">
         <attr name="label" format="string"/>
         <attr name="value" format="string"/>
+        <attr name="inputType" format="integer"/>
     </declare-styleable>
 </resources>

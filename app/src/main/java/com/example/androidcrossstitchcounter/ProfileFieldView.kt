@@ -3,6 +3,7 @@ package com.example.androidcrossstitchcounter
 import android.content.Context
 import android.content.res.TypedArray
 import android.text.Editable
+import android.text.InputType
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -38,8 +39,10 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ProfileFieldView, defStyleAttr, 0)
         val labelTxt = typedArray.getString(R.styleable.ProfileFieldView_label) ?: ""
         val valueTxt = typedArray.getString(R.styleable.ProfileFieldView_value) ?: ""
+        val inputType = typedArray.getInt(R.styleable.ProfileFieldView_inputType, InputType.TYPE_CLASS_TEXT)
         setLabel(labelTxt)
         setValue(valueTxt)
+        setInputType(inputType)
         typedArray.recycle()
 
         setupListeners()
@@ -83,5 +86,9 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
 
     fun setLabel(s: String) {
         label.text = s
+    }
+
+    fun setInputType(type: Int) {
+        profileEditText.inputType = type
     }
 }
