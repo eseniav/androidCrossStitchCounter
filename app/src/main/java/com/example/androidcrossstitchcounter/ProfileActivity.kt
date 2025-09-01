@@ -18,7 +18,7 @@ class ProfileActivity: AppCompatActivity()  {
         }
 
         val surnameWidget = findViewById<ProfileFieldView>(R.id.surnameRow)
-        surnameWidget.setLabel("Фамилия")
+        //surnameWidget.setLabel("Фамилия")
         surnameWidget.setValue("Иванова")
 
         val nameWidget = findViewById<ProfileFieldView>(R.id.nameRow)

@@ -1,6 +1,7 @@
 package com.example.androidcrossstitchcounter
 
 import android.content.Context
+import android.content.res.TypedArray
 import android.text.Editable
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -26,12 +27,20 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
         orientation = HORIZONTAL
         LayoutInflater.from(context).inflate(R.layout.view_profile_field, this, true)
 
+
         profileValue = findViewById<TextView>(R.id.value)
         imgEdit = findViewById<ImageView>(R.id.imageEdit)
         imgCheck = findViewById<ImageView>(R.id.imageCheck)
         profileEditText = findViewById<EditText>(R.id.edit)
         imgCancel = findViewById<ImageView>(R.id.imageCancel)
         label = findViewById<TextView>(R.id.label)
+
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ProfileFieldView, defStyleAttr, 0)
+        val labelTxt = typedArray.getString(R.styleable.ProfileFieldView_label) ?: ""
+        val valueTxt = typedArray.getString(R.styleable.ProfileFieldView_value) ?: ""
+        setLabel(labelTxt)
+        setValue(valueTxt)
+        typedArray.recycle()
 
         setupListeners()
     }
