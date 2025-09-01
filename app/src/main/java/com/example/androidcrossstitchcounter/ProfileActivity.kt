@@ -1,6 +1,7 @@
 package com.example.androidcrossstitchcounter
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -18,7 +19,6 @@ class ProfileActivity: AppCompatActivity()  {
         }
 
         val surnameWidget = findViewById<ProfileFieldView>(R.id.surnameRow)
-        //surnameWidget.setLabel("Фамилия")
         surnameWidget.setValue("Иванова")
 
         val nameWidget = findViewById<ProfileFieldView>(R.id.nameRow)
@@ -32,12 +32,14 @@ class ProfileActivity: AppCompatActivity()  {
 
         val passWidget = findViewById<ProfileFieldView>(R.id.passRow)
         passWidget.setLabel("Пароль")
+        passWidget.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
 
         val repeatPassWidget = findViewById<ProfileFieldView>(R.id.repeatPassRow)
         repeatPassWidget.setLabel("Повторите пароль")
 
         val phoneWidget = findViewById<ProfileFieldView>(R.id.phoneRow)
         phoneWidget.setLabel("Телефон")
+        phoneWidget.setTxtWatcher(PhoneMaskWatcher())
 
         val emailWidget = findViewById<ProfileFieldView>(R.id.emailRow)
         emailWidget.setLabel("Email")
