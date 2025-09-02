@@ -36,14 +36,17 @@ class ProjActivity : AppCompatActivity() {
         val addFinish = findViewById<ImageView>(R.id.imageAddFinish)
         addPresent.setOnClickListener {
             val intent = Intent(this@ProjActivity, AddProjActivity::class.java)
+            intent.putExtra("projType", "present")
             startActivity(intent)
         }
         addFuture.setOnClickListener {
             val intent = Intent(this@ProjActivity, AddProjActivity::class.java)
+            intent.putExtra("projType", "future")
             startActivity(intent)
         }
         addFinish.setOnClickListener {
             val intent = Intent(this@ProjActivity, AddProjActivity::class.java)
+            intent.putExtra("projType", "finish")
             startActivity(intent)
         }
 //        val projects = listOf(
