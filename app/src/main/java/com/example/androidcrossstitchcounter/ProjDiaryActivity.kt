@@ -16,26 +16,14 @@ class ProjDiaryActivity: AppCompatActivity() {
 
         val aboutProjLayout = findViewById<ConstraintLayout>(R.id.innerLayout)
         val aboutProjText = findViewById<TextView>(R.id.aboutProj)
-
         aboutProjText.setOnClickListener {
-            if (aboutProjLayout.visibility == View.VISIBLE) {
-                // Плавное скрытие
-                aboutProjLayout.animate()
-                    .alpha(0f)
-                    .setDuration(300)
-                    .withEndAction {
-                        aboutProjLayout.visibility = View.GONE
-                    }
-                    .start()
-            } else {
-                // Плавное появление
-                aboutProjLayout.alpha = 0f
-                aboutProjLayout.visibility = View.VISIBLE
-                aboutProjLayout.animate()
-                    .alpha(1f)
-                    .setDuration(300)
-                    .start()
-            }
+            Animation.hiding(aboutProjLayout)
+        }
+
+        val statisticsInnerL = findViewById<ConstraintLayout>(R.id.statisticsInnerL)
+        val statistics = findViewById<TextView>(R.id.statistics)
+        statistics.setOnClickListener {
+            Animation.hiding(statisticsInnerL)
         }
 
         val addRow = findViewById<TableRow>(R.id.addRow)

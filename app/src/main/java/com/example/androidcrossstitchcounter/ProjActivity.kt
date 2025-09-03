@@ -49,6 +49,24 @@ class ProjActivity : AppCompatActivity() {
             intent.putExtra("projType", "finish")
             startActivity(intent)
         }
+
+        val presentTxt = findViewById<TextView>(R.id.present)
+        val presentInner = findViewById<TableLayout>(R.id.currentProj)
+        presentTxt.setOnClickListener {
+            Animation.hiding(presentInner)
+        }
+
+        val futureTxt = findViewById<TextView>(R.id.future)
+        val futureInner = findViewById<TableLayout>(R.id.projTable)
+        futureTxt.setOnClickListener {
+            Animation.hiding(futureInner)
+        }
+
+        val finishTxt = findViewById<TextView>(R.id.finish)
+        val finishInner = findViewById<TableLayout>(R.id.finishProjTable)
+        finishTxt.setOnClickListener {
+            Animation.hiding(finishInner)
+        }
 //        val projects = listOf(
 //            listOf("Пума", "102x302", "12.03.2025", "05.05.2025", "2500"),
 //            listOf("Nike", "Air Max 90", "15.04.2025", "20.06.2025", "8990"),
