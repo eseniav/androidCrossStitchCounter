@@ -1,5 +1,6 @@
 package com.example.androidcrossstitchcounter
 
+import User
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
@@ -14,11 +15,19 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.room.Room
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class RegActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.reg_activity)
+
+        val db = Room.databaseBuilder(applicationContext, AppDataBase::class.java, "app_db").build()
+        val userDao = db.userDao()
+
         val registrBtn = findViewById<Button>(R.id.regBtnRegAct)
         val login = findViewById<EditText>(R.id.etxtLog)
         val password = findViewById<EditText>(R.id.etxtPass)
@@ -99,6 +108,15 @@ class RegActivity : AppCompatActivity() {
             }
 
             if(isValid) {
+                val user = User(
+                    login = loginText,
+                    password = passwordText,
+                    email = emailText
+                    )
+                CoroutineScope(Dispatchers.IO).launch {
+                    userDao.insertUser(user)
+
+                }
                 Toast.makeText(this, "Регистрация успешно выполнена!",
                     Toast.LENGTH_SHORT).show()
                 finish()
