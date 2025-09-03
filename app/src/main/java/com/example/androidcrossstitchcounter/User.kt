@@ -1,30 +1,34 @@
+import androidx.room.Dao
+import androidx.room.Entity
+import androidx.room.Insert
+import androidx.room.PrimaryKey
 import com.example.androidcrossstitchcounter.CalendarUtils
 import java.util.Calendar
 import java.util.Locale
 import java.text.SimpleDateFormat
 import java.util.UUID
 
-interface Identifiable {
-    fun getID() = UUID.randomUUID().toString()
+@Dao
+interface UserDao {
+    @Insert
+    suspend fun insertUser(user: User)
 }
 
+@Entity(tableName = "users")
 data class User(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     var login: String = "",
     var password: String = "",
     var userName: String? = null,
     var userLastName: String? = null,
     var phoneNumber: String = "",
     var email: String = "",
-    var birthDate: Calendar? = null,
-    val regDate: Calendar = CalendarUtils.getCurrentDate()
-): Identifiable {
-
-    val userID: String = getID()
-
+    //var birthDate: Calendar? = null,
+    //val regDate: Calendar = CalendarUtils.getCurrentDate()
+)
+{
     fun print() {
-        println(this)
-    }
-
+        println(this)}
     companion object {
         val minName = 2
         val maxName = 30
