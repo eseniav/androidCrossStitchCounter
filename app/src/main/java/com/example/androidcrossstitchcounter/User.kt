@@ -1,18 +1,13 @@
 import androidx.room.Dao
+import androidx.room.Database
 import androidx.room.Entity
 import androidx.room.Insert
 import androidx.room.PrimaryKey
+import androidx.room.RoomDatabase
 import com.example.androidcrossstitchcounter.CalendarUtils
 import java.util.Calendar
 import java.util.Locale
 import java.text.SimpleDateFormat
-import java.util.UUID
-
-@Dao
-interface UserDao {
-    @Insert
-    suspend fun insertUser(user: User)
-}
 
 @Entity(tableName = "users")
 data class User(
@@ -46,4 +41,15 @@ data class User(
             return input.timeInMillis >= minDate.timeInMillis && input.timeInMillis <= maxDate.timeInMillis
         }
     }
+}
+
+@Dao
+interface UserDao {
+    @Insert
+    suspend fun insertUser(user: User)
+}
+
+@Database(entities = [User::class], version = 1)
+abstract class AppDataBase: RoomDatabase() {
+    abstract fun userDao(): UserDao
 }
