@@ -7,10 +7,10 @@
     >
     <TextView
         android:id="@+id/label"
-        style="@style/label"
-        android:layout_width="50dp"
+        style="@style/label.Small"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="3dp"
         android:layout_weight="1"
         android:maxLines="2"
         android:ellipsize="end"
@@ -19,29 +19,29 @@
         style="@style/labelAcherus"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:layout_weight="2"
         />
     <EditText
         android:id="@+id/edit"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
+        android:layout_margin="3dp"
         android:layout_weight="1.8"
         android:visibility="gone"
         />
     <ImageView
         android:id="@+id/imageEdit"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:contentDescription="@string/edit"
         android:src="@drawable/edit"
         android:layout_margin="5dp"
         />
     <ImageView
         android:id="@+id/imageCheck"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:contentDescription="Подтвердить изменения"
         android:src="@drawable/check"
         android:layout_margin="5dp"
@@ -49,8 +49,8 @@
         />
     <ImageView
         android:id="@+id/imageCancel"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:contentDescription="Отмена"
         android:src="@drawable/cancel"
         android:layout_margin="5dp"
