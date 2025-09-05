@@ -19,10 +19,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
-    var userDao: UserDao? = null
+    private lateinit var userDao: UserDao
     fun authUser(login: String, pass: String, onResult: (Boolean) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
-            val user = userDao?.getUserByLogin(login)
+            val user = userDao.getUserByLogin(login)
             val success = user?.password == pass
             withContext(Dispatchers.Main) {
                 onResult(success)
@@ -36,8 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         val loginBtn = findViewById<Button>(R.id.enterBtn)
         val loginBox = findViewById<EditText>(R.id.loginTxtBox)
-        val userLogin = "anna"
-        val userPass = "Anna111$"
         val passWidget = findViewById<PassVisWidget>(R.id.pWid)
         val db = DataBaseProvider.getDB(this)
         userDao = db.userDao()
