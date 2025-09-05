@@ -1,6 +1,7 @@
 package com.example.androidcrossstitchcounter
 
 import User
+import UserDao
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
@@ -21,12 +22,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class RegActivity : AppCompatActivity() {
+    private lateinit var userDao: UserDao
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.reg_activity)
 
-        val db = Room.databaseBuilder(applicationContext, AppDataBase::class.java, "app_db").build()
-        val userDao = db.userDao()
+        val db = DataBaseProvider.getDB(this)
+        userDao = db.userDao()
 
         val registrBtn = findViewById<Button>(R.id.regBtnRegAct)
         val login = findViewById<EditText>(R.id.etxtLog)
