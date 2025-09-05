@@ -22,6 +22,7 @@ class ProjActivity : AppCompatActivity() {
 
         loginVal.setOnClickListener {
             val intent = Intent(this@ProjActivity, ProfileActivity::class.java)
+            intent.putExtra("LOGIN", login)
             startActivity(intent)
         }
 

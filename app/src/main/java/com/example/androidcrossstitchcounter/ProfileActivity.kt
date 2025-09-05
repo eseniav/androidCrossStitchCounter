@@ -1,18 +1,32 @@
 package com.example.androidcrossstitchcounter
 
+import User
+import UserDao
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ProfileActivity: AppCompatActivity()  {
+    private lateinit var userDao: UserDao
+    private lateinit var user: User
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_activity)
 
+        val login = intent.getStringExtra("LOGIN").toString()
         val avatar = findViewById<ImageView>(R.id.imgAvatar)
+        val db = DataBaseProvider.getDB(this)
+        userDao = db.userDao()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            user = userDao.getUserByLogin(login)!!
+        }
 
         avatar.setOnClickListener {
             Toast.makeText(this, "Изменение картинки", Toast.LENGTH_SHORT).show()
@@ -29,6 +43,7 @@ class ProfileActivity: AppCompatActivity()  {
 
         val logWidget = findViewById<ProfileFieldView>(R.id.logRow)
         logWidget.setLabel("Логин")
+        logWidget.setValue(user.login)
 
         val passWidget = findViewById<ProfileFieldView>(R.id.passRow)
         passWidget.setLabel("Пароль")
