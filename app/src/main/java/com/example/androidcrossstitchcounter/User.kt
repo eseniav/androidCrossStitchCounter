@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.Update
 import com.example.androidcrossstitchcounter.CalendarUtils
 import java.util.Calendar
 import java.util.Locale
@@ -54,6 +55,8 @@ interface UserDao {
     suspend fun getUserByLogin(login: String): User?
     @Query("SELECT * FROM users WHERE id = :id LIMIT 1" )
     suspend fun getUserById(id: String): User?
+    @Update
+    suspend fun updateUser(user: User)
 }
 
 @Database(entities = [User::class], version = 1)
