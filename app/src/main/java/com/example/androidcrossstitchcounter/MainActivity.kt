@@ -1,5 +1,6 @@
 package com.example.androidcrossstitchcounter
 
+import UserDao
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
@@ -12,8 +13,22 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var userDao: UserDao
+    fun authUser(login: String, pass: String, onResult: (Boolean) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val user = userDao.getUserByLogin(login)
+            val success = user?.password == pass
+            withContext(Dispatchers.Main) {
+                onResult(success)
+            }
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
@@ -21,22 +36,23 @@ class MainActivity : AppCompatActivity() {
 
         val loginBtn = findViewById<Button>(R.id.enterBtn)
         val loginBox = findViewById<EditText>(R.id.loginTxtBox)
-        val userLogin = "anna"
-        val userPass = "Anna111$"
         val passWidget = findViewById<PassVisWidget>(R.id.pWid)
+        val db = DataBaseProvider.getDB(this)
+        userDao = db.userDao()
 
         loginBtn.setOnClickListener {
             val userName = loginBox.text.toString()
-            val password = passWidget.getText()
-            // || password.toString() != userPass
-            if(userName != userLogin) {
-                Toast.makeText(this, "Проверьте правильность вводимых данных!", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            val password = passWidget.getText().toString()
+            authUser(userName, password) { success ->
+                if(success) {
+                    Toast.makeText(this, "Добро пожаловать, $userName!", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@MainActivity, ProjActivity::class.java)
+                    intent.putExtra("LOGIN", userName)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, "Проверьте правильность вводимых данных!", Toast.LENGTH_SHORT).show()
+                }
             }
-            Toast.makeText(this, "Добро пожаловать, $userName!", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this@MainActivity, ProjActivity::class.java)
-            intent.putExtra("LOGIN", userName)
-            startActivity(intent)
         }
 
         val regBtn = findViewById<Button>(R.id.regBtn)
