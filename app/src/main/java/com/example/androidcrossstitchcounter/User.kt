@@ -1,8 +1,11 @@
+import android.content.Context
 import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Entity
 import androidx.room.Insert
 import androidx.room.PrimaryKey
+import androidx.room.Query
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.androidcrossstitchcounter.CalendarUtils
 import java.util.Calendar
@@ -47,9 +50,24 @@ data class User(
 interface UserDao {
     @Insert
     suspend fun insertUser(user: User)
+    @Query("SELECT * FROM users WHERE login = :login LIMIT 1" )
+    suspend fun getUserByLogin(login: String): User?
+    @Query("SELECT * FROM users WHERE id = :id LIMIT 1" )
+    suspend fun getUserById(id: String): User?
 }
 
 @Database(entities = [User::class], version = 1)
 abstract class AppDataBase: RoomDatabase() {
     abstract fun userDao(): UserDao
+}
+
+object DataBaseProvider {
+    private var INSTANCE: AppDataBase? = null
+    fun getDB(context: Context): AppDataBase {
+        return INSTANCE ?: synchronized(this) {
+            val instance = Room.databaseBuilder(context.applicationContext, AppDataBase::class.java, "app_db").build()
+            INSTANCE = instance
+            instance
+        }
+    }
 }
