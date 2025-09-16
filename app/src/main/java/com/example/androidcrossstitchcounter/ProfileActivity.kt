@@ -60,6 +60,12 @@ class ProfileActivity: AppCompatActivity()  {
         val emailWidget = findViewById<ProfileFieldView>(R.id.emailRow)
         emailWidget.setLabel("Email")
         emailWidget.setValue(user.email)
+        emailWidget.onSaveValue = { newValue ->
+            user.email = newValue
+            CoroutineScope(Dispatchers.IO).launch {
+                userDao.updateUser(user)
+            }
+        }
 
         val birthDateWidget = findViewById<ProfileFieldView>(R.id.birthDateRow)
         birthDateWidget.setLabel("Дата рождения")
