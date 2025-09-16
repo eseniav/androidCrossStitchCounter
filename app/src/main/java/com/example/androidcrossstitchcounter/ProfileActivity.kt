@@ -56,6 +56,12 @@ class ProfileActivity: AppCompatActivity()  {
         phoneWidget.setLabel("Телефон")
         phoneWidget.setTxtWatcher(PhoneMaskWatcher())
         phoneWidget.setValue(user.phoneNumber)
+        phoneWidget.onSaveValue = { newValue ->
+            user.phoneNumber = newValue
+            CoroutineScope(Dispatchers.IO).launch {
+                userDao.updateUser(user)
+            }
+        }
 
         val emailWidget = findViewById<ProfileFieldView>(R.id.emailRow)
         emailWidget.setLabel("Email")
