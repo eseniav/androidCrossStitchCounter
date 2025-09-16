@@ -24,6 +24,7 @@ class ProjActivity : AppCompatActivity() {
             val intent = Intent(this@ProjActivity, ProfileActivity::class.java)
             intent.putExtra("LOGIN", login)
             startActivity(intent)
+            finish()
         }
 
         val projName = findViewById<TextView>(R.id.projName)
