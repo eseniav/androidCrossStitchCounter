@@ -15,18 +15,18 @@ import kotlinx.coroutines.launch
 class ProfileActivity: AppCompatActivity()  {
     private lateinit var userDao: UserDao
     private lateinit var user: User
+    private val app: App by lazy {
+        application as App
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_activity)
 
-        val login = intent.getStringExtra("LOGIN").toString()
+        user = app.user!!
         val avatar = findViewById<ImageView>(R.id.imgAvatar)
         val db = DataBaseProvider.getDB(this)
         userDao = db.userDao()
-
-        CoroutineScope(Dispatchers.IO).launch {
-            user = userDao.getUserByLogin(login)!!
-        }
 
         avatar.setOnClickListener {
             Toast.makeText(this, "Изменение картинки", Toast.LENGTH_SHORT).show()

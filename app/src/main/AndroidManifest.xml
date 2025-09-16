@@ -10,7 +10,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AndroidCrossStitchCounter">
+        android:theme="@style/Theme.AndroidCrossStitchCounter"
+        android:name=".App"
+        >
         <activity
             android:name=".ProjActivity"
             android:exported="false" />

@@ -12,18 +12,22 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class ProjActivity : AppCompatActivity() {
+    private val app: App by lazy {
+        application as App
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_proj)
 
-        val login = intent.getStringExtra("LOGIN")
+        val login = app.user!!.login
         val loginVal = findViewById<TextView>(R.id.logProj)
         loginVal.text = login
 
         loginVal.setOnClickListener {
             val intent = Intent(this@ProjActivity, ProfileActivity::class.java)
-            intent.putExtra("LOGIN", login)
             startActivity(intent)
+            finish()
         }
 
         val projName = findViewById<TextView>(R.id.projName)
