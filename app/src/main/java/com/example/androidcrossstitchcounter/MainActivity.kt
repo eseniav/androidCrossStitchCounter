@@ -21,6 +21,9 @@ import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
     private lateinit var userDao: UserDao
+    private val app: App by lazy {
+        application as App
+    }
     fun authUser(login: String, pass: String, onResult: (User?) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
             var user = userDao.getUserByLogin(login)
@@ -48,7 +51,6 @@ class MainActivity : AppCompatActivity() {
             val password = passWidget.getText().toString()
             authUser(userName, password) { user ->
                 if(user != null) {
-                    val app = application as App
                     app.user = user
                     Toast.makeText(this, "Добро пожаловать, ${app.user!!.login}!", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@MainActivity, ProjActivity::class.java)

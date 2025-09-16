@@ -12,11 +12,14 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class ProjActivity : AppCompatActivity() {
+    private val app: App by lazy {
+        application as App
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_proj)
 
-        val app = application as App
         val login = app.user!!.login
         val loginVal = findViewById<TextView>(R.id.logProj)
         loginVal.text = login
