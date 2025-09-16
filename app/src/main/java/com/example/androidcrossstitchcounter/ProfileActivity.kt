@@ -19,6 +19,16 @@ class ProfileActivity: AppCompatActivity()  {
         application as App
     }
 
+    private fun updateUserProp(propName: String, propValue: String) {
+        when(propName) {
+            "phoneNumber" -> user.phoneNumber = propValue
+            "email" -> user.email = propValue
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            userDao.updateUser(user)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_activity)
@@ -33,7 +43,7 @@ class ProfileActivity: AppCompatActivity()  {
         }
 
         val surnameWidget = findViewById<ProfileFieldView>(R.id.surnameRow)
-        surnameWidget.setValue("Иванова")
+        //surnameWidget.setValue()
 
         val nameWidget = findViewById<ProfileFieldView>(R.id.nameRow)
         nameWidget.setLabel("Имя")
@@ -55,9 +65,17 @@ class ProfileActivity: AppCompatActivity()  {
         val phoneWidget = findViewById<ProfileFieldView>(R.id.phoneRow)
         phoneWidget.setLabel("Телефон")
         phoneWidget.setTxtWatcher(PhoneMaskWatcher())
+        phoneWidget.setValue(user.phoneNumber)
+        phoneWidget.onSaveValue = { newValue ->
+            updateUserProp("phoneNumber", newValue)
+        }
 
         val emailWidget = findViewById<ProfileFieldView>(R.id.emailRow)
         emailWidget.setLabel("Email")
+        emailWidget.setValue(user.email)
+        emailWidget.onSaveValue = { newValue ->
+            updateUserProp("email", newValue)
+        }
 
         val birthDateWidget = findViewById<ProfileFieldView>(R.id.birthDateRow)
         birthDateWidget.setLabel("Дата рождения")

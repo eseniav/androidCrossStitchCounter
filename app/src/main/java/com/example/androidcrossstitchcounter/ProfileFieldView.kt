@@ -24,6 +24,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
     private val label: TextView
     private var valueText = ""
     private var onValueChangeListener: ((String) -> Unit)? = null
+    var onSaveValue: ((newValue: String) -> Unit)? = null
 
     init {
         orientation = HORIZONTAL
@@ -67,7 +68,6 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
             ) {
                 onValueChangeListener?.invoke(s.toString())
             }
-
         })
     }
 
@@ -80,6 +80,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
         imgCheck.setOnClickListener {
             valueText = getValue()
             setValue(valueText)
+            onSaveValue?.invoke(valueText)
             changeVisibility()
         }
         imgCancel.setOnClickListener {
