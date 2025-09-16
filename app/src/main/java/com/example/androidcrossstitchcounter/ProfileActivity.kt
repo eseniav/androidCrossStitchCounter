@@ -33,7 +33,7 @@ class ProfileActivity: AppCompatActivity()  {
         }
 
         val surnameWidget = findViewById<ProfileFieldView>(R.id.surnameRow)
-        surnameWidget.setValue("Иванова")
+        //surnameWidget.setValue()
 
         val nameWidget = findViewById<ProfileFieldView>(R.id.nameRow)
         nameWidget.setLabel("Имя")
@@ -55,9 +55,11 @@ class ProfileActivity: AppCompatActivity()  {
         val phoneWidget = findViewById<ProfileFieldView>(R.id.phoneRow)
         phoneWidget.setLabel("Телефон")
         phoneWidget.setTxtWatcher(PhoneMaskWatcher())
+        phoneWidget.setValue(user.phoneNumber)
 
         val emailWidget = findViewById<ProfileFieldView>(R.id.emailRow)
         emailWidget.setLabel("Email")
+        emailWidget.setValue(user.email)
 
         val birthDateWidget = findViewById<ProfileFieldView>(R.id.birthDateRow)
         birthDateWidget.setLabel("Дата рождения")
