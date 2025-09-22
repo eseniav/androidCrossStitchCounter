@@ -23,6 +23,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
     private val imgCancel: ImageView
     private val label: TextView
     private var valueText = ""
+    private val inputType: Int
     private var onValueChangeListener: ((String) -> Unit)? = null
     var onSaveValue: ((newValue: String) -> Unit)? = null
     var onEdit: ((isEdit: Boolean) -> Unit)? = null
@@ -42,7 +43,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ProfileFieldView, defStyleAttr, 0)
         val labelTxt = typedArray.getString(R.styleable.ProfileFieldView_label) ?: ""
         val valueTxt = typedArray.getString(R.styleable.ProfileFieldView_value) ?: ""
-        val inputType = typedArray.getInt(R.styleable.ProfileFieldView_inputType, InputType.TYPE_CLASS_TEXT)
+        inputType = typedArray.getInt(R.styleable.ProfileFieldView_inputType, InputType.TYPE_CLASS_TEXT)
         setLabel(labelTxt)
         setValue(valueTxt)
         setInputType(inputType)
@@ -82,7 +83,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
             valueText = getValue()
             onSaveValue?.invoke(valueText)
             if(profileEditText.error == null) {
-                setValue(valueText)
+                setValue(if(inputType == 129) "*******" else valueText)
                 changeVisibility()
                 onEdit?.invoke(false)
             }
