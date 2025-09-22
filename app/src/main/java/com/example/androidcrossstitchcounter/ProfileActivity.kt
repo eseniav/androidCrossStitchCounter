@@ -64,6 +64,7 @@ class ProfileActivity: AppCompatActivity()  {
         passWidget.setLabel("Пароль")
         passWidget.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
         passWidget.onSaveValue = fun(newValue) {
+            passWidget.clearError()
             if (!Validation.checkPassword(newValue)) {
                 passWidget.setError("Пароль должен соответствовать критериям сложности")
                 return
