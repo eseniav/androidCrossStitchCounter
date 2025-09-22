@@ -5,6 +5,7 @@ import UserDao
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -24,6 +25,7 @@ class ProfileActivity: AppCompatActivity()  {
         when(propName) {
             "phoneNumber" -> user.phoneNumber = propValue
             "email" -> user.email = propValue
+            "password" -> user.password = propValue
         }
         CoroutineScope(Dispatchers.IO).launch {
             userDao.updateUser(user)
@@ -39,6 +41,7 @@ class ProfileActivity: AppCompatActivity()  {
         val db = DataBaseProvider.getDB(this)
         userDao = db.userDao()
         var passRepeat = findViewById<LinearLayout>(R.id.passRepeat)
+        val repeatPassRow = findViewById<EditText>(R.id.repeatPassRow)
 
         avatar.setOnClickListener {
             Toast.makeText(this, "Изменение картинки", Toast.LENGTH_SHORT).show()
@@ -60,6 +63,18 @@ class ProfileActivity: AppCompatActivity()  {
         val passWidget = findViewById<ProfileFieldView>(R.id.passRow)
         passWidget.setLabel("Пароль")
         passWidget.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
+        passWidget.onSaveValue = fun(newValue) {
+            if (!Validation.checkPassword(newValue)) {
+                passWidget.setError("Пароль должен соответствовать критериям сложности")
+                return
+            }
+            if (!Validation.checkMatch(newValue, repeatPassRow.text.toString())) {
+                passWidget.setError("Пароли должны совпадать")
+                return
+            }
+            updateUserProp("password", newValue)
+            passRepeat.visibility = View.GONE
+        }
 
         passWidget.onEdit = { isEdit ->
             passRepeat.visibility = if(isEdit) View.VISIBLE else View.GONE
