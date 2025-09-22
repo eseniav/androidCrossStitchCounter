@@ -5,7 +5,9 @@ import UserDao
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.CoroutineScope
@@ -23,6 +25,7 @@ class ProfileActivity: AppCompatActivity()  {
         when(propName) {
             "phoneNumber" -> user.phoneNumber = propValue
             "email" -> user.email = propValue
+            "password" -> user.password = propValue
         }
         CoroutineScope(Dispatchers.IO).launch {
             userDao.updateUser(user)
@@ -37,6 +40,8 @@ class ProfileActivity: AppCompatActivity()  {
         val avatar = findViewById<ImageView>(R.id.imgAvatar)
         val db = DataBaseProvider.getDB(this)
         userDao = db.userDao()
+        var passRepeat = findViewById<LinearLayout>(R.id.passRepeat)
+        val repeatPassRow = findViewById<EditText>(R.id.repeatPassRow)
 
         avatar.setOnClickListener {
             Toast.makeText(this, "Изменение картинки", Toast.LENGTH_SHORT).show()
@@ -57,10 +62,24 @@ class ProfileActivity: AppCompatActivity()  {
 
         val passWidget = findViewById<ProfileFieldView>(R.id.passRow)
         passWidget.setLabel("Пароль")
+        passWidget.setValue(user.password)
         passWidget.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
+        passWidget.onSaveValue = fun(newValue) {
+            passWidget.clearError()
+            if (!Validation.checkPassword(newValue)) {
+                passWidget.setError("Пароль должен соответствовать критериям сложности")
+                return
+            }
+            if (!Validation.checkMatch(newValue, repeatPassRow.text.toString())) {
+                passWidget.setError("Пароли должны совпадать")
+                return
+            }
+            updateUserProp("password", newValue)
+        }
 
-        val repeatPassWidget = findViewById<ProfileFieldView>(R.id.repeatPassRow)
-        repeatPassWidget.setLabel("Повторите пароль")
+        passWidget.onEdit = { isEdit ->
+            passRepeat.visibility = if(isEdit) View.VISIBLE else View.GONE
+        }
 
         val phoneWidget = findViewById<ProfileFieldView>(R.id.phoneRow)
         phoneWidget.setLabel("Телефон")

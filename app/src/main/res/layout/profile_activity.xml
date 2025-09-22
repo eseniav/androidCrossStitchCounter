@@ -62,12 +62,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:inputType="129"/>
-            <com.example.androidcrossstitchcounter.ProfileFieldView
-                android:id="@+id/repeatPassRow"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                />
+                android:id="@+id/passRepeat"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Повторите\nпароль"
+                    style="@style/label"
+                    />
+                <EditText
+                    android:id="@+id/repeatPassRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
             <com.example.androidcrossstitchcounter.ProfileFieldView
                 android:id="@+id/phoneRow"
                 android:layout_width="match_parent"

@@ -23,8 +23,10 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
     private val imgCancel: ImageView
     private val label: TextView
     private var valueText = ""
+    private val inputType: Int
     private var onValueChangeListener: ((String) -> Unit)? = null
     var onSaveValue: ((newValue: String) -> Unit)? = null
+    var onEdit: ((isEdit: Boolean) -> Unit)? = null
 
     init {
         orientation = HORIZONTAL
@@ -41,7 +43,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ProfileFieldView, defStyleAttr, 0)
         val labelTxt = typedArray.getString(R.styleable.ProfileFieldView_label) ?: ""
         val valueTxt = typedArray.getString(R.styleable.ProfileFieldView_value) ?: ""
-        val inputType = typedArray.getInt(R.styleable.ProfileFieldView_inputType, InputType.TYPE_CLASS_TEXT)
+        inputType = typedArray.getInt(R.styleable.ProfileFieldView_inputType, InputType.TYPE_CLASS_TEXT)
         setLabel(labelTxt)
         setValue(valueTxt)
         setInputType(inputType)
@@ -73,19 +75,24 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
 
     fun setupListeners() {
         imgEdit.setOnClickListener {
-            //TODO При нажатии на редактирование пароля должно появляться поле Повторите пароль
             setValue(valueText)
             changeVisibility()
+            onEdit?.invoke(true)
         }
         imgCheck.setOnClickListener {
             valueText = getValue()
-            setValue(valueText)
             onSaveValue?.invoke(valueText)
+            if(profileEditText.error != null) {
+                return@setOnClickListener
+            }
+            setValue(valueText)
             changeVisibility()
+            onEdit?.invoke(false)
         }
         imgCancel.setOnClickListener {
             setValue(valueText)
             changeVisibility()
+            onEdit?.invoke(false)
         }
     }
 
@@ -104,7 +111,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
 
     fun setValue(s: String) {
         valueText = s
-        profileValue.text = s
+        profileValue.text = if(inputType == 129) "*******" else s
         profileEditText.setText(s)
     }
 
@@ -122,5 +129,13 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
 
     fun setTxtWatcher(watcher: TextWatcher) {
         profileEditText.addTextChangedListener(watcher)
+    }
+
+    fun setError(errorText: String) {
+        profileEditText.error = errorText
+    }
+
+    fun clearError() {
+        profileEditText.error = null
     }
 }
