@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.CoroutineScope
@@ -37,6 +38,7 @@ class ProfileActivity: AppCompatActivity()  {
         val avatar = findViewById<ImageView>(R.id.imgAvatar)
         val db = DataBaseProvider.getDB(this)
         userDao = db.userDao()
+        var passRepeat = findViewById<LinearLayout>(R.id.passRepeat)
 
         avatar.setOnClickListener {
             Toast.makeText(this, "Изменение картинки", Toast.LENGTH_SHORT).show()
@@ -59,8 +61,9 @@ class ProfileActivity: AppCompatActivity()  {
         passWidget.setLabel("Пароль")
         passWidget.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
 
-        val repeatPassWidget = findViewById<ProfileFieldView>(R.id.repeatPassRow)
-        repeatPassWidget.setLabel("Повторите пароль")
+        passWidget.onEdit = { isEdit ->
+            passRepeat.visibility = if(isEdit) View.VISIBLE else View.GONE
+        }
 
         val phoneWidget = findViewById<ProfileFieldView>(R.id.phoneRow)
         phoneWidget.setLabel("Телефон")
