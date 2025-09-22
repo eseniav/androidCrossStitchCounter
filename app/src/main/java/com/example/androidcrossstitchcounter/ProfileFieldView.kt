@@ -126,4 +126,8 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
     fun setTxtWatcher(watcher: TextWatcher) {
         profileEditText.addTextChangedListener(watcher)
     }
+
+    fun setError(errorText: String) {
+        profileEditText.error = errorText
+    }
 }
