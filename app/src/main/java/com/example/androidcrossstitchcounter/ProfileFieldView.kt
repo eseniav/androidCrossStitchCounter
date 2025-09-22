@@ -25,6 +25,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
     private var valueText = ""
     private var onValueChangeListener: ((String) -> Unit)? = null
     var onSaveValue: ((newValue: String) -> Unit)? = null
+    var onEdit: ((isEdit: Boolean) -> Unit)? = null
 
     init {
         orientation = HORIZONTAL
@@ -73,19 +74,21 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
 
     fun setupListeners() {
         imgEdit.setOnClickListener {
-            //TODO При нажатии на редактирование пароля должно появляться поле Повторите пароль
             setValue(valueText)
             changeVisibility()
+            onEdit?.invoke(true)
         }
         imgCheck.setOnClickListener {
             valueText = getValue()
             setValue(valueText)
             onSaveValue?.invoke(valueText)
             changeVisibility()
+            onEdit?.invoke(false)
         }
         imgCancel.setOnClickListener {
             setValue(valueText)
             changeVisibility()
+            onEdit?.invoke(false)
         }
     }
 
