@@ -73,7 +73,6 @@ class ProfileActivity: AppCompatActivity()  {
                 return
             }
             updateUserProp("password", newValue)
-            passRepeat.visibility = View.GONE
         }
 
         passWidget.onEdit = { isEdit ->
