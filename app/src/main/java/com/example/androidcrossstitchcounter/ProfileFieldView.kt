@@ -79,11 +79,13 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
             onEdit?.invoke(true)
         }
         imgCheck.setOnClickListener {
-            valueText = getValue()
-            setValue(valueText)
             onSaveValue?.invoke(valueText)
-            changeVisibility()
-            onEdit?.invoke(false)
+            if(profileEditText.error == null) {
+                valueText = getValue()
+                setValue(valueText)
+                changeVisibility()
+                onEdit?.invoke(false)
+            }
         }
         imgCancel.setOnClickListener {
             setValue(valueText)
