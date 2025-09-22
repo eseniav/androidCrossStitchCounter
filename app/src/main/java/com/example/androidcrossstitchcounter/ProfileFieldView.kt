@@ -83,7 +83,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
             valueText = getValue()
             onSaveValue?.invoke(valueText)
             if(profileEditText.error == null) {
-                setValue(if(inputType == 129) "*******" else valueText)
+                setValue(valueText)
                 changeVisibility()
                 onEdit?.invoke(false)
             }
@@ -110,7 +110,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
 
     fun setValue(s: String) {
         valueText = s
-        profileValue.text = s
+        profileValue.text = if(inputType == 129) "*******" else s
         profileEditText.setText(s)
     }
 

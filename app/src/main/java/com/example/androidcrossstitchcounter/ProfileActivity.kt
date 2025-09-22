@@ -62,6 +62,7 @@ class ProfileActivity: AppCompatActivity()  {
 
         val passWidget = findViewById<ProfileFieldView>(R.id.passRow)
         passWidget.setLabel("Пароль")
+        passWidget.setValue(user.password)
         passWidget.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
         passWidget.onSaveValue = fun(newValue) {
             passWidget.clearError()
