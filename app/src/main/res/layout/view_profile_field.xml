@@ -31,6 +31,16 @@
         android:visibility="gone"
         />
     <ImageView
+        android:id="@+id/visibilityToggle"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/eye_close"
+        android:contentDescription="Переключить видимость пароля"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_gravity="end|center_vertical"
+        />
+    <ImageView
         android:id="@+id/imageEdit"
         android:layout_width="20dp"
         android:layout_height="20dp"

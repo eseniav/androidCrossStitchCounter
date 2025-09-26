@@ -71,6 +71,26 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
                 onValueChangeListener?.invoke(s.toString())
             }
         })
+
+        val visToggle = findViewById<ImageView>(R.id.visibilityToggle)
+        var isVisible = false
+        visToggle.visibility = if(inputType == 129) View.VISIBLE else View.GONE
+
+        visToggle.setOnClickListener {
+            if (!isVisible) {
+                visToggle.setImageResource(R.drawable.eye_open)
+                profileEditText.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                profileValue.text = valueText
+            } else {
+                visToggle.setImageResource(R.drawable.eye_close)
+                profileEditText.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                profileValue.text = "*******"
+            }
+            isVisible = !isVisible
+            profileEditText.setSelection(profileEditText.text.length)
+        }
     }
 
     fun setupListeners() {
