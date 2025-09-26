@@ -1,7 +1,9 @@
 package com.example.androidcrossstitchcounter
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.res.TypedArray
+import android.icu.util.Calendar
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
@@ -76,6 +78,8 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
         })
 
         handlePassVisibility()
+        if(inputType == 20)
+            setCalendar()
     }
 
     fun setupListeners() {
@@ -160,6 +164,23 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
             }
             isVisible = !isVisible
             profileEditText.setSelection(profileEditText.text.length)
+        }
+    }
+
+    fun setCalendar() {
+        profileEditText.isFocusable = false
+        profileEditText.isClickable = true
+        profileEditText.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerdialog = DatePickerDialog(context, {_, selectedYear, selectedMonth, selectedDay ->
+                val formatedDate = String.format("%02d.%02d.%04d", selectedDay, selectedMonth + 1, selectedYear)
+                profileEditText.setText(formatedDate)
+            }, year, month, day)
+            datePickerdialog.show()
         }
     }
 }
