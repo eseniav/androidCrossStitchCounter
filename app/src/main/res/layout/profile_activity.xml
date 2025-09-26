@@ -93,7 +93,9 @@
             <com.example.androidcrossstitchcounter.ProfileFieldView
                 android:id="@+id/birthDateRow"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                app:inputType="20"
+                />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
