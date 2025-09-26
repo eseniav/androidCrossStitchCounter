@@ -27,4 +27,7 @@
     <string name="ageLine"><u>Возраст:</u></string>
     <string name="profile">Профиль</string>
     <string name="edit">Редактировать</string>
+    <integer name="passwordType">129</integer>
+    <integer name="emailType">33</integer>
+    <integer name="dateType">20</integer>
 </resources>
