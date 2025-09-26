@@ -27,6 +27,8 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
     private var onValueChangeListener: ((String) -> Unit)? = null
     var onSaveValue: ((newValue: String) -> Unit)? = null
     var onEdit: ((isEdit: Boolean) -> Unit)? = null
+    var visToggle: ImageView
+    var isVisible = false
 
     init {
         orientation = HORIZONTAL
@@ -39,6 +41,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
         profileEditText = findViewById<EditText>(R.id.edit)
         imgCancel = findViewById<ImageView>(R.id.imageCancel)
         label = findViewById<TextView>(R.id.label)
+        visToggle = findViewById<ImageView>(R.id.visibilityToggle)
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ProfileFieldView, defStyleAttr, 0)
         val labelTxt = typedArray.getString(R.styleable.ProfileFieldView_label) ?: ""
@@ -71,6 +74,8 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
                 onValueChangeListener?.invoke(s.toString())
             }
         })
+
+        handlePassVisibility()
     }
 
     fun setupListeners() {
@@ -137,5 +142,24 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
 
     fun clearError() {
         profileEditText.error = null
+    }
+
+    fun handlePassVisibility() {
+        visToggle.visibility = if(inputType == 129) View.VISIBLE else View.GONE
+        visToggle.setOnClickListener {
+            if (!isVisible) {
+                visToggle.setImageResource(R.drawable.eye_open)
+                profileEditText.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                profileValue.text = valueText
+            } else {
+                visToggle.setImageResource(R.drawable.eye_close)
+                profileEditText.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                profileValue.text = "*******"
+            }
+            isVisible = !isVisible
+            profileEditText.setSelection(profileEditText.text.length)
+        }
     }
 }
