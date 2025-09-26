@@ -180,6 +180,19 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
                 val formatedDate = String.format("%02d.%02d.%04d", selectedDay, selectedMonth + 1, selectedYear)
                 profileEditText.setText(formatedDate)
             }, year, month, day)
+
+            val minCalendar = Calendar.getInstance()
+            minCalendar.set(Calendar.YEAR, year - 120)
+            minCalendar.set(Calendar.MONTH, month)
+            minCalendar.set(Calendar.DAY_OF_MONTH, day)
+            datePickerdialog.datePicker.minDate = minCalendar.timeInMillis
+
+            val maxCalendar = Calendar.getInstance()
+            maxCalendar.set(Calendar.YEAR, year - 5)
+            maxCalendar.set(Calendar.MONTH, month)
+            maxCalendar.set(Calendar.DAY_OF_MONTH, day)
+            datePickerdialog.datePicker.maxDate = maxCalendar.timeInMillis
+
             datePickerdialog.show()
         }
     }
