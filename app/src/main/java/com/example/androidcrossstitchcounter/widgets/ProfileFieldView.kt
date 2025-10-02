@@ -1,8 +1,7 @@
-package com.example.androidcrossstitchcounter
+package com.example.androidcrossstitchcounter.widgets
 
 import android.app.DatePickerDialog
 import android.content.Context
-import android.content.res.TypedArray
 import android.icu.util.Calendar
 import android.text.Editable
 import android.text.InputType
@@ -11,11 +10,10 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.transition.Visibility
+import com.example.androidcrossstitchcounter.R
 
 class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
     private var profileValue: TextView
@@ -55,7 +53,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
         typedArray.recycle()
 
         setupListeners()
-        profileEditText.addTextChangedListener(object: TextWatcher{
+        profileEditText.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
 
@@ -149,7 +147,7 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
     }
 
     fun handlePassVisibility() {
-        visToggle.visibility = if(inputType == 129) View.VISIBLE else View.GONE
+        visToggle.visibility = if(inputType == 129) VISIBLE else GONE
         visToggle.setOnClickListener {
             if (!isVisible) {
                 visToggle.setImageResource(R.drawable.eye_open)
@@ -176,10 +174,16 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
             val month = calendar.get(Calendar.MONTH)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-            val datePickerdialog = DatePickerDialog(context, {_, selectedYear, selectedMonth, selectedDay ->
-                val formatedDate = String.format("%02d.%02d.%04d", selectedDay, selectedMonth + 1, selectedYear)
-                profileEditText.setText(formatedDate)
-            }, year, month, day)
+            val datePickerdialog =
+                DatePickerDialog(context, { _, selectedYear, selectedMonth, selectedDay ->
+                    val formatedDate = String.format(
+                        "%02d.%02d.%04d",
+                        selectedDay,
+                        selectedMonth + 1,
+                        selectedYear
+                    )
+                    profileEditText.setText(formatedDate)
+                }, year, month, day)
 
             val minCalendar = Calendar.getInstance()
             minCalendar.set(Calendar.YEAR, year - 120)

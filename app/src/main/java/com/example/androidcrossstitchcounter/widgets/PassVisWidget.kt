@@ -1,4 +1,4 @@
-package com.example.androidcrossstitchcounter
+package com.example.androidcrossstitchcounter.widgets
 
 import android.content.Context
 import android.text.Editable
@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
+import com.example.androidcrossstitchcounter.R
 
 class PassVisWidget @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context, attrs, defStyleAttr) {
     private val visToggle: ImageView
