@@ -1,7 +1,8 @@
-package com.example.androidcrossstitchcounter
+package com.example.androidcrossstitchcounter.watchers
 
 import android.text.Editable
 import android.text.TextWatcher
+import kotlin.text.iterator
 
 class PhoneMaskWatcher: TextWatcher {
     private val mask = "(###) ###-##-##"

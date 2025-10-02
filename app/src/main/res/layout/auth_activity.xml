@@ -33,7 +33,7 @@
         android:layout_marginTop="50dp"
         style="@style/label"
         />
-    <com.example.androidcrossstitchcounter.PassVisWidget
+    <com.example.androidcrossstitchcounter.widgets.PassVisWidget
         android:id="@+id/pWid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

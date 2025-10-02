@@ -1,15 +1,14 @@
-package com.example.androidcrossstitchcounter
+package com.example.androidcrossstitchcounter.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TableLayout
-import android.widget.TableRow
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.example.androidcrossstitchcounter.App
+import com.example.androidcrossstitchcounter.R
+import com.example.androidcrossstitchcounter.services.Animation
 
 class ProjActivity : AppCompatActivity() {
     private val app: App by lazy {
@@ -58,19 +57,19 @@ class ProjActivity : AppCompatActivity() {
         val presentTxt = findViewById<TextView>(R.id.present)
         val presentInner = findViewById<TableLayout>(R.id.currentProj)
         presentTxt.setOnClickListener {
-            Animation.hiding(presentInner)
+            Animation.Companion.hiding(presentInner)
         }
 
         val futureTxt = findViewById<TextView>(R.id.future)
         val futureInner = findViewById<TableLayout>(R.id.projTable)
         futureTxt.setOnClickListener {
-            Animation.hiding(futureInner)
+            Animation.Companion.hiding(futureInner)
         }
 
         val finishTxt = findViewById<TextView>(R.id.finish)
         val finishInner = findViewById<TableLayout>(R.id.finishProjTable)
         finishTxt.setOnClickListener {
-            Animation.hiding(finishInner)
+            Animation.Companion.hiding(finishInner)
         }
 //        val projects = listOf(
 //            listOf("Пума", "102x302", "12.03.2025", "05.05.2025", "2500"),

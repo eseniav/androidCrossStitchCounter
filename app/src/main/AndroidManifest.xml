@@ -14,13 +14,13 @@
         android:name=".App"
         >
         <activity
-            android:name=".ProjActivity"
+            android:name=".activities.ProjActivity"
             android:exported="false" />
         <activity
-            android:name=".RegActivity"
+            android:name=".activities.RegActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,13 +29,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProfileActivity"
+            android:name=".activities.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".ProjDiaryActivity"
+            android:name=".activities.ProjDiaryActivity"
             android:exported="false" />
         <activity
-            android:name=".AddProjActivity"
+            android:name=".activities.AddProjActivity"
             android:exported="false" />
     </application>
 </manifest>

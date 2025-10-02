@@ -40,24 +40,24 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
-            <com.example.androidcrossstitchcounter.ProfileFieldView
+            <com.example.androidcrossstitchcounter.widgets.ProfileFieldView
                 android:id="@+id/surnameRow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:label="@string/Lname"/>
-            <com.example.androidcrossstitchcounter.ProfileFieldView
+            <com.example.androidcrossstitchcounter.widgets.ProfileFieldView
                 android:id="@+id/nameRow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <com.example.androidcrossstitchcounter.ProfileFieldView
+            <com.example.androidcrossstitchcounter.widgets.ProfileFieldView
                 android:id="@+id/patrRow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <com.example.androidcrossstitchcounter.ProfileFieldView
+            <com.example.androidcrossstitchcounter.widgets.ProfileFieldView
                 android:id="@+id/logRow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <com.example.androidcrossstitchcounter.ProfileFieldView
+            <com.example.androidcrossstitchcounter.widgets.ProfileFieldView
                 android:id="@+id/passRow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,17 +80,17 @@
                     android:layout_height="wrap_content"
                     />
             </LinearLayout>
-            <com.example.androidcrossstitchcounter.ProfileFieldView
+            <com.example.androidcrossstitchcounter.widgets.ProfileFieldView
                 android:id="@+id/phoneRow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:inputType="4"/>
-            <com.example.androidcrossstitchcounter.ProfileFieldView
+            <com.example.androidcrossstitchcounter.widgets.ProfileFieldView
                 android:id="@+id/emailRow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:inputType="@integer/emailType"/>
-            <com.example.androidcrossstitchcounter.ProfileFieldView
+            <com.example.androidcrossstitchcounter.widgets.ProfileFieldView
                 android:id="@+id/birthDateRow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

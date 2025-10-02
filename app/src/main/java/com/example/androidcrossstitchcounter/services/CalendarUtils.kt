@@ -1,4 +1,4 @@
-package com.example.androidcrossstitchcounter
+package com.example.androidcrossstitchcounter.services
 
 import java.text.SimpleDateFormat
 import java.util.Calendar

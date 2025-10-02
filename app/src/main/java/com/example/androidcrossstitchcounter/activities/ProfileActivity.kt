@@ -1,4 +1,4 @@
-package com.example.androidcrossstitchcounter
+package com.example.androidcrossstitchcounter.activities
 
 import User
 import UserDao
@@ -10,6 +10,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.androidcrossstitchcounter.App
+import com.example.androidcrossstitchcounter.R
+import com.example.androidcrossstitchcounter.services.Validation
+import com.example.androidcrossstitchcounter.watchers.PhoneMaskWatcher
+import com.example.androidcrossstitchcounter.widgets.ProfileFieldView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -66,11 +71,11 @@ class ProfileActivity: AppCompatActivity()  {
         passWidget.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
         passWidget.onSaveValue = fun(newValue) {
             passWidget.clearError()
-            if (!Validation.checkPassword(newValue)) {
+            if (!Validation.Companion.checkPassword(newValue)) {
                 passWidget.setError("Пароль должен соответствовать критериям сложности")
                 return
             }
-            if (!Validation.checkMatch(newValue, repeatPassRow.text.toString())) {
+            if (!Validation.Companion.checkMatch(newValue, repeatPassRow.text.toString())) {
                 passWidget.setError("Пароли должны совпадать")
                 return
             }
