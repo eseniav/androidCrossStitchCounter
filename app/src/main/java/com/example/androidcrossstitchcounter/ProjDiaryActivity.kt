@@ -8,6 +8,7 @@ import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.androidcrossstitchcounter.services.Animation
 
 class ProjDiaryActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -8,10 +8,9 @@ import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.Update
-import com.example.androidcrossstitchcounter.CalendarUtils
+import com.example.androidcrossstitchcounter.services.CalendarUtils
+import com.example.androidcrossstitchcounter.services.Validation
 import java.util.Calendar
-import java.util.Locale
-import java.text.SimpleDateFormat
 
 @Entity(tableName = "users")
 data class User(

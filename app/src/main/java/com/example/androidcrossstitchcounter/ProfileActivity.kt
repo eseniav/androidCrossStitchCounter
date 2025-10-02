@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.androidcrossstitchcounter.services.Validation
 import com.example.androidcrossstitchcounter.widgets.ProfileFieldView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

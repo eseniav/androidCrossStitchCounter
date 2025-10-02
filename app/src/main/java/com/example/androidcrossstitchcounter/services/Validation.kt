@@ -1,6 +1,6 @@
+package com.example.androidcrossstitchcounter.services
+
 import java.util.Calendar
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class Validation {
     companion object {
