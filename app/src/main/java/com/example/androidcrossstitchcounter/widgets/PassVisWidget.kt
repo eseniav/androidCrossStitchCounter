@@ -9,37 +9,31 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
 import com.example.androidcrossstitchcounter.R
+import com.example.androidcrossstitchcounter.databinding.PassVisibilityBinding
 
 class PassVisWidget @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context, attrs, defStyleAttr) {
-    private val visToggle: ImageView
-    private val passEdit: EditText
-
+    private val binding = PassVisibilityBinding.inflate(LayoutInflater.from(context), this, true)
     var isVisible = false
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.pass_visibility, this, true)
-
-        visToggle = findViewById<ImageView>(R.id.visibilityToggle)
-        passEdit = findViewById<EditText>(R.id.passEditTxt)
-
-        visToggle.setOnClickListener {
+        binding.visibilityToggle.setOnClickListener {
             if (!isVisible) {
-                visToggle.setImageResource(R.drawable.eye_open)
-                passEdit.inputType =
+                binding.visibilityToggle.setImageResource(R.drawable.eye_open)
+                binding.passEditTxt.inputType =
                     InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
             } else {
-                visToggle.setImageResource(R.drawable.eye_close)
-                passEdit.inputType =
+                binding.visibilityToggle.setImageResource(R.drawable.eye_close)
+                binding.passEditTxt.inputType =
                     InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
             }
             isVisible = !isVisible
-            passEdit.setSelection(passEdit.text.length)
+            binding.passEditTxt.setSelection(binding.passEditTxt.text.length)
         }
     }
 
-    fun getText(): Editable? = passEdit.text
+    fun getText(): Editable? = binding.passEditTxt.text
 
     fun setText(text: CharSequence) {
-        passEdit.setText(text)
+        binding.passEditTxt.setText(text)
     }
 }
