@@ -2,6 +2,7 @@ package com.example.androidcrossstitchcounter.activities
 
 import User
 import UserDao
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -30,6 +31,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    fun handleRememberMe(id: Int) {
+        val sharedPreferences = getSharedPreferences("app_data", MODE_PRIVATE)
+        sharedPreferences.edit().apply {
+            if(binding.rememberMe.isChecked) {
+                putInt("user_id", id)
+            } else {
+                remove("user_id")
+            }
+            apply()
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
@@ -45,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             authUser(userName, password) { user ->
                 if(user != null) {
                     app.user = user
+                    handleRememberMe(user.id)
                     Toast.makeText(this, "Добро пожаловать, ${app.user!!.login}!", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@MainActivity, ProjActivity::class.java)
                     startActivity(intent)
