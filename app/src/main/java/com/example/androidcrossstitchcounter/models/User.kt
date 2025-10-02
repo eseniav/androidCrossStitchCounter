@@ -53,7 +53,7 @@ interface UserDao {
     @Query("SELECT * FROM users WHERE login = :login LIMIT 1" )
     suspend fun getUserByLogin(login: String): User?
     @Query("SELECT * FROM users WHERE id = :id LIMIT 1" )
-    suspend fun getUserById(id: String): User?
+    suspend fun getUserById(id: Int): User?
     @Update
     suspend fun updateUser(user: User)
 }
