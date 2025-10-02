@@ -1,13 +1,13 @@
-package com.example.androidcrossstitchcounter
+package com.example.androidcrossstitchcounter.activities
 
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.services.Animation
 
 class ProjDiaryActivity: AppCompatActivity() {
@@ -18,13 +18,13 @@ class ProjDiaryActivity: AppCompatActivity() {
         val aboutProjLayout = findViewById<ConstraintLayout>(R.id.innerLayout)
         val aboutProjText = findViewById<TextView>(R.id.aboutProj)
         aboutProjText.setOnClickListener {
-            Animation.hiding(aboutProjLayout)
+            Animation.Companion.hiding(aboutProjLayout)
         }
 
         val statisticsInnerL = findViewById<ConstraintLayout>(R.id.statisticsInnerL)
         val statistics = findViewById<TextView>(R.id.statistics)
         statistics.setOnClickListener {
-            Animation.hiding(statisticsInnerL)
+            Animation.Companion.hiding(statisticsInnerL)
         }
 
         val addRow = findViewById<TableRow>(R.id.addRow)

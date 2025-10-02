@@ -1,4 +1,4 @@
-package com.example.androidcrossstitchcounter
+package com.example.androidcrossstitchcounter.activities
 
 import android.os.Bundle
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.RadioButton
 import android.widget.TableRow
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.androidcrossstitchcounter.R
 
 class AddProjActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

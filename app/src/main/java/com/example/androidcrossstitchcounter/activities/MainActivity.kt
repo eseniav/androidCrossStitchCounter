@@ -1,19 +1,15 @@
-package com.example.androidcrossstitchcounter
+package com.example.androidcrossstitchcounter.activities
 
 import User
 import UserDao
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.example.androidcrossstitchcounter.App
+import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.widgets.PassVisWidget
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

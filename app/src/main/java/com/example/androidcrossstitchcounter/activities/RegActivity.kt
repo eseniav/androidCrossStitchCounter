@@ -1,4 +1,4 @@
-package com.example.androidcrossstitchcounter
+package com.example.androidcrossstitchcounter.activities
 
 import User
 import UserDao
@@ -9,14 +9,10 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
 import android.widget.Button
-import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.room.Room
+import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.watchers.PhoneMaskWatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,7 +36,7 @@ class RegActivity : AppCompatActivity() {
 
         phone.addTextChangedListener(PhoneMaskWatcher())
 
-        phone.addTextChangedListener(object: TextWatcher{
+        phone.addTextChangedListener(object: TextWatcher {
             private val phonePattern = Regex("""^(\+7|7|8)?[\s\-]?\(?[0-9]{3}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$""")
             fun checkPhone(input: String) = phonePattern.matches(input)
             override fun afterTextChanged(s: Editable?) {
@@ -66,10 +62,16 @@ class RegActivity : AppCompatActivity() {
             val month = calendar.get(Calendar.MONTH)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-            val datePickerdialog = DatePickerDialog(this, {_, selectedYear, selectedMonth, selectedDay ->
-                val formatedDate = String.format("%02d.%02d.%04d", selectedDay, selectedMonth + 1, selectedYear)
-                date.setText(formatedDate)
-            }, year, month, day)
+            val datePickerdialog =
+                DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
+                    val formatedDate = String.format(
+                        "%02d.%02d.%04d",
+                        selectedDay,
+                        selectedMonth + 1,
+                        selectedYear
+                    )
+                    date.setText(formatedDate)
+                }, year, month, day)
             datePickerdialog.show()
         }
 
