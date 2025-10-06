@@ -22,6 +22,14 @@ import kotlinx.coroutines.withContext
 class MainActivity : AppCompatActivity() {
     private  lateinit var binding: MainActivityBinding
     private lateinit var userDao: UserDao
+    private val controls by lazy {
+        listOf(
+            binding.projectList,
+            binding.profile,
+            binding.settings,
+            binding.logout
+        )
+    }
     private val proj = ProjFragment()
     private val profile = ProfileFragment()
     private val settings = SettingsFragment()
@@ -76,12 +84,20 @@ class MainActivity : AppCompatActivity() {
 
         handleAuth()
 
+        fun resetColor() {
+            controls.forEach {
+                val color = ContextCompat.getColor(this, R.color.white)
+                it.setColorFilter(color)
+            }
+        }
+
         fun setColor(element: ImageView) {
             val color = ContextCompat.getColor(this, R.color.dark_plum)
             element.setColorFilter(color)
         }
 
         binding.projectList.setOnClickListener {
+            resetColor()
             setColor(binding.projectList)
             supportFragmentManager
                 .beginTransaction()
@@ -89,6 +105,7 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
         binding.profile.setOnClickListener {
+            resetColor()
             setColor(binding.profile)
             supportFragmentManager
                 .beginTransaction()
@@ -96,6 +113,7 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
         binding.settings.setOnClickListener {
+            resetColor()
             setColor(binding.settings)
             supportFragmentManager
                 .beginTransaction()
@@ -103,6 +121,7 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
         binding.logout.setOnClickListener {
+            resetColor()
             setColor(binding.logout)
             redirect("Auth")
         }
