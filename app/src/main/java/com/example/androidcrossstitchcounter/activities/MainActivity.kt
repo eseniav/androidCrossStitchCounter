@@ -2,20 +2,38 @@ package com.example.androidcrossstitchcounter.activities
 
 import User
 import UserDao
+import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.androidcrossstitchcounter.App
+import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.databinding.MainActivityBinding
+import com.example.androidcrossstitchcounter.fragments.ProfileFragment
+import com.example.androidcrossstitchcounter.fragments.ProjFragment
+import com.example.androidcrossstitchcounter.fragments.SettingsFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
-    private  lateinit var binding: MainActivityBinding
+    lateinit var binding: MainActivityBinding
     private lateinit var userDao: UserDao
+    private val controls by lazy {
+        listOf(
+            binding.projectList,
+            binding.profile,
+            binding.settings,
+            binding.logout
+        )
+    }
+    private val proj = ProjFragment()
+    private val profile = ProfileFragment()
+    private val settings = SettingsFragment()
     private val app: App by lazy {
         application as App
     }
@@ -45,11 +63,32 @@ class MainActivity : AppCompatActivity() {
             checkUser(userId) { user ->
               if(user != null) {
                   app.user = user
-                  redirect("Proj")
+                  toggleFragment(binding.projectList, proj)
+
               } else
                   redirect("Auth")
             }
         }
+    }
+    fun resetColor() {
+        controls.forEach {
+            val color = ContextCompat.getColor(this, R.color.white)
+            it.setColorFilter(color)
+        }
+    }
+
+    fun setColor(element: ImageView) {
+        val color = ContextCompat.getColor(this, R.color.dark_plum)
+        element.setColorFilter(color)
+    }
+
+    fun toggleFragment(element: ImageView, fragment: androidx.fragment.app.Fragment) {
+        resetColor()
+        setColor(element)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.frame, fragment)
+            .commit()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,5 +101,20 @@ class MainActivity : AppCompatActivity() {
         userDao = db.userDao()
 
         handleAuth()
+
+        binding.projectList.setOnClickListener {
+            toggleFragment(binding.projectList, proj)
+        }
+        binding.profile.setOnClickListener {
+            toggleFragment(binding.profile, profile)
+        }
+        binding.settings.setOnClickListener {
+            toggleFragment(binding.settings, settings)
+        }
+        binding.logout.setOnClickListener {
+            resetColor()
+            setColor(binding.logout)
+            redirect("Auth")
+        }
     }
 }
