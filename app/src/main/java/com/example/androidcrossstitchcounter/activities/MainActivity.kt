@@ -2,6 +2,7 @@ package com.example.androidcrossstitchcounter.activities
 
 import User
 import UserDao
+import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
@@ -72,6 +73,26 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    fun resetColor() {
+        controls.forEach {
+            val color = ContextCompat.getColor(this, R.color.white)
+            it.setColorFilter(color)
+        }
+    }
+
+    fun setColor(element: ImageView) {
+        val color = ContextCompat.getColor(this, R.color.dark_plum)
+        element.setColorFilter(color)
+    }
+
+    fun toggleFragment(element: ImageView, fragment: androidx.fragment.app.Fragment) {
+        resetColor()
+        setColor(element)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.frame, fragment)
+            .commit()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,41 +105,14 @@ class MainActivity : AppCompatActivity() {
 
         handleAuth()
 
-        fun resetColor() {
-            controls.forEach {
-                val color = ContextCompat.getColor(this, R.color.white)
-                it.setColorFilter(color)
-            }
-        }
-
-        fun setColor(element: ImageView) {
-            val color = ContextCompat.getColor(this, R.color.dark_plum)
-            element.setColorFilter(color)
-        }
-
         binding.projectList.setOnClickListener {
-            resetColor()
-            setColor(binding.projectList)
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.frame, proj)
-                .commit()
+            toggleFragment(binding.projectList, proj)
         }
         binding.profile.setOnClickListener {
-            resetColor()
-            setColor(binding.profile)
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.frame, profile)
-                .commit()
+            toggleFragment(binding.profile, profile)
         }
         binding.settings.setOnClickListener {
-            resetColor()
-            setColor(binding.settings)
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.frame, settings)
-                .commit()
+            toggleFragment(binding.settings, settings)
         }
         binding.logout.setOnClickListener {
             resetColor()
