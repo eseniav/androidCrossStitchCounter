@@ -30,7 +30,7 @@ class RegActivity : AppCompatActivity() {
         setContentView(binding.root)
         val db = DataBaseProvider.getDB(this)
         userDao = db.userDao()
-                binding.etxtPhone.addTextChangedListener(PhoneMaskWatcher())
+        binding.etxtPhone.addTextChangedListener(PhoneMaskWatcher())
 
         binding.etxtPhone.addTextChangedListener(object: TextWatcher {
             private val phonePattern = Regex("""^(\+7|7|8)?[\s\-]?\(?[0-9]{3}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$""")
