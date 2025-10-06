@@ -4,8 +4,10 @@ import User
 import UserDao
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.databinding.MainActivityBinding
@@ -74,25 +76,34 @@ class MainActivity : AppCompatActivity() {
 
         handleAuth()
 
+        fun setColor(element: ImageView) {
+            val color = ContextCompat.getColor(this, R.color.dark_plum)
+            element.setColorFilter(color)
+        }
+
         binding.projectList.setOnClickListener {
+            setColor(binding.projectList)
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.frame, proj)
                 .commit()
         }
         binding.profile.setOnClickListener {
+            setColor(binding.profile)
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.frame, profile)
                 .commit()
         }
         binding.settings.setOnClickListener {
+            setColor(binding.settings)
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.frame, settings)
                 .commit()
         }
         binding.logout.setOnClickListener {
+            setColor(binding.logout)
             redirect("Auth")
         }
     }
