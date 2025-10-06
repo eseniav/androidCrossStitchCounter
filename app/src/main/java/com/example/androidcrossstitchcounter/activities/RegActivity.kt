@@ -8,11 +8,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidcrossstitchcounter.R
+import com.example.androidcrossstitchcounter.databinding.RegActivityBinding
 import com.example.androidcrossstitchcounter.watchers.PhoneMaskWatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,31 +20,27 @@ import kotlinx.coroutines.launch
 
 class RegActivity : AppCompatActivity() {
     private lateinit var userDao: UserDao
+    private  lateinit var binding: RegActivityBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.reg_activity)
 
+        binding = RegActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val db = DataBaseProvider.getDB(this)
         userDao = db.userDao()
+        binding.etxtPhone.addTextChangedListener(PhoneMaskWatcher())
 
-        val registrBtn = findViewById<Button>(R.id.regBtnRegAct)
-        val login = findViewById<EditText>(R.id.etxtLog)
-        val password = findViewById<EditText>(R.id.etxtPass)
-        val repeatPass = findViewById<EditText>(R.id.etxtPassRep)
-        val email = findViewById<EditText>(R.id.etxtEmail)
-        val phone = findViewById<EditText>(R.id.etxtPhone)
-
-        phone.addTextChangedListener(PhoneMaskWatcher())
-
-        phone.addTextChangedListener(object: TextWatcher {
+        binding.etxtPhone.addTextChangedListener(object: TextWatcher {
             private val phonePattern = Regex("""^(\+7|7|8)?[\s\-]?\(?[0-9]{3}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$""")
             fun checkPhone(input: String) = phonePattern.matches(input)
             override fun afterTextChanged(s: Editable?) {
                 val input = s.toString()
                 if(!checkPhone(input)) {
-                    phone.error = "Проверьте правильность вводимых данных!"
+                    binding.etxtPhone.error = "Проверьте правильность вводимых данных!"
                 } else {
-                    phone.error = null
+                    binding.etxtPhone.error = null
                 }
             }
 
@@ -75,41 +71,41 @@ class RegActivity : AppCompatActivity() {
             datePickerdialog.show()
         }
 
-        registrBtn.setOnClickListener {
+        binding.regBtnRegAct.setOnClickListener {
             var isValid = true
 
-            val loginText = login.text.toString()
+            val loginText = binding.etxtLog.text.toString()
             if(loginText.isBlank()) {
                 isValid = false
-                login.error = "Поле Логин должно быть заполнено!"
+                binding.etxtLog.error = "Поле Логин должно быть заполнено!"
             } else if (loginText.length < 3 || loginText.length > 30) {
                 isValid = false
-                login.error = "Логин должен быть от 3 до 30 символов!"
+                binding.etxtLog.error = "Логин должен быть от 3 до 30 символов!"
             } else if (loginText.any { it.isWhitespace() }) {
                 isValid = false
-                login.error = "Логин не должен содержать пробелов!"
+                binding.etxtLog.error = "Логин не должен содержать пробелов!"
             }
 
-            val passwordText = password.text.toString()
+            val passwordText = binding.etxtPass.text.toString()
             val passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,30}\$"
             if(passwordText.isBlank()) {
                 isValid = false
-                password.error = "Поле Пароль должно быть заполнено!"
+                binding.etxtPass.error = "Поле Пароль должно быть заполнено!"
             } else if (!passwordText.matches(passwordPattern.toRegex())) {
                 isValid = false
-                password.error = "Пароль должен быть без пробелов и содержать от 8 до 30 символов, цифру, буквы в обоих регистрах и спецсимвол!"
-            } else if (repeatPass.text.toString() != passwordText) {
+                binding.etxtPass.error = "Пароль должен быть без пробелов и содержать от 8 до 30 символов, цифру, буквы в обоих регистрах и спецсимвол!"
+            } else if (binding.etxtPassRep.text.toString() != passwordText) {
                 isValid = false
-                repeatPass.error = "Пароли должны совпадать!"
+                binding.etxtPassRep.error = "Пароли должны совпадать!"
             }
 
-            val emailText = email.text.toString()
+            val emailText = binding.etxtEmail.text.toString()
             if(emailText.isBlank()) {
                 isValid = false
-                email.error = "Поле Email должно быть заполнено!"
+                binding.etxtEmail.error = "Поле Email должно быть заполнено!"
             } else if (!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
                 isValid = false
-                email.error = "Проверьте правильность заполнения поля!"
+                binding.etxtEmail.error = "Проверьте правильность заполнения поля!"
             }
 
             if(isValid) {
