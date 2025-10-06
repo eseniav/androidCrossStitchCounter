@@ -63,10 +63,7 @@ class MainActivity : AppCompatActivity() {
             checkUser(userId) { user ->
               if(user != null) {
                   app.user = user
-                  supportFragmentManager
-                      .beginTransaction()
-                      .replace(R.id.frame, proj)
-                      .commit()
+                  toggleFragment(binding.projectList, proj)
 
               } else
                   redirect("Auth")
