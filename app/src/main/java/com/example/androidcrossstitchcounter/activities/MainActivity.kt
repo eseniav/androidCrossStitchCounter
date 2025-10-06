@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androidcrossstitchcounter.App
+import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.databinding.MainActivityBinding
+import com.example.androidcrossstitchcounter.fragments.ProjFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,6 +18,7 @@ import kotlinx.coroutines.withContext
 class MainActivity : AppCompatActivity() {
     private  lateinit var binding: MainActivityBinding
     private lateinit var userDao: UserDao
+    private val proj = ProjFragment()
     private val app: App by lazy {
         application as App
     }
@@ -45,7 +48,11 @@ class MainActivity : AppCompatActivity() {
             checkUser(userId) { user ->
               if(user != null) {
                   app.user = user
-                  redirect("Proj")
+                  supportFragmentManager
+                      .beginTransaction()
+                      .replace(R.id.frame, proj)
+                      .commit()
+
               } else
                   redirect("Auth")
             }
