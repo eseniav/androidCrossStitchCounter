@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.androidcrossstitchcounter.R
+import com.example.androidcrossstitchcounter.activities.MainActivity
 import com.example.androidcrossstitchcounter.activities.ProfileActivity
 import com.example.androidcrossstitchcounter.databinding.ProjFragmentBinding
 
@@ -24,6 +25,7 @@ class ProjFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private val mainActivity get() = requireActivity() as MainActivity
     private val binding by lazy {
         ProjFragmentBinding.inflate(layoutInflater)
     }
@@ -48,11 +50,8 @@ class ProjFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.logProj.setOnClickListener {
-            val fragment = ProfileFragment()
-            val transaction = parentFragmentManager.beginTransaction()
-            transaction.replace(R.id.frame, fragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
+            mainActivity.toggleFragment(mainActivity.binding.profile,
+                ProfileFragment())
         }
     }
 

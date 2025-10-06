@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
-    private  lateinit var binding: MainActivityBinding
+    lateinit var binding: MainActivityBinding
     private lateinit var userDao: UserDao
     private val controls by lazy {
         listOf(
