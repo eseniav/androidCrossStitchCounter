@@ -1,12 +1,22 @@
 package com.example.androidcrossstitchcounter.fragments
 
+import User
+import UserDao
 import android.os.Bundle
+import android.text.InputType
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.databinding.ProfileFragmentBinding
+import com.example.androidcrossstitchcounter.services.Validation
+import com.example.androidcrossstitchcounter.watchers.PhoneMaskWatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,6 +35,11 @@ class ProfileFragment : Fragment() {
     private val binding by lazy {
         ProfileFragmentBinding.inflate(layoutInflater)
     }
+    private lateinit var userDao: UserDao
+    private lateinit var user: User
+    private val app: App by lazy {
+        requireActivity().application as App
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,16 +57,64 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+    private fun updateUserProp(propName: String, propValue: String) {
+        when(propName) {
+            "phoneNumber" -> user.phoneNumber = propValue
+            "email" -> user.email = propValue
+            "password" -> user.password = propValue
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            userDao.updateUser(user)
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        user = app.user!!
+        val db = DataBaseProvider.getDB(requireContext())
+        userDao = db.userDao()
         binding.nameRow.setLabel("Имя")
         binding.patrRow.setLabel("Отчество")
+
         binding.logRow.setLabel("Логин")
+        binding.logRow.setValue(user.login)
+
         binding.passRow.setLabel("Пароль")
+        binding.passRow.setValue(user.password)
+        binding.passRow.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
+        binding.passRow.onSaveValue = fun(newValue) {
+            binding.passRow.clearError()
+            if (!Validation.Companion.checkPassword(newValue)) {
+                binding.passRow.setError("Пароль должен соответствовать критериям сложности")
+                return
+            }
+            if (!Validation.Companion.checkMatch(newValue, binding.repeatPassRow.text.toString())) {
+                binding.passRow.setError("Пароли должны совпадать")
+                return
+            }
+            updateUserProp("password", newValue)
+        }
+        binding.passRow.onEdit = { isEdit ->
+            binding.repeatPassRow.visibility = if(isEdit) View.VISIBLE else View.GONE
+        }
+
         binding.phoneRow.setLabel("Телефон")
+        binding.phoneRow.setTxtWatcher(PhoneMaskWatcher())
+        binding.phoneRow.setValue(user.phoneNumber)
+        binding.phoneRow.onSaveValue = { newValue ->
+            updateUserProp("phoneNumber", newValue)
+        }
+
         binding.emailRow.setLabel("Email")
+        binding.emailRow.setValue(user.email)
+        binding.emailRow.onSaveValue = { newValue ->
+            updateUserProp("email", newValue)
+        }
+
         binding.birthDateRow.setLabel("Дата рождения")
 
+        binding.imgAvatar.setOnClickListener {
+            Toast.makeText(requireContext(), "Изменение картинки", Toast.LENGTH_SHORT).show()
+        }
     }
     companion object {
         /**
