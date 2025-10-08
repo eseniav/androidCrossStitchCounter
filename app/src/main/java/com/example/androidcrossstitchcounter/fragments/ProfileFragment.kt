@@ -42,6 +42,17 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.nameRow.setLabel("Имя")
+        binding.patrRow.setLabel("Отчество")
+        binding.logRow.setLabel("Логин")
+        binding.passRow.setLabel("Пароль")
+        binding.phoneRow.setLabel("Телефон")
+        binding.emailRow.setLabel("Email")
+        binding.birthDateRow.setLabel("Дата рождения")
+
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of
