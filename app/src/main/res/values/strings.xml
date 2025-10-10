@@ -37,6 +37,7 @@
     <string name="system">Системная</string>
     <string name="startPage">Стартовая страница</string>
     <string name="language">Язык</string>
+    <string name="save">Сохранить</string>
     <string-array name="startPageArray">
         <item>Все проекты</item>
         <item>Профиль</item>

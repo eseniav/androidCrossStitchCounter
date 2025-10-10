@@ -17,6 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         />
     <TableLayout
+        android:id="@+id/tableSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="25dp"
@@ -136,4 +137,13 @@
             </LinearLayout>
         </TableRow>
     </TableLayout>
+    <Button
+        android:id="@+id/regBtnRegAct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tableSettings"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/save"
+        style="@style/btnColor"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

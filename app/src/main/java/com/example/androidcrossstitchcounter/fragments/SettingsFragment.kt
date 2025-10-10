@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.RadioGroup
-import android.widget.RadioGroup.OnCheckedChangeListener
 import android.widget.Toast
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.databinding.SettingsFragmentBinding
