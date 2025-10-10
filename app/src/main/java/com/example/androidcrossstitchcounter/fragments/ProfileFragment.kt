@@ -2,6 +2,7 @@ package com.example.androidcrossstitchcounter.fragments
 
 import User
 import UserDao
+import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.databinding.ProfileFragmentBinding
@@ -40,6 +42,7 @@ class ProfileFragment : Fragment() {
     private val app: App by lazy {
         requireActivity().application as App
     }
+    private var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +70,14 @@ class ProfileFragment : Fragment() {
             userDao.updateUser(user)
         }
     }
+
+    private val setImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
+        uri: Uri? -> uri?.let {
+        imageUri = it
+        binding.imgAvatar.setImageURI(it)
+    }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         user = app.user!!
@@ -113,7 +124,7 @@ class ProfileFragment : Fragment() {
         binding.birthDateRow.setLabel("Дата рождения")
 
         binding.imgAvatar.setOnClickListener {
-            Toast.makeText(requireContext(), "Изменение картинки", Toast.LENGTH_SHORT).show()
+            setImage.launch("image/*")
         }
     }
     companion object {
