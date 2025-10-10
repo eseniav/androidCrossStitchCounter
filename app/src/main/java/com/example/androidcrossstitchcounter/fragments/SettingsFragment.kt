@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.RadioGroup
+import android.widget.RadioGroup.OnCheckedChangeListener
 import android.widget.Toast
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.databinding.SettingsFragmentBinding
@@ -91,6 +93,20 @@ class SettingsFragment : Fragment() {
 
             override fun onNothingSelected(parent: AdapterView<*>) {
                 // Обработка случая, когда ничего не выбрано
+            }
+        }
+
+        binding.themes.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.light -> {
+                    Toast.makeText(requireContext(), "Выбрана светлая тема", Toast.LENGTH_SHORT).show()
+                }
+                R.id.dark -> {
+                    Toast.makeText(requireContext(), "Выбрана темная тема", Toast.LENGTH_SHORT).show()
+                }
+                R.id.system -> {
+                    Toast.makeText(requireContext(), "Выбрана системная тема", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

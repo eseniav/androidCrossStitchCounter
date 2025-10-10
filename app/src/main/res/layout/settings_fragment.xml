@@ -33,41 +33,45 @@
                 android:paddingEnd="10dp"
                 android:layout_weight="2"
                 />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
                 android:layout_weight="1"
-                >
+                android:gravity="end">
+
                 <RadioGroup
                     android:id="@+id/themes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <RadioButton
                         android:id="@+id/light"
+                        style="@style/labelAcherus.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/light"
-                        style="@style/labelAcherus.Small"
+                        android:minWidth="0dp"
                         android:minHeight="0dp"
-                        android:minWidth="0dp"/>
+                        android:text="@string/light" />
+
                     <RadioButton
                         android:id="@+id/dark"
+                        style="@style/labelAcherus.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/dark"
-                        style="@style/labelAcherus.Small"
+                        android:minWidth="0dp"
                         android:minHeight="0dp"
-                        android:minWidth="0dp"/>
+                        android:text="@string/dark" />
+
                     <RadioButton
                         android:id="@+id/system"
+                        style="@style/labelAcherus.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/system"
-                        style="@style/labelAcherus.Small"
+                        android:minWidth="0dp"
                         android:minHeight="0dp"
-                        android:minWidth="0dp"/>
+                        android:text="@string/system" />
                 </RadioGroup>
             </LinearLayout>
         </TableRow>
