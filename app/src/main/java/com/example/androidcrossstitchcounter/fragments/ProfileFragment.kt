@@ -20,6 +20,7 @@ import com.example.androidcrossstitchcounter.watchers.PhoneMaskWatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import androidx.core.net.toUri
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,6 +73,8 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun getPrefs() = requireActivity()
+            .getSharedPreferences("user_${user.id}", MODE_PRIVATE)
     private val setImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
         uri: Uri? -> uri?.let {
         imageUri = it
@@ -81,19 +84,24 @@ class ProfileFragment : Fragment() {
     }
 
     private fun saveImage() {
-        val sharedPreferences = requireActivity()
-            .getSharedPreferences("user_${user.id}", MODE_PRIVATE)
-        sharedPreferences.edit().apply {
+        getPrefs().edit().apply {
             putString("image_uri", imageUri.toString())
             apply()
         }
     }
 
+    private fun loadImage() {
+        val uri = getPrefs()?.getString("image_uri", null)
+        if(uri != null) {
+            binding.imgAvatar.setImageURI(uri.toUri())
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         user = app.user!!
         val db = DataBaseProvider.getDB(requireContext())
         userDao = db.userDao()
+        //loadImage()
         binding.nameRow.setLabel("Имя")
         binding.patrRow.setLabel("Отчество")
 
