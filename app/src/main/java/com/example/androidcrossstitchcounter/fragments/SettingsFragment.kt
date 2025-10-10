@@ -66,7 +66,8 @@ class SettingsFragment : Fragment() {
         binding.languageSpinner.adapter = adapterLanguage
 
         binding.startPage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                if (view == null) return
                 val selectedItem = parent.getItemAtPosition(position).toString()
                 when (selectedItem) {
                     "Все проекты" ->  {
