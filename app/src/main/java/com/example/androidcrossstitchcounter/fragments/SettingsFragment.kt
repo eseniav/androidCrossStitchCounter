@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.example.androidcrossstitchcounter.R
+import com.example.androidcrossstitchcounter.databinding.SettingsFragmentBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +25,9 @@ class SettingsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private val binding by lazy {
+        SettingsFragmentBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +41,76 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.settings_fragment, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // Адаптер для спинера
+        val adapterStartPage = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.startPageArray,
+            R.layout.spinner_item
+        ).also {
+            it.setDropDownViewResource(R.layout.spinner_item)
+        }
+        binding.startPage.adapter = adapterStartPage
+
+        val adapterLanguage = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.languageArray,
+            R.layout.spinner_item
+        ).also {
+            it.setDropDownViewResource(R.layout.spinner_item)
+        }
+        binding.languageSpinner.adapter = adapterLanguage
+
+        binding.startPage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                if (view == null) return
+                val selectedItem = parent.getItemAtPosition(position).toString()
+                when (selectedItem) {
+                    "Все проекты" ->  {
+                        binding.projSpinner.visibility = View.INVISIBLE
+                        Toast.makeText(requireContext(), "Все проекты", Toast.LENGTH_SHORT).show()
+                    }
+                    "Профиль" -> {
+                        binding.projSpinner.visibility = View.INVISIBLE
+                        Toast.makeText(requireContext(), "Профиль", Toast.LENGTH_SHORT).show()
+                    }
+                    "Проект" -> {
+                        binding.projSpinner.visibility = View.VISIBLE
+                        Toast.makeText(requireContext(), "Проект", Toast.LENGTH_SHORT).show()
+                    }
+                    "Настройки" -> {
+                        binding.projSpinner.visibility = View.INVISIBLE
+                        Toast.makeText(requireContext(), "Настройки", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Обработка случая, когда ничего не выбрано
+            }
+        }
+
+        binding.themes.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.light -> {
+                    Toast.makeText(requireContext(), "Выбрана светлая тема", Toast.LENGTH_SHORT).show()
+                }
+                R.id.dark -> {
+                    Toast.makeText(requireContext(), "Выбрана темная тема", Toast.LENGTH_SHORT).show()
+                }
+                R.id.system -> {
+                    Toast.makeText(requireContext(), "Выбрана системная тема", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        binding.saveBtn.setOnClickListener {
+            Toast.makeText(requireContext(), "Сохранение настроек", Toast.LENGTH_SHORT).show()
+        }
     }
 
     companion object {

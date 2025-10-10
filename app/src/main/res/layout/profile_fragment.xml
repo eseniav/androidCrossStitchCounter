@@ -1,14 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ProfileFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    style="@style/layout">
     <TextView
+        android:id="@+id/headProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile"
+        style="@style/mainHeader"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <ImageView
+        android:id="@+id/imgAvatar"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:contentDescription="@string/avatar"
+        android:src="@drawable/test"
+        android:background="@drawable/frame"
+        android:scaleType="fitCenter"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@id/headProfile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <ScrollView
+        android:id="@+id/profileForm"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Profile Fragment" />
-
-</FrameLayout>
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/imgAvatar"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <com.example.androidcrossstitchcounter.widgets.ProfileFieldView
+                android:id="@+id/surnameRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:label="@string/Lname"/>
+            <com.example.androidcrossstitchcounter.widgets.ProfileFieldView
+                android:id="@+id/nameRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <com.example.androidcrossstitchcounter.widgets.ProfileFieldView
+                android:id="@+id/patrRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <com.example.androidcrossstitchcounter.widgets.ProfileFieldView
+                android:id="@+id/logRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <com.example.androidcrossstitchcounter.widgets.ProfileFieldView
+                android:id="@+id/passRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:inputType="@integer/passwordType"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:id="@+id/passRepeat"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Повторите\nпароль"
+                    style="@style/label.Small"
+                    />
+                <EditText
+                    android:id="@+id/repeatPassRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+            <com.example.androidcrossstitchcounter.widgets.ProfileFieldView
+                android:id="@+id/phoneRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:inputType="4"/>
+            <com.example.androidcrossstitchcounter.widgets.ProfileFieldView
+                android:id="@+id/emailRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:inputType="@integer/emailType"/>
+            <com.example.androidcrossstitchcounter.widgets.ProfileFieldView
+                android:id="@+id/birthDateRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:inputType="@integer/dateType"
+                />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

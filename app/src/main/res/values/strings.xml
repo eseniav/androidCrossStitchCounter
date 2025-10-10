@@ -30,4 +30,24 @@
     <integer name="passwordType">129</integer>
     <integer name="emailType">33</integer>
     <integer name="dateType">20</integer>
+    <string name="settings">Настройки</string>
+    <string name="theme">Тема</string>
+    <string name="light">Светлая</string>
+    <string name="dark">Темная</string>
+    <string name="system">Системная</string>
+    <string name="startPage">Стартовая страница</string>
+    <string name="language">Язык</string>
+    <string name="save">Сохранить</string>
+    <string-array name="startPageArray">
+        <item>Все проекты</item>
+        <item>Профиль</item>
+        <item>Проект</item>
+        <item>Настройки</item>
+    </string-array>
+    <string-array name="languageArray">
+        <item>Русский</item>
+        <item>Английский</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
