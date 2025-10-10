@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.activities.MainActivity
 import com.example.androidcrossstitchcounter.activities.ProfileActivity
+import com.example.androidcrossstitchcounter.activities.ProjDiaryActivity
 import com.example.androidcrossstitchcounter.databinding.ProjFragmentBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -52,6 +53,10 @@ class ProjFragment : Fragment() {
         binding.logProj.setOnClickListener {
             mainActivity.toggleFragment(mainActivity.binding.profile,
                 ProfileFragment())
+        }
+        binding.projName.setOnClickListener {
+            val intent = Intent(requireActivity(), ProjDiaryActivity::class.java)
+            startActivity(intent)
         }
     }
 
