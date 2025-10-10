@@ -9,6 +9,7 @@ import android.widget.RadioButton
 import android.widget.TableRow
 import android.widget.Toast
 import com.example.androidcrossstitchcounter.R
+import com.example.androidcrossstitchcounter.activities.MainActivity
 import com.example.androidcrossstitchcounter.databinding.AddProjFragmentBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -25,6 +26,7 @@ class AddProjFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var projType: String? = null
     private val binding by lazy {
         AddProjFragmentBinding.inflate(layoutInflater)
     }
@@ -34,6 +36,7 @@ class AddProjFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+            projType = it.getString("projType")
         }
     }
 
@@ -74,21 +77,20 @@ class AddProjFragment : Fragment() {
             }
         }
 
-//        val projType = intent.getStringExtra("projType")
-//        when (projType) {
-//            "present" -> {
-//                binding.current.isChecked = true
-//                updateVisibility()
-//            }
-//            "future" -> {
-//                binding.future.isChecked = true
-//                updateVisibility()
-//            }
-//            "finish" -> {
-//                binding.finish.isChecked = true
-//                updateVisibility()
-//            }
-//        }
+        when (projType) {
+            "present" -> {
+                binding.current.isChecked = true
+                updateVisibility()
+            }
+            "future" -> {
+                binding.future.isChecked = true
+                updateVisibility()
+            }
+            "finish" -> {
+                binding.finish.isChecked = true
+                updateVisibility()
+            }
+        }
 
         binding.current.setOnClickListener {
             updateVisibility()

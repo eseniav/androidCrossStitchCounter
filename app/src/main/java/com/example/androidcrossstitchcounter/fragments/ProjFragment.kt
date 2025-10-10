@@ -50,6 +50,17 @@ class ProjFragment : Fragment() {
         return binding.root
     }
 
+    private fun goToFragment(value: String) {
+        val addProjFragment = AddProjFragment()
+        val bundle = Bundle()
+        bundle.putString("projType", value)
+        addProjFragment.arguments = bundle
+        parentFragmentManager
+            .beginTransaction()
+            .replace(R.id.frame, addProjFragment)
+            .commit()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -63,19 +74,13 @@ class ProjFragment : Fragment() {
         }
         // Переходы на страницы добавления проектов
         binding.imageAdd.setOnClickListener {
-            val intent = Intent(requireActivity(), AddProjActivity::class.java)
-            intent.putExtra("projType", "present")
-            startActivity(intent)
+            goToFragment("present")
         }
         binding.imageAddF.setOnClickListener {
-            val intent = Intent(requireActivity(), AddProjActivity::class.java)
-            intent.putExtra("projType", "future")
-            startActivity(intent)
+            goToFragment("future")
         }
         binding.imageAddFinish.setOnClickListener {
-            val intent = Intent(requireActivity(), AddProjActivity::class.java)
-            intent.putExtra("projType", "finish")
-            startActivity(intent)
+            goToFragment("finish")
         }
         // Анимация для свертывания списка проектов
         binding.present.setOnClickListener {
