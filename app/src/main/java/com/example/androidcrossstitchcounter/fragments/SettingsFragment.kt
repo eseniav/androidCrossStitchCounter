@@ -107,6 +107,10 @@ class SettingsFragment : Fragment() {
                 }
             }
         }
+
+        binding.saveBtn.setOnClickListener {
+            Toast.makeText(requireContext(), "Сохранение настроек", Toast.LENGTH_SHORT).show()
+        }
     }
 
     companion object {

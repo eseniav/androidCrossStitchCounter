@@ -138,7 +138,7 @@
         </TableRow>
     </TableLayout>
     <Button
-        android:id="@+id/regBtnRegAct"
+        android:id="@+id/saveBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/tableSettings"
