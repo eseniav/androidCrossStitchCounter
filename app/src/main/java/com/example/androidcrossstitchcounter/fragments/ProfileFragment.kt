@@ -2,13 +2,17 @@ package com.example.androidcrossstitchcounter.fragments
 
 import User
 import UserDao
+import android.content.Context.MODE_PRIVATE
+import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.databinding.ProfileFragmentBinding
@@ -17,6 +21,9 @@ import com.example.androidcrossstitchcounter.watchers.PhoneMaskWatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import androidx.core.net.toUri
+import java.io.File
+import java.io.FileOutputStream
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,6 +47,7 @@ class ProfileFragment : Fragment() {
     private val app: App by lazy {
         requireActivity().application as App
     }
+    private var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,11 +75,56 @@ class ProfileFragment : Fragment() {
             userDao.updateUser(user)
         }
     }
+
+    private fun getPrefs() = requireActivity()
+            .getSharedPreferences("user_${user.id}", MODE_PRIVATE)
+    private val setImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
+        uri: Uri? -> uri?.let {
+        imageUri = copyImage(it)
+        if (imageUri != null) {
+            binding.imgAvatar.setImageURI(imageUri)
+            saveImage()
+        }
+    }
+    }
+
+    private fun saveImage() {
+        getPrefs().edit().apply {
+            putString("image_uri", imageUri.toString())
+            apply()
+        }
+    }
+
+    private fun loadImage() {
+        val uri = getPrefs()?.getString("image_uri", null)
+        if(uri != null) {
+            binding.imgAvatar.setImageURI(uri.toUri())
+        }
+    }
+    private fun copyImage(uri: Uri): Uri? {
+        val iunputStream = requireContext().contentResolver.openInputStream(uri)
+        if(iunputStream == null)
+            return null
+
+        return try {
+            val file = File(requireContext().filesDir, "avatar_${user.id}.jpg")
+            FileOutputStream(file).use {
+                outputStream -> iunputStream.copyTo(outputStream)
+            }
+            Uri.fromFile(file)
+        } catch (e: Exception) {
+            Log.e("copyImage", "$e")
+            null
+        } finally {
+            iunputStream.close()
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         user = app.user!!
         val db = DataBaseProvider.getDB(requireContext())
         userDao = db.userDao()
+        loadImage()
         binding.nameRow.setLabel("Имя")
         binding.patrRow.setLabel("Отчество")
 
@@ -113,7 +166,7 @@ class ProfileFragment : Fragment() {
         binding.birthDateRow.setLabel("Дата рождения")
 
         binding.imgAvatar.setOnClickListener {
-            Toast.makeText(requireContext(), "Изменение картинки", Toast.LENGTH_SHORT).show()
+            setImage.launch("image/*")
         }
     }
     companion object {
