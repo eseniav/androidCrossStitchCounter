@@ -6,10 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TableLayout
+import android.widget.TextView
+import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.activities.AddProjActivity
 import com.example.androidcrossstitchcounter.activities.MainActivity
 import com.example.androidcrossstitchcounter.activities.ProjDiaryActivity
 import com.example.androidcrossstitchcounter.databinding.ProjFragmentBinding
+import com.example.androidcrossstitchcounter.services.Animation
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -57,6 +61,7 @@ class ProjFragment : Fragment() {
             val intent = Intent(requireActivity(), ProjDiaryActivity::class.java)
             startActivity(intent)
         }
+        // Переходы на страницы добавления проектов
         binding.imageAdd.setOnClickListener {
             val intent = Intent(requireActivity(), AddProjActivity::class.java)
             intent.putExtra("projType", "present")
@@ -71,6 +76,16 @@ class ProjFragment : Fragment() {
             val intent = Intent(requireActivity(), AddProjActivity::class.java)
             intent.putExtra("projType", "finish")
             startActivity(intent)
+        }
+        // Анимация для свертывания списка проектов
+        binding.present.setOnClickListener {
+            Animation.Companion.hiding(binding.currentProj)
+        }
+        binding.future.setOnClickListener {
+            Animation.Companion.hiding(binding.projTable)
+        }
+        binding.finish.setOnClickListener {
+            Animation.Companion.hiding(binding.finishProjTable)
         }
     }
 
