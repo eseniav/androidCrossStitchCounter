@@ -7,7 +7,7 @@
         <item name="android:textSize">30sp</item>
     </style>
     <style name="mainHeader">
-        <item name="android:textSize">40sp</item>
+        <item name="android:textSize">30sp</item>
         <item name="fontFamily">@font/unsightly</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:letterSpacing">-0.05</item>
