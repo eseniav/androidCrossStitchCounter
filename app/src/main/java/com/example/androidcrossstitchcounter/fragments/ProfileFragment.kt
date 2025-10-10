@@ -6,6 +6,7 @@ import android.content.Context.MODE_PRIVATE
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import androidx.core.net.toUri
+import java.io.File
+import java.io.FileOutputStream
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -77,9 +80,11 @@ class ProfileFragment : Fragment() {
             .getSharedPreferences("user_${user.id}", MODE_PRIVATE)
     private val setImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
         uri: Uri? -> uri?.let {
-        imageUri = it
-        binding.imgAvatar.setImageURI(it)
-        saveImage()
+        imageUri = copyImage(it)
+        if (imageUri != null) {
+            binding.imgAvatar.setImageURI(imageUri)
+            saveImage()
+        }
     }
     }
 
@@ -96,12 +101,30 @@ class ProfileFragment : Fragment() {
             binding.imgAvatar.setImageURI(uri.toUri())
         }
     }
+    private fun copyImage(uri: Uri): Uri? {
+        val iunputStream = requireContext().contentResolver.openInputStream(uri)
+        if(iunputStream == null)
+            return null
+
+        return try {
+            val file = File(requireContext().filesDir, "avatar_${user.id}.jpg")
+            FileOutputStream(file).use {
+                outputStream -> iunputStream.copyTo(outputStream)
+            }
+            Uri.fromFile(file)
+        } catch (e: Exception) {
+            Log.e("copyImage", "$e")
+            null
+        } finally {
+            iunputStream.close()
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         user = app.user!!
         val db = DataBaseProvider.getDB(requireContext())
         userDao = db.userDao()
-        //loadImage()
+        loadImage()
         binding.nameRow.setLabel("Имя")
         binding.patrRow.setLabel("Отчество")
 
