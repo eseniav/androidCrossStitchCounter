@@ -6,9 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.androidcrossstitchcounter.R
+import com.example.androidcrossstitchcounter.activities.AddProjActivity
 import com.example.androidcrossstitchcounter.activities.MainActivity
-import com.example.androidcrossstitchcounter.activities.ProfileActivity
 import com.example.androidcrossstitchcounter.activities.ProjDiaryActivity
 import com.example.androidcrossstitchcounter.databinding.ProjFragmentBinding
 
@@ -56,6 +55,21 @@ class ProjFragment : Fragment() {
         }
         binding.projName.setOnClickListener {
             val intent = Intent(requireActivity(), ProjDiaryActivity::class.java)
+            startActivity(intent)
+        }
+        binding.imageAdd.setOnClickListener {
+            val intent = Intent(requireActivity(), AddProjActivity::class.java)
+            intent.putExtra("projType", "present")
+            startActivity(intent)
+        }
+        binding.imageAddF.setOnClickListener {
+            val intent = Intent(requireActivity(), AddProjActivity::class.java)
+            intent.putExtra("projType", "future")
+            startActivity(intent)
+        }
+        binding.imageAddFinish.setOnClickListener {
+            val intent = Intent(requireActivity(), AddProjActivity::class.java)
+            intent.putExtra("projType", "finish")
             startActivity(intent)
         }
     }
