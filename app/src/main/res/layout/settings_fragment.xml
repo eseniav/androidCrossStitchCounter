@@ -1,14 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.SettingsFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context=".fragments.SettingsFragment"
+    style="@style/layout"
+    android:orientation="vertical"
+    >
     <TextView
+        android:id="@+id/headSettings"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Settings Fragment" />
+        android:layout_height="wrap_content"
+        android:text="@string/settings"
+        android:gravity="center"
+        style="@style/mainHeader"
+        />
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*"
+        android:paddingTop="25dp"
+        >
+        <TableRow
+            android:paddingBottom="10dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/theme"
+                style="@style/label.Small"
+                android:paddingEnd="10dp"
+                />
+            <RadioGroup
+                android:id="@+id/themes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="end">
+                <RadioButton
+                    android:id="@+id/light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/light"
+                    style="@style/labelAcherus.Small"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"/>
 
-</FrameLayout>
+                <RadioButton
+                    android:id="@+id/dark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dark"
+                    style="@style/labelAcherus.Small"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"/>
+
+                <RadioButton
+                    android:id="@+id/system"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/system"
+                    style="@style/labelAcherus.Small"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"/>
+            </RadioGroup>
+        </TableRow>
+        <TableRow
+            android:paddingBottom="10dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/startPage"
+                style="@style/label.Small"
+                android:paddingEnd="10dp"
+                />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                >
+                <Spinner
+                    android:id="@+id/startPage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"
+                    android:entries="@array/startPageArray"/>
+                <Spinner
+                    android:id="@+id/projSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"
+                    android:visibility="invisible"
+                    />
+            </LinearLayout>
+
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

@@ -30,4 +30,16 @@
     <integer name="passwordType">129</integer>
     <integer name="emailType">33</integer>
     <integer name="dateType">20</integer>
+    <string name="settings">Настройки</string>
+    <string name="theme">Тема</string>
+    <string name="light">Светлая</string>
+    <string name="dark">Темная</string>
+    <string name="system">Системная</string>
+    <string name="startPage">Стартовая страница</string>
+    <string-array name="startPageArray">
+        <item>Все проекты</item>
+        <item>Профиль</item>
+        <item>Проект</item>
+        <item>Настройки</item>
+    </string-array>
 </resources>
