@@ -2,6 +2,7 @@ package com.example.androidcrossstitchcounter.fragments
 
 import User
 import UserDao
+import android.content.Context.MODE_PRIVATE
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
@@ -75,7 +76,17 @@ class ProfileFragment : Fragment() {
         uri: Uri? -> uri?.let {
         imageUri = it
         binding.imgAvatar.setImageURI(it)
+        saveImage()
     }
+    }
+
+    private fun saveImage() {
+        val sharedPreferences = requireActivity()
+            .getSharedPreferences("user_${user.id}", MODE_PRIVATE)
+        sharedPreferences.edit().apply {
+            putString("image_uri", imageUri.toString())
+            apply()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
