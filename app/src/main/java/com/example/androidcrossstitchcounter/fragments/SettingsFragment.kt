@@ -47,14 +47,23 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Адаптер для спинера
-        val adapter = ArrayAdapter.createFromResource(
+        val adapterStartPage = ArrayAdapter.createFromResource(
             requireContext(),
             R.array.startPageArray,
             R.layout.spinner_item
         ).also {
             it.setDropDownViewResource(R.layout.spinner_item)
         }
-        binding.startPage.adapter = adapter
+        binding.startPage.adapter = adapterStartPage
+
+        val adapterLanguage = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.languageArray,
+            R.layout.spinner_item
+        ).also {
+            it.setDropDownViewResource(R.layout.spinner_item)
+        }
+        binding.languageSpinner.adapter = adapterLanguage
 
         binding.startPage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {

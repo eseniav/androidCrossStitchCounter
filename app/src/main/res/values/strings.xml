@@ -36,10 +36,15 @@
     <string name="dark">Темная</string>
     <string name="system">Системная</string>
     <string name="startPage">Стартовая страница</string>
+    <string name="language">Язык</string>
     <string-array name="startPageArray">
         <item>Все проекты</item>
         <item>Профиль</item>
         <item>Проект</item>
         <item>Настройки</item>
+    </string-array>
+    <string-array name="languageArray">
+        <item>Русский</item>
+        <item>Английский</item>
     </string-array>
 </resources>

@@ -27,7 +27,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/theme"
-                style="@style/label.Small"
+                style="@style/label"
                 android:paddingEnd="10dp"
                 />
             <RadioGroup
@@ -70,7 +70,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/startPage"
-                style="@style/label.Small"
+                style="@style/label"
                 android:paddingEnd="10dp"
                 />
             <LinearLayout
@@ -93,7 +93,29 @@
                     android:visibility="invisible"
                     />
             </LinearLayout>
-
+        </TableRow>
+        <TableRow
+            android:paddingBottom="10dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/language"
+                style="@style/label"
+                android:paddingEnd="10dp"
+                />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                >
+                <Spinner
+                    android:id="@+id/languageSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"
+                    android:entries="@array/languageArray"/>
+            </LinearLayout>
         </TableRow>
     </TableLayout>
 </LinearLayout>
