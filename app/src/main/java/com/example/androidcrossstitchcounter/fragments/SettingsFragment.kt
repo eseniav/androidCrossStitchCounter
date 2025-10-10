@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.databinding.SettingsFragmentBinding
 
@@ -39,6 +41,12 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // Адаптер для спинера
         val adapter = ArrayAdapter.createFromResource(
             requireContext(),
             R.array.startPageArray,
@@ -46,9 +54,35 @@ class SettingsFragment : Fragment() {
         ).also {
             it.setDropDownViewResource(R.layout.spinner_item)
         }
-
         binding.startPage.adapter = adapter
-        return binding.root
+
+        binding.startPage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                val selectedItem = parent.getItemAtPosition(position).toString()
+                when (selectedItem) {
+                    "Все проекты" ->  {
+                        binding.projSpinner.visibility = View.INVISIBLE
+                        Toast.makeText(requireContext(), "Все проекты", Toast.LENGTH_SHORT).show()
+                    }
+                    "Профиль" -> {
+                        binding.projSpinner.visibility = View.INVISIBLE
+                        Toast.makeText(requireContext(), "Профиль", Toast.LENGTH_SHORT).show()
+                    }
+                    "Проект" -> {
+                        binding.projSpinner.visibility = View.VISIBLE
+                        Toast.makeText(requireContext(), "Проект", Toast.LENGTH_SHORT).show()
+                    }
+                    "Настройки" -> {
+                        binding.projSpinner.visibility = View.INVISIBLE
+                        Toast.makeText(requireContext(), "Настройки", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Обработка случая, когда ничего не выбрано
+            }
+        }
     }
 
     companion object {
