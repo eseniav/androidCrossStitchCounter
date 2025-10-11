@@ -13,10 +13,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/menu"
-        android:paddingBottom="50dp"
-        android:paddingTop="50dp"
+        android:paddingBottom="35dp"
+        android:paddingTop="40dp"
         >
-
     </FrameLayout>
     <LinearLayout
         android:id="@+id/menu"
