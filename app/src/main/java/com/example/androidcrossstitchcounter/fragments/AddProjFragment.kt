@@ -8,9 +8,17 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.TableRow
 import android.widget.Toast
+import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.activities.MainActivity
 import com.example.androidcrossstitchcounter.databinding.AddProjFragmentBinding
+import com.example.androidcrossstitchcounter.models.AppDataBase
+import com.example.androidcrossstitchcounter.models.DataBaseProvider
+import com.example.androidcrossstitchcounter.models.ProjDao
+import com.example.androidcrossstitchcounter.models.Project
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,8 +35,12 @@ class AddProjFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var projType: String? = null
+    private lateinit var projDao: ProjDao
     private val binding by lazy {
         AddProjFragmentBinding.inflate(layoutInflater)
+    }
+    private val app: App by lazy {
+        requireActivity().application as App
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,8 +62,21 @@ class AddProjFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val db = DataBaseProvider.getDB(requireContext())
+        projDao = db.projDao()
         binding.imgAvatar.setOnClickListener {
             Toast.makeText(requireActivity(), "Добавление картинки", Toast.LENGTH_SHORT).show()
+        }
+
+        fun addProj() {
+            val project = Project(
+                projName = "1",
+                userId = app.user!!.id,
+                projStatusId = 1
+            )
+            CoroutineScope(Dispatchers.IO).launch {
+                projDao.insertProject(project)
+            }
         }
 
         fun updateVisibility() {
@@ -102,6 +127,10 @@ class AddProjFragment : Fragment() {
 
         binding.finish.setOnClickListener {
             updateVisibility()
+        }
+
+        binding.saveBtn.setOnClickListener {
+            addProj()
         }
     }
 

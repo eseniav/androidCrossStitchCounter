@@ -1,6 +1,7 @@
 package com.example.androidcrossstitchcounter.models
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -26,7 +27,7 @@ abstract class AppDataBase: RoomDatabase() {
             }
         }
 
-        private fun buildDatabase(context: Context): AppDataBase {
+        public fun buildDatabase(context: Context): AppDataBase {
             return Room.databaseBuilder(
                 context.applicationContext,
                 AppDataBase::class.java,
@@ -52,6 +53,7 @@ abstract class AppDataBase: RoomDatabase() {
                     ProjStatus(statusName = "Завершенный")
                 )
                 statusDao.insertAll(initialStatuses)
+                Log.d("AppDataBase", "Inserted ${initialStatuses.size} initial statuses")
             }
         }
     }
@@ -60,11 +62,6 @@ abstract class AppDataBase: RoomDatabase() {
 object DataBaseProvider {
     private var INSTANCE: AppDataBase? = null
     fun getDB(context: Context): AppDataBase {
-        return INSTANCE ?: synchronized(this) {
-            val instance = Room.databaseBuilder(context.applicationContext, AppDataBase::class.java, "app_db")
-                .fallbackToDestructiveMigration(false).build()
-            INSTANCE = instance
-            instance
-        }
+        return AppDataBase.buildDatabase(context)
     }
 }
