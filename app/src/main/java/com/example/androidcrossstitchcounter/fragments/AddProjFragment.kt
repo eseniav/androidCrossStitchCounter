@@ -19,6 +19,7 @@ import com.example.androidcrossstitchcounter.models.Project
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -76,6 +77,9 @@ class AddProjFragment : Fragment() {
             )
             CoroutineScope(Dispatchers.IO).launch {
                 projDao.insertProject(project)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireActivity(), "Проект добавлен!", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
