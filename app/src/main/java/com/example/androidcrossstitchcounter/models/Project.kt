@@ -34,7 +34,7 @@ data class Project(
     var stitchedCrossBeforeRegistration: Int = 0,
     var startDate: String? = null,
     var finishDate: String? = null,
-    val registrationDate: String = CalendarUtils.getCurrentDate().toString(),
+    val registrationDate: String = CalendarUtils.getCurrentDateStringCompat(),
     val userId: Int,
     var projStatusId: Int
 )
