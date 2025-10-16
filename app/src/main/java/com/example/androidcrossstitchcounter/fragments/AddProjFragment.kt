@@ -71,9 +71,15 @@ class AddProjFragment : Fragment() {
 
         fun addProj() {
             val project = Project(
-                projName = "1",
+                projName = binding.nameProj.text.toString(),
                 userId = app.user!!.id,
-                projStatusId = 1
+                projStatusId =
+                    when {
+                        binding.current.isChecked -> 2
+                        binding.future.isChecked  -> 1
+                        binding.finish.isChecked -> 3
+                        else -> 1
+                    }
             )
             CoroutineScope(Dispatchers.IO).launch {
                 projDao.insertProject(project)
