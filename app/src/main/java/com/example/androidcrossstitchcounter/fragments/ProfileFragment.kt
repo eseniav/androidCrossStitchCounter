@@ -1,7 +1,7 @@
 package com.example.androidcrossstitchcounter.fragments
 
-import User
-import UserDao
+import com.example.androidcrossstitchcounter.models.User
+import com.example.androidcrossstitchcounter.models.UserDao
 import android.content.Context.MODE_PRIVATE
 import android.net.Uri
 import android.os.Bundle
@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 import androidx.core.net.toUri
 import java.io.File
 import java.io.FileOutputStream
+import com.example.androidcrossstitchcounter.models.DataBaseProvider
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

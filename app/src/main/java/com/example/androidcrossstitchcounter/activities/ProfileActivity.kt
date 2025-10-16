@@ -1,7 +1,7 @@
 package com.example.androidcrossstitchcounter.activities
 
-import User
-import UserDao
+import com.example.androidcrossstitchcounter.models.User
+import com.example.androidcrossstitchcounter.models.UserDao
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
@@ -18,6 +18,7 @@ import com.example.androidcrossstitchcounter.widgets.ProfileFieldView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import com.example.androidcrossstitchcounter.models.DataBaseProvider
 
 class ProfileActivity: AppCompatActivity()  {
     private lateinit var userDao: UserDao
