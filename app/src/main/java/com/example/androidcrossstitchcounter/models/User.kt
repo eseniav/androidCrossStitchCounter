@@ -1,3 +1,5 @@
+package com.example.androidcrossstitchcounter.models
+
 import android.content.Context
 import androidx.room.Dao
 import androidx.room.Database
@@ -56,20 +58,4 @@ interface UserDao {
     suspend fun getUserById(id: Int): User?
     @Update
     suspend fun updateUser(user: User)
-}
-
-@Database(entities = [User::class], version = 1)
-abstract class AppDataBase: RoomDatabase() {
-    abstract fun userDao(): UserDao
-}
-
-object DataBaseProvider {
-    private var INSTANCE: AppDataBase? = null
-    fun getDB(context: Context): AppDataBase {
-        return INSTANCE ?: synchronized(this) {
-            val instance = Room.databaseBuilder(context.applicationContext, AppDataBase::class.java, "app_db").build()
-            INSTANCE = instance
-            instance
-        }
-    }
 }

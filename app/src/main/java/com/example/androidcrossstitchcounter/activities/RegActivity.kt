@@ -1,7 +1,7 @@
 package com.example.androidcrossstitchcounter.activities
 
-import User
-import UserDao
+import com.example.androidcrossstitchcounter.models.User
+import com.example.androidcrossstitchcounter.models.UserDao
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
@@ -17,6 +17,7 @@ import com.example.androidcrossstitchcounter.watchers.PhoneMaskWatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import com.example.androidcrossstitchcounter.models.DataBaseProvider
 
 class RegActivity : AppCompatActivity() {
     private lateinit var userDao: UserDao

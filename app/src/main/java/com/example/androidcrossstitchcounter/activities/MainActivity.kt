@@ -1,7 +1,7 @@
 package com.example.androidcrossstitchcounter.activities
 
-import User
-import UserDao
+import com.example.androidcrossstitchcounter.models.User
+import com.example.androidcrossstitchcounter.models.UserDao
 import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
@@ -19,6 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.example.androidcrossstitchcounter.models.DataBaseProvider
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: MainActivityBinding
