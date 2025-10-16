@@ -30,11 +30,11 @@ data class Project(
     var projName: String = "",
     var projDesigner: String? = null,
     var totalCross: Int? = null,
-    var finishDreamDate: Calendar? = null,
+    var finishDreamDate: String? = null,
     var stitchedCrossBeforeRegistration: Int = 0,
-    var startDate: Calendar? = null,
-    var finishDate: Calendar? = null,
-    val registrationDate: Calendar = CalendarUtils.getCurrentDate(),
+    var startDate: String? = null,
+    var finishDate: String? = null,
+    val registrationDate: String = CalendarUtils.getCurrentDate().toString(),
     val userId: Int,
     var projStatusId: Int
 )
