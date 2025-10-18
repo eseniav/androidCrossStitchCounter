@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_green"
+    tools:context=".fragments.ProjDiaryFragment">
+    <TextView
+        android:id="@+id/headProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Пума"
+        style="@style/labelAcherus"
+        android:textSize="30sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        />
+    <ImageView
+        android:id="@+id/imgAvatar"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:contentDescription="@string/avatar"
+        android:src="@drawable/test"
+        android:background="@drawable/frame"
+        android:scaleType="fitCenter"
+        android:layout_margin="10dp"
+        android:layout_below="@id/headProfile"
+        android:layout_centerHorizontal="true"
+        />
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:layout_below="@+id/imgAvatar">
+        <LinearLayout
+            android:id="@+id/aboutProjLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/aboutProj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" О проекте "
+                style="@style/projNames"
+                android:layout_gravity="center"
+                />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/innerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/designer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Автор дизайна: "
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    style="@style/labelAcherus"
+                    />
+                <TextView
+                    android:id="@+id/designerVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dimensions"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/designer"
+                    style="@style/labelAcherus"
+                    android:textColor="@color/dark_blue"
+                    />
+                <TextView
+                    android:id="@+id/size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Размер: "
+                    app:layout_constraintTop_toBottomOf="@id/designer"
+                    app:layout_constraintStart_toStartOf="parent"
+                    style="@style/labelAcherus"
+                    />
+                <TextView
+                    android:id="@+id/sizeVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="140X250"
+                    app:layout_constraintTop_toBottomOf="@id/designer"
+                    app:layout_constraintStart_toEndOf="@id/size"
+                    style="@style/labelAcherus"
+                    android:textColor="@color/dark_blue"
+                    />
+                <TextView
+                    android:id="@+id/allCross"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Всего крестиков: "
+                    app:layout_constraintTop_toBottomOf="@id/size"
+                    app:layout_constraintStart_toStartOf="parent"
+                    style="@style/labelAcherus"
+                    />
+                <TextView
+                    android:id="@+id/allCrossVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="35000"
+                    app:layout_constraintTop_toBottomOf="@id/size"
+                    app:layout_constraintStart_toEndOf="@id/allCross"
+                    style="@style/labelAcherus"
+                    android:textColor="@color/dark_blue"
+                    />
+                <TextView
+                    android:id="@+id/beforeRegCross"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Вышито до регистрации: "
+                    app:layout_constraintTop_toBottomOf="@id/allCross"
+                    app:layout_constraintStart_toStartOf="parent"
+                    style="@style/labelAcherus"
+                    />
+                <TextView
+                    android:id="@+id/beforeRegCrossVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3000"
+                    app:layout_constraintTop_toBottomOf="@id/allCross"
+                    app:layout_constraintStart_toEndOf="@id/beforeRegCross"
+                    style="@style/labelAcherus"
+                    android:textColor="@color/dark_blue"
+                    />
+                <TextView
+                    android:id="@+id/startDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Дата начала: "
+                    app:layout_constraintTop_toBottomOf="@id/beforeRegCross"
+                    app:layout_constraintStart_toStartOf="parent"
+                    style="@style/labelAcherus"
+                    />
+                <TextView
+                    android:id="@+id/startDateVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12.03.2025"
+                    app:layout_constraintTop_toBottomOf="@id/beforeRegCross"
+                    app:layout_constraintStart_toEndOf="@id/startDate"
+                    style="@style/labelAcherus"
+                    android:textColor="@color/dark_blue"
+                    />
+                <TextView
+                    android:id="@+id/planDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Планируется вышить к: "
+                    app:layout_constraintTop_toBottomOf="@id/startDate"
+                    app:layout_constraintStart_toStartOf="parent"
+                    style="@style/labelAcherus"
+                    />
+                <TextView
+                    android:id="@+id/planDateVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12.03.2026"
+                    app:layout_constraintTop_toBottomOf="@id/startDate"
+                    app:layout_constraintStart_toEndOf="@id/planDate"
+                    style="@style/labelAcherus"
+                    android:textColor="@color/dark_blue"
+                    />
+                <TextView
+                    android:id="@+id/finishDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Проект завершен: "
+                    app:layout_constraintTop_toBottomOf="@id/planDate"
+                    app:layout_constraintStart_toStartOf="parent"
+                    style="@style/labelAcherus"
+                    />
+                <TextView
+                    android:id="@+id/finishDateVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12.08.2025"
+                    app:layout_constraintTop_toBottomOf="@id/planDate"
+                    app:layout_constraintStart_toEndOf="@id/finishDate"
+                    style="@style/labelAcherus"
+                    android:textColor="@color/dark_blue"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/statistics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Статистика "
+                style="@style/projNames"
+                android:layout_gravity="center"
+                />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/statisticsInnerL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/stitched"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Вышито: "
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    style="@style/labelAcherus"
+                    />
+                <TextView
+                    android:id="@+id/stitchedVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="54185 кр./ 3515 дн."
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/stitched"
+                    style="@style/labelAcherus"
+                    android:textColor="@color/dark_blue"
+                    />
+                <TextView
+                    android:id="@+id/rest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Осталось: "
+                    app:layout_constraintTop_toBottomOf="@id/stitched"
+                    app:layout_constraintStart_toStartOf="parent"
+                    style="@style/labelAcherus"
+                    />
+                <TextView
+                    android:id="@+id/restVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4827 кр./ 322 дн."
+                    app:layout_constraintTop_toBottomOf="@id/stitched"
+                    app:layout_constraintStart_toEndOf="@id/rest"
+                    style="@style/labelAcherus"
+                    android:textColor="@color/dark_blue"
+                    />
+                <TextView
+                    android:id="@+id/avgSpeed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Средняя скорость: "
+                    app:layout_constraintTop_toBottomOf="@id/rest"
+                    app:layout_constraintStart_toStartOf="parent"
+                    style="@style/labelAcherus"
+                    />
+                <TextView
+                    android:id="@+id/avgSpeedVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="15 кр./день"
+                    app:layout_constraintTop_toBottomOf="@id/rest"
+                    app:layout_constraintStart_toEndOf="@id/avgSpeed"
+                    style="@style/labelAcherus"
+                    android:textColor="@color/dark_blue"
+                    />
+                <TextView
+                    android:id="@+id/prognosis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Прогноз окончания: "
+                    app:layout_constraintTop_toBottomOf="@id/avgSpeed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    style="@style/labelAcherus"
+                    />
+                <TextView
+                    android:id="@+id/prognosisVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="04.07.2026"
+                    app:layout_constraintTop_toBottomOf="@id/avgSpeed"
+                    app:layout_constraintStart_toEndOf="@id/prognosis"
+                    style="@style/labelAcherus"
+                    android:textColor="@color/dark_blue"
+                    />
+                <TextView
+                    android:id="@+id/percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Вышито в процентах: "
+                    app:layout_constraintTop_toBottomOf="@id/prognosis"
+                    app:layout_constraintStart_toStartOf="parent"
+                    style="@style/labelAcherus"
+                    />
+                <TextView
+                    android:id="@+id/percentVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="92%"
+                    app:layout_constraintTop_toBottomOf="@id/prognosis"
+                    app:layout_constraintStart_toEndOf="@id/percent"
+                    style="@style/labelAcherus"
+                    android:textColor="@color/dark_blue"
+                    />
+                <TextView
+                    android:id="@+id/necessarySpeed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Необходимая скорость: "
+                    app:layout_constraintTop_toBottomOf="@id/percent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    style="@style/labelAcherus"
+                    />
+                <TextView
+                    android:id="@+id/necessarySpeedVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="302 кр./день"
+                    app:layout_constraintTop_toBottomOf="@id/percent"
+                    app:layout_constraintStart_toEndOf="@id/necessarySpeed"
+                    style="@style/labelAcherus"
+                    android:textColor="@color/dark_plum"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Прогресс "
+                    style="@style/projNames"
+                    />
+                <ImageView
+                    android:id="@+id/imageAdd"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="Добавить"
+                    android:src="@drawable/add"
+                    android:paddingStart="10dp"
+                    />
+                <ImageView
+                    android:id="@+id/imageCheck"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:contentDescription="Подтвердить изменения"
+                    android:src="@drawable/check"
+                    android:paddingStart="10dp"
+                    />
+                <ImageView
+                    android:id="@+id/imageCancel"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:contentDescription="Отмена"
+                    android:src="@drawable/cancel"
+                    android:paddingStart="10dp"
+                    />
+            </LinearLayout>
+            <TableLayout
+                android:id="@+id/progressTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="*"
+                >
+                <TableRow android:padding="3dp" android:background="@color/white_50">
+                    <TextView android:text="Дата" style="@style/tableStyle"/>
+                    <TextView android:text="За день" style="@style/tableStyle"/>
+                    <TextView android:text="Вышито" style="@style/tableStyle"/>
+                    <TextView android:text="Осталось" style="@style/tableStyle"/>
+                </TableRow>
+                <TableRow android:id="@+id/addRow" android:padding="5dp" >
+                    <EditText/>
+                    <EditText/>
+                    <EditText/>
+                    <TextView/>
+                </TableRow>
+                <TableRow android:padding="5dp" >
+                    <TextView android:text="18.03.2025" style="@style/tableStyle"/>
+                    <TextView android:text="325" style="@style/tableStyle"/>
+                    <TextView android:text="2325" style="@style/tableStyle"/>
+                    <TextView android:text="32675" style="@style/tableStyle"/>
+                </TableRow>
+                <View android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/white"
+                    />
+                <TableRow android:padding="5dp" >
+                    <TextView android:text="18.03.2025" style="@style/tableStyle"/>
+                    <TextView android:text="300" style="@style/tableStyle"/>
+                    <TextView android:text="2625" style="@style/tableStyle"/>
+                    <TextView android:text="32375" style="@style/tableStyle"/>
+                </TableRow>
+                <View android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/white"
+                    />
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
