@@ -55,10 +55,7 @@ class ProjFragment : Fragment() {
         val bundle = Bundle()
         bundle.putString("projType", value)
         addProjFragment.arguments = bundle
-        parentFragmentManager
-            .beginTransaction()
-            .replace(R.id.frame, addProjFragment)
-            .commit()
+        mainActivity.toggleFragment(addProjFragment)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
