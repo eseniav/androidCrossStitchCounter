@@ -58,107 +58,113 @@
         android:fillViewport="true"
         android:layout_below="@+id/radioGroup"
         >
-        <TableLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="1"
+            android:orientation="vertical"
             >
-            <TableRow android:padding="5dp" android:layout_height="wrap_content">
-                <TextView android:text="Название" style="@style/label.Small" android:paddingEnd="10sp"/>
-                <EditText
-                    android:id="@+id/nameProj"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-            </TableRow>
-            <TableRow android:padding="5dp" android:layout_height="wrap_content">
-                <TextView android:text="Автор дизайна" style="@style/label.Small" android:paddingEnd="10sp"/>
-                <EditText
-                    android:id="@+id/designerProj"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-            </TableRow>
-            <TableRow android:padding="5dp">
-                <TextView android:text="Размер" style="@style/label.Small" android:paddingEnd="10sp"/>
-                <LinearLayout
-                    android:layout_height="wrap_content"
-                    android:layout_width="0dp"
-                    android:orientation="horizontal"
-                    android:layout_weight="1">
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1"
+                >
+                <TableRow android:padding="5dp" android:layout_height="wrap_content">
+                    <TextView android:text="Название" style="@style/label.Small" android:paddingEnd="10sp"/>
                     <EditText
-                        android:id="@+id/width"
-                        android:layout_width="100dp"
+                        android:id="@+id/nameProj"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        />
-                    <TextView
+                        android:layout_weight="1"/>
+                </TableRow>
+                <TableRow android:padding="5dp" android:layout_height="wrap_content">
+                    <TextView android:text="Автор дизайна" style="@style/label.Small" android:paddingEnd="10sp"/>
+                    <EditText
+                        android:id="@+id/designerProj"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:text="Х"
+                        android:layout_weight="1"/>
+                </TableRow>
+                <TableRow android:padding="5dp">
+                    <TextView android:text="Размер" style="@style/label.Small" android:paddingEnd="10sp"/>
+                    <LinearLayout
+                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:orientation="horizontal"
+                        android:layout_weight="1">
+                        <EditText
+                            android:id="@+id/width"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            />
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="Х"
+                            style="@style/label.Small"
+                            android:paddingEnd="10sp"/>
+                        <EditText
+                            android:id="@+id/height"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            />
+                    </LinearLayout>
+                </TableRow>
+                <TableRow android:padding="5dp">
+                    <TextView android:text="Всего крестиков" style="@style/label.Small" android:paddingEnd="10sp"/>
+                    <EditText
+                        android:id="@+id/totalCross"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+                </TableRow>
+                <TableRow android:id="@+id/stitchesBeforeRow" android:layout_height="wrap_content" android:gravity="center_vertical">
+                    <TextView android:text="Вышито до\nрегистрации"
                         style="@style/label.Small"
-                        android:paddingEnd="10sp"/>
+                        android:paddingEnd="10sp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:maxLines="2"
+                        android:ellipsize="none"/>
                     <EditText
-                        android:id="@+id/height"
-                        android:layout_width="100dp"
+                        android:id="@+id/beforeRegCross"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        />
-                </LinearLayout>
-            </TableRow>
-            <TableRow android:padding="5dp">
-                <TextView android:text="Всего крестиков" style="@style/label.Small" android:paddingEnd="10sp"/>
-                <EditText
-                    android:id="@+id/totalCross"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-            </TableRow>
-            <TableRow android:id="@+id/stitchesBeforeRow" android:layout_height="wrap_content" android:gravity="center_vertical">
-                <TextView android:text="Вышито до\nрегистрации"
-                    style="@style/label.Small"
-                    android:paddingEnd="10sp"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:maxLines="2"
-                    android:ellipsize="none"/>
-                <EditText
-                    android:id="@+id/beforeRegCross"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-            </TableRow>
-            <TableRow android:id="@+id/startDateRow">
-                <TextView android:text="Дата начала" style="@style/label.Small" android:paddingEnd="10sp"/>
-                <EditText
-                    android:id="@+id/startDate"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-            </TableRow>
-            <TableRow android:id="@+id/planDateRow" android:layout_height="wrap_content" android:gravity="center_vertical">
-                <TextView android:text="Планируется \nвышить к" style="@style/label.Small" android:paddingEnd="10sp"/>
-                <EditText
-                    android:id="@+id/finishDream"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-            </TableRow>
-            <TableRow android:padding="5dp" android:id="@+id/finishRow">
-                <TextView android:text="Завершен" style="@style/label.Small" android:paddingEnd="10sp"/>
-                <EditText
-                    android:id="@+id/finishDate"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-            </TableRow>
-        </TableLayout>
+                        android:layout_weight="1"/>
+                </TableRow>
+                <TableRow android:id="@+id/startDateRow">
+                    <TextView android:text="Дата начала" style="@style/label.Small" android:paddingEnd="10sp"/>
+                    <EditText
+                        android:id="@+id/startDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+                </TableRow>
+                <TableRow android:id="@+id/planDateRow" android:layout_height="wrap_content" android:gravity="center_vertical">
+                    <TextView android:text="Планируется \nвышить к" style="@style/label.Small" android:paddingEnd="10sp"/>
+                    <EditText
+                        android:id="@+id/finishDream"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+                </TableRow>
+                <TableRow android:padding="5dp" android:id="@+id/finishRow">
+                    <TextView android:text="Завершен" style="@style/label.Small" android:paddingEnd="10sp"/>
+                    <EditText
+                        android:id="@+id/finishDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+                </TableRow>
+            </TableLayout>
+            <Button
+                android:id="@+id/saveBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/save"
+                style="@style/btnColor"
+                android:layout_below="@id/scrollview"
+                />
+        </LinearLayout>
     </ScrollView>
-    <Button
-        android:id="@+id/saveBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/save"
-        style="@style/btnColor"
-        android:layout_below="@id/scrollview"
-        />
 </RelativeLayout>

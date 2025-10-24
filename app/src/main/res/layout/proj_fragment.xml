@@ -119,11 +119,17 @@
             android:layout_centerHorizontal="true"
             />
     </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tempList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutSpeed"
+        />
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/layoutSpeed"
+        android:layout_below="@id/tempList"
         android:layout_centerHorizontal="true"
         android:fillViewport="true"
         >

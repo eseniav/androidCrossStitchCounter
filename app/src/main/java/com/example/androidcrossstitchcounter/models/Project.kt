@@ -46,7 +46,7 @@ interface ProjDao {
     @Insert
     suspend fun insertProject(project: Project)
     @Query("SELECT * FROM projects WHERE userId = :userId" )
-    suspend fun getProjectByUserId(userId: Int): Project?
+    suspend fun getProjectByUserId(userId: Int): List<Project>
     @Query("SELECT * FROM projects WHERE id = :id LIMIT 1" )
     suspend fun getProjectById(id: Int): Project?
     @Query("SELECT * FROM projects WHERE userId = :userId AND projStatusId = :projStatusId" )

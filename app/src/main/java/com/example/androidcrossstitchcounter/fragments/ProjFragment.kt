@@ -6,14 +6,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
+import android.widget.LinearLayout
 import android.widget.TableLayout
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.activities.AddProjActivity
 import com.example.androidcrossstitchcounter.activities.MainActivity
 import com.example.androidcrossstitchcounter.activities.ProjDiaryActivity
+import com.example.androidcrossstitchcounter.adapters.ProjectAdapter
 import com.example.androidcrossstitchcounter.databinding.ProjFragmentBinding
+import com.example.androidcrossstitchcounter.models.AppDataBase
+import com.example.androidcrossstitchcounter.models.DataBaseProvider
+import com.example.androidcrossstitchcounter.models.ProjDao
 import com.example.androidcrossstitchcounter.services.Animation
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,6 +42,19 @@ class ProjFragment : Fragment() {
     private val mainActivity get() = requireActivity() as MainActivity
     private val binding by lazy {
         ProjFragmentBinding.inflate(layoutInflater)
+    }
+    private lateinit var projAdapter: ProjectAdapter
+    private lateinit var projectDao: ProjDao
+
+    private val app: App by lazy {
+        requireActivity().application as App
+    }
+
+    fun loadProjects() {
+        lifecycleScope.launch {
+            val projects = projectDao.getProjectByUserId(app.user!!.id)
+            projAdapter.updateProjects(projects)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +84,8 @@ class ProjFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val db = AppDataBase.getInstance(requireContext())
+        projectDao = db.projDao()
         binding.logProj.setOnClickListener {
             mainActivity.toggleFragment(mainActivity.binding.profile,
                 ProfileFragment())
@@ -89,6 +114,11 @@ class ProjFragment : Fragment() {
         binding.finish.setOnClickListener {
             Animation.Companion.hiding(binding.finishProjTable)
         }
+
+        binding.tempList.layoutManager = LinearLayoutManager(requireContext())
+        projAdapter = ProjectAdapter(emptyList())
+        binding.tempList.adapter = projAdapter
+        loadProjects()
     }
 
     companion object {

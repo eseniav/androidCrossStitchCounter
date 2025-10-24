@@ -35,4 +35,9 @@ class ProjectAdapter(private var projects: List<Project>):
     inner class ProjectViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val titleView: TextView = itemView.findViewById<TextView>(R.id.nameProj)
     }
+
+    fun updateProjects(newProjects: List<Project>) {
+        projects = newProjects
+        notifyDataSetChanged()
+    }
 }
