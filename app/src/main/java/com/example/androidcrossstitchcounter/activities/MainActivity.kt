@@ -91,6 +91,13 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.frame, fragment)
             .commit()
     }
+    fun toggleFragment(fragment: androidx.fragment.app.Fragment) {
+        resetColor()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.frame, fragment)
+            .commit()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
