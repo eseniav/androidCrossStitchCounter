@@ -76,11 +76,11 @@ class AddProjFragment : Fragment() {
                 projDesigner = binding.designerProj.text.toString(),
                 totalCross = binding.totalCross.text.toString().toIntOrNull(),
                 finishDreamDate = binding.finishDream.text.toString(),
-                stitchedCrossBeforeRegistration = binding.beforeRegCross.text.toString().toInt(),
+                stitchedCrossBeforeRegistration = binding.beforeRegCross.text.toString().toIntOrNull() ?: 0,
                 startDate = binding.startDate.text.toString(),
                 finishDate = binding.finishDate.text.toString(),
-                width = binding.width.text.toString().toInt(),
-                height = binding.height.text.toString().toInt(),
+                width = binding.width.text.toString().toIntOrNull() ?: 0,
+                height = binding.height.text.toString().toIntOrNull() ?: 0,
                 projStatusId =
                     when {
                         binding.current.isChecked -> 2
