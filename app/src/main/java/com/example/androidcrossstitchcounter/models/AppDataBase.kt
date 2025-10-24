@@ -60,8 +60,7 @@ abstract class AppDataBase: RoomDatabase() {
 }
 
 object DataBaseProvider {
-    private var INSTANCE: AppDataBase? = null
     fun getDB(context: Context): AppDataBase {
-        return AppDataBase.buildDatabase(context)
+        return AppDataBase.getInstance(context)
     }
 }
