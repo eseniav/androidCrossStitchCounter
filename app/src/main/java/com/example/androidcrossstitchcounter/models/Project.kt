@@ -35,6 +35,8 @@ data class Project(
     var startDate: String? = null,
     var finishDate: String? = null,
     val registrationDate: String = CalendarUtils.getCurrentDateStringCompat(),
+    var width: Int = 0,
+    var height: Int = 0,
     val userId: Int,
     var projStatusId: Int
 )

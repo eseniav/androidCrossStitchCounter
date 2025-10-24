@@ -79,6 +79,8 @@ class AddProjFragment : Fragment() {
                 stitchedCrossBeforeRegistration = binding.beforeRegCross.text.toString().toInt(),
                 startDate = binding.startDate.text.toString(),
                 finishDate = binding.finishDate.text.toString(),
+                width = binding.width.text.toString().toInt(),
+                height = binding.height.text.toString().toInt(),
                 projStatusId =
                     when {
                         binding.current.isChecked -> 2
