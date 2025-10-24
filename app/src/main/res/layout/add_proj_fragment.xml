@@ -103,7 +103,9 @@
             </TableRow>
             <TableRow android:padding="5dp">
                 <TextView android:text="Всего крестиков" style="@style/label.Small" android:paddingEnd="10sp"/>
-                <EditText android:layout_width="0dp"
+                <EditText
+                    android:id="@+id/totalCross"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </TableRow>
@@ -115,25 +117,33 @@
                     android:layout_weight="1"
                     android:maxLines="2"
                     android:ellipsize="none"/>
-                <EditText android:layout_width="0dp"
+                <EditText
+                    android:id="@+id/beforeRegCross"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </TableRow>
             <TableRow android:id="@+id/startDateRow">
                 <TextView android:text="Дата начала" style="@style/label.Small" android:paddingEnd="10sp"/>
-                <EditText android:layout_width="0dp"
+                <EditText
+                    android:id="@+id/startDate"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </TableRow>
             <TableRow android:id="@+id/planDateRow" android:layout_height="wrap_content" android:gravity="center_vertical">
                 <TextView android:text="Планируется \nвышить к" style="@style/label.Small" android:paddingEnd="10sp"/>
-                <EditText android:layout_width="0dp"
+                <EditText
+                    android:id="@+id/finishDream"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </TableRow>
             <TableRow android:padding="5dp" android:id="@+id/finishRow">
                 <TextView android:text="Завершен" style="@style/label.Small" android:paddingEnd="10sp"/>
-                <EditText android:layout_width="0dp"
+                <EditText
+                    android:id="@+id/finishDate"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </TableRow>

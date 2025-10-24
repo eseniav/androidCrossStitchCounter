@@ -73,6 +73,12 @@ class AddProjFragment : Fragment() {
             val project = Project(
                 projName = binding.nameProj.text.toString(),
                 userId = app.user!!.id,
+                projDesigner = binding.designerProj.text.toString(),
+                totalCross = binding.totalCross.text.toString().toIntOrNull(),
+                finishDreamDate = binding.finishDream.text.toString(),
+                stitchedCrossBeforeRegistration = binding.beforeRegCross.text.toString().toInt(),
+                startDate = binding.startDate.text.toString(),
+                finishDate = binding.finishDate.text.toString(),
                 projStatusId =
                     when {
                         binding.current.isChecked -> 2
