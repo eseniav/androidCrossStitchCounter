@@ -21,10 +21,11 @@ data class User(
     var password: String = "",
     var userName: String? = null,
     var userLastName: String? = null,
+    var userPatr: String? = null,
     var phoneNumber: String = "",
     var email: String = "",
-    //var birthDate: Calendar? = null,
-    //val regDate: Calendar = CalendarUtils.getCurrentDate()
+    var birthDate: String? = null,
+    val regDate: String = CalendarUtils.getCurrentDateStringCompat()
 )
 {
     fun print() {
