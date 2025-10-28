@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
+import com.example.androidcrossstitchcounter.databinding.ProjDiaryFragmentBinding
+import com.example.androidcrossstitchcounter.services.Animation
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +24,12 @@ class ProjDiaryFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private val binding by lazy {
+        ProjDiaryFragmentBinding.inflate(layoutInflater)
+    }
+    private val app: App by lazy {
+        requireActivity().application as App
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +44,16 @@ class ProjDiaryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.proj_diary_fragment, container, false)
+        return binding.root
     }
+
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//
+//            binding.aboutProj.setOnClickListener {
+//            Animation.Companion.hiding(aboutProjLayout)
+//        }
+//    }
 
     companion object {
         /**
