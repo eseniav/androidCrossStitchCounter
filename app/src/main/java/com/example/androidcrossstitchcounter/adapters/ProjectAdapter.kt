@@ -25,7 +25,10 @@ class ProjectAdapter(private var projects: List<Project>):
         position: Int
     ) {
         val project = projects[position]
-        holder.titleView.text = project.projName
+        holder.sizeView.text = "${project.width} X ${project.height}"
+        holder.startDateView.text = project.startDate
+        holder.planDateView.text = project.finishDreamDate
+        holder.stitchedView.text = project.stitchedCrossBeforeRegistration.toString()
     }
 
     override fun getItemCount(): Int {
@@ -33,7 +36,10 @@ class ProjectAdapter(private var projects: List<Project>):
     }
 
     inner class ProjectViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val titleView: TextView = itemView.findViewById<TextView>(R.id.nameProj)
+        val sizeView: TextView = itemView.findViewById<TextView>(R.id.size)
+        val startDateView: TextView = itemView.findViewById<TextView>(R.id.startDate)
+        val planDateView: TextView = itemView.findViewById<TextView>(R.id.planDate)
+        val stitchedView: TextView = itemView.findViewById<TextView>(R.id.stitched)
     }
 
     fun updateProjects(newProjects: List<Project>) {
