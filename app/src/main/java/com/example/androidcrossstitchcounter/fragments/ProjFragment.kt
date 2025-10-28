@@ -115,9 +115,9 @@ class ProjFragment : Fragment() {
             Animation.Companion.hiding(binding.finishProjTable)
         }
 
-        binding.tempList.layoutManager = LinearLayoutManager(requireContext())
+        binding.currentList.layoutManager = LinearLayoutManager(requireContext())
         projAdapter = ProjectAdapter(emptyList())
-        binding.tempList.adapter = projAdapter
+        binding.currentList.adapter = projAdapter
         loadProjects()
     }
 

@@ -119,11 +119,32 @@
             />
     </RelativeLayout>
     <LinearLayout
+        android:id="@+id/presentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@id/layoutSpeed"
+        >
+        <TextView
+            android:id="@+id/present"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Текущие"
+            style="@style/projNames"
+            android:layout_marginEnd="10dp" />
+        <ImageView
+            android:id="@+id/imageAdd"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:contentDescription="Добавить"
+            android:src="@drawable/add" />
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/currentProjHead"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@id/layoutSpeed">
+        android:layout_below="@id/presentLayout">
         <TextView
             android:id="@+id/size"
             android:text="Размер"
@@ -154,7 +175,7 @@
             android:gravity="center"/>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tempList"
+        android:id="@+id/currentList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/currentProjHead"
@@ -163,7 +184,7 @@
         android:id="@+id/scroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tempList"
+        android:layout_below="@id/currentList"
         android:layout_centerHorizontal="true"
         android:fillViewport="true"
         >
@@ -173,25 +194,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/userBox"
             android:layout_centerHorizontal="true">
-            <LinearLayout
-                android:id="@+id/presentLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
-                <TextView
-                    android:id="@+id/present"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Текущие"
-                    style="@style/projNames"
-                    android:layout_marginEnd="10dp" />
-                <ImageView
-                    android:id="@+id/imageAdd"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:contentDescription="Добавить"
-                    android:src="@drawable/add" />
-            </LinearLayout>
             <TableLayout
                 android:id="@+id/currentProj"
                 android:layout_width="match_parent"
