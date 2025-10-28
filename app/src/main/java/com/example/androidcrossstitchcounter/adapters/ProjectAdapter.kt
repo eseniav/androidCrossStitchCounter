@@ -30,6 +30,10 @@ class ProjectAdapter(private var projects: List<Project>):
         holder.planDateView.text = project.finishDreamDate
         holder.stitchedView.text = project.stitchedCrossBeforeRegistration.toString()
         holder.projNameView.text = project.projName
+        if(project.projStatusId == 1) {
+            holder.startDateView.visibility = View.GONE
+            holder.stitchedView.visibility = View.GONE
+        }
     }
 
     override fun getItemCount(): Int {
