@@ -43,7 +43,9 @@ class ProjFragment : Fragment() {
     private val binding by lazy {
         ProjFragmentBinding.inflate(layoutInflater)
     }
-    private lateinit var projAdapter: ProjectAdapter
+    private lateinit var currentAdapter: ProjectAdapter
+    private lateinit var futureAdapter: ProjectAdapter
+    private lateinit var finishedAdapter: ProjectAdapter
     private lateinit var projectDao: ProjDao
 
     private val app: App by lazy {
@@ -53,7 +55,9 @@ class ProjFragment : Fragment() {
     fun loadProjects() {
         lifecycleScope.launch {
             val projects = projectDao.getProjectByUserId(app.user!!.id)
-            projAdapter.updateProjects(projects)
+            currentAdapter.updateProjects(projects.filter { it.projStatusId == 2 })
+            futureAdapter.updateProjects(projects.filter { it.projStatusId == 1 })
+            finishedAdapter.updateProjects(projects.filter { it.projStatusId == 3 })
         }
     }
 
@@ -90,10 +94,10 @@ class ProjFragment : Fragment() {
             mainActivity.toggleFragment(mainActivity.binding.profile,
                 ProfileFragment())
         }
-        binding.projName.setOnClickListener {
-            val intent = Intent(requireActivity(), ProjDiaryActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.projName.setOnClickListener {
+//            val intent = Intent(requireActivity(), ProjDiaryActivity::class.java)
+//            startActivity(intent)
+//        }
         // Переходы на страницы добавления проектов
         binding.imageAdd.setOnClickListener {
             goToFragment("present")
@@ -105,19 +109,25 @@ class ProjFragment : Fragment() {
             goToFragment("finish")
         }
         // Анимация для свертывания списка проектов
-        binding.present.setOnClickListener {
-            Animation.Companion.hiding(binding.currentProj)
-        }
-        binding.future.setOnClickListener {
-            Animation.Companion.hiding(binding.projTable)
-        }
-        binding.finish.setOnClickListener {
-            Animation.Companion.hiding(binding.finishProjTable)
-        }
+//        binding.present.setOnClickListener {
+//            Animation.Companion.hiding(binding.currentProj)
+//        }
+//        binding.future.setOnClickListener {
+//            Animation.Companion.hiding(binding.projTable)
+//        }
+//        binding.finish.setOnClickListener {
+//            Animation.Companion.hiding(binding.finishProjTable)
+//        }
 
-        binding.tempList.layoutManager = LinearLayoutManager(requireContext())
-        projAdapter = ProjectAdapter(emptyList())
-        binding.tempList.adapter = projAdapter
+        binding.currentList.layoutManager = LinearLayoutManager(requireContext())
+        binding.futureList.layoutManager = LinearLayoutManager(requireContext())
+        binding.finishedList.layoutManager = LinearLayoutManager(requireContext())
+        currentAdapter = ProjectAdapter(emptyList())
+        binding.currentList.adapter = currentAdapter
+        futureAdapter = ProjectAdapter(emptyList())
+        binding.futureList.adapter = futureAdapter
+        finishedAdapter = ProjectAdapter(emptyList())
+        binding.finishedList.adapter = finishedAdapter
         loadProjects()
     }
 

@@ -89,7 +89,6 @@
             android:layout_below="@id/regDate"
             />
     </RelativeLayout>
-
     <RelativeLayout
         android:id="@+id/layoutSpeed"
         android:layout_width="wrap_content"
@@ -119,163 +118,133 @@
             android:layout_centerHorizontal="true"
             />
     </RelativeLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tempList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layoutSpeed"
-        />
     <ScrollView
         android:id="@+id/scroll"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tempList"
+        android:layout_below="@id/layoutSpeed"
         android:layout_centerHorizontal="true"
         android:fillViewport="true"
         >
         <RelativeLayout
-            android:id="@+id/tableLayout"
+                    android:id="@+id/projAdapterLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true">
+    <LinearLayout
+        android:id="@+id/presentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+        <TextView
+            android:id="@+id/present"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/userBox"
-            android:layout_centerHorizontal="true">
-            <LinearLayout
-                android:id="@+id/presentLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
-                <TextView
-                    android:id="@+id/present"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Текущие"
-                    style="@style/projNames"
-                    android:layout_marginEnd="10dp" />
-                <ImageView
-                    android:id="@+id/imageAdd"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:contentDescription="Добавить"
-                    android:src="@drawable/add" />
-            </LinearLayout>
-            <TableLayout
-                android:id="@+id/currentProj"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:stretchColumns="*"
-                android:layout_below="@id/presentLayout"
-                >
-                <TableRow android:padding="3dp" android:background="@color/white_50">
-                    <TextView android:text="Размер" style="@style/tableStyle"/>
-                    <TextView android:text="Начало" style="@style/tableStyle"/>
-                    <TextView android:text="Планируется\nвышить к" style="@style/tableStyle"/>
-                    <TextView android:text="Вышито" style="@style/tableStyle"/>
-                </TableRow>
-                <TableRow android:padding="5dp">
-                    <TextView
-                        android:id="@+id/projName"
-                        android:text="Пума"
-                        android:padding="5dp"
-                        android:layout_span="4"
-                        style="@style/tableStyle.BlueText"
-                        />
-                </TableRow>
-                <TableRow android:padding="5dp" >
-                    <TextView android:text="104Х205" style="@style/tableStyle"/>
-                    <TextView android:text="18.03.2025" style="@style/tableStyle"/>
-                    <TextView android:text="20.05.2025" style="@style/tableStyle"/>
-                    <TextView android:text="2500" style="@style/tableStyle"/>
-                </TableRow>
-                <View android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/white"
-                    />
-                <TableRow android:padding="5dp">
-                    <TextView android:text="Пума"
-                        android:padding="5dp"
-                        android:layout_span="4"
-                        style="@style/tableStyle.BlueText"
-                        />
-                </TableRow>
-                <TableRow android:padding="5dp" >
-                    <TextView android:text="104Х205" style="@style/tableStyle"/>
-                    <TextView android:text="18.03.2025" style="@style/tableStyle"/>
-                    <TextView android:text="20.05.2025" style="@style/tableStyle"/>
-                    <TextView android:text="2500" style="@style/tableStyle"/>
-                </TableRow>
-                <View android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/white"
-                    />
-            </TableLayout>
-            <LinearLayout
-                android:id="@+id/futureLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_below="@id/currentProj">
-                <TextView
-                    android:id="@+id/future"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Будущие"
-                    style="@style/projNames"
-                    android:layout_marginEnd="10dp" />
-                <ImageView
-                    android:id="@+id/imageAddF"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:contentDescription="Добавить"
-                    android:src="@drawable/add" />
-            </LinearLayout>
-            <TableLayout
-                android:id="@+id/projTable"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:stretchColumns="*"
-                android:layout_below="@id/futureLayout"
-                >
-                <TableRow android:padding="3dp" android:background="@color/white_50">
-                    <TextView android:text="Размер" style="@style/tableStyle"/>
-                    <TextView android:text="Планируется\nвышить к" style="@style/tableStyle"/>
-                </TableRow>
-                <TableRow android:padding="3dp">
-                    <TextView android:text="Пума"
-                        android:padding="3dp"
-                        android:layout_span="2"
-                        style="@style/tableStyle.BlueText"
-                        />
-                </TableRow>
-                <TableRow android:padding="3dp" >
-                    <TextView android:text="104Х205" style="@style/tableStyle"/>
-                    <TextView android:text="18.03.2025" style="@style/tableStyle"/>
-                </TableRow>
-                <View android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/white"
-                    />
-                <TableRow android:padding="3dp">
-                    <TextView android:text="Пума"
-                        android:padding="3dp"
-                        android:layout_span="2"
-                        style="@style/tableStyle.BlueText"
-                        />
-                </TableRow>
-                <TableRow android:padding="3dp" >
-                    <TextView android:text="104Х205" style="@style/tableStyle"/>
-                    <TextView android:text="18.03.2025" style="@style/tableStyle"/>
-                </TableRow>
-                <View android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/white"
-                    />
-            </TableLayout>
+            android:text="Текущие"
+            style="@style/projNames"
+            android:layout_marginEnd="10dp" />
+        <ImageView
+            android:id="@+id/imageAdd"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:contentDescription="Добавить"
+            android:src="@drawable/add" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/currentProjHead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/presentLayout">
+        <TextView
+            android:id="@+id/size"
+            android:text="Размер"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/startDate"
+            android:text="Начало"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/planDate"
+            android:text="Планирую вышить к"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/stitched"
+            android:text="Вышито"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"/>
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/currentList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/currentProjHead"
+        />
+    <LinearLayout
+        android:id="@+id/futureLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@id/currentList">
+        <TextView
+            android:id="@+id/future"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Будущие"
+            style="@style/projNames"
+            android:layout_marginEnd="10dp" />
+        <ImageView
+            android:id="@+id/imageAddF"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:contentDescription="Добавить"
+            android:src="@drawable/add" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/futureProjHead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/futureLayout">
+        <TextView
+            android:id="@+id/sizeF"
+            android:text="Размер"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/planDateF"
+            android:text="Планирую вышить к"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"/>
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/futureList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/futureProjHead"
+        />
             <LinearLayout
                 android:id="@+id/finishLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_below="@id/projTable">
+                android:layout_below="@id/futureList">
                 <TextView
                     android:id="@+id/finish"
                     android:layout_width="wrap_content"
@@ -290,54 +259,47 @@
                     android:contentDescription="Добавить"
                     android:src="@drawable/add" />
             </LinearLayout>
-            <TableLayout
-                android:id="@+id/finishProjTable"
+            <LinearLayout
+                android:id="@+id/finishedProjHead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:stretchColumns="*"
-                android:layout_below="@id/finishLayout"
-                >
-                <TableRow android:padding="3dp" android:background="@color/white_50">
-                    <TextView android:text="Размер" style="@style/tableStyle"/>
-                    <TextView android:text="Начало" style="@style/tableStyle"/>
-                    <TextView android:text="Завершен" style="@style/tableStyle"/>
-                    <TextView android:text="Вышито" style="@style/tableStyle"/>
-                </TableRow>
-                <TableRow android:padding="5dp">
-                    <TextView android:text="Пума"
-                        android:padding="5dp"
-                        android:layout_span="4"
-                        style="@style/tableStyle.BlueText"
-                        />
-                </TableRow>
-                <TableRow android:padding="5dp" >
-                    <TextView android:text="104Х205" style="@style/tableStyle"/>
-                    <TextView android:text="18.03.2025" style="@style/tableStyle"/>
-                    <TextView android:text="20.05.2025" style="@style/tableStyle"/>
-                    <TextView android:text="2500" style="@style/tableStyle"/>
-                </TableRow>
-                <View android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/white"
-                    />
-                <TableRow android:padding="5dp">
-                    <TextView android:text="Пума"
-                        android:padding="5dp"
-                        android:layout_span="4"
-                        style="@style/tableStyle.BlueText"
-                        />
-                </TableRow>
-                <TableRow android:padding="5dp" >
-                    <TextView android:text="104Х205" style="@style/tableStyle"/>
-                    <TextView android:text="18.03.2025" style="@style/tableStyle"/>
-                    <TextView android:text="20.05.2025" style="@style/tableStyle"/>
-                    <TextView android:text="2500" style="@style/tableStyle"/>
-                </TableRow>
-                <View android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/white"
-                    />
-            </TableLayout>
+                android:orientation="horizontal"
+                android:layout_below="@id/finishLayout">
+                <TextView
+                    android:id="@+id/sizeFin"
+                    android:text="Размер"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/startDateFin"
+                    android:text="Начало"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/planDateFin"
+                    android:text="Завершен"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"/>
+                <TextView
+                    android:id="@+id/stitchedFin"
+                    android:text="Вышито"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"/>
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/finishedList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/finishedProjHead"
+                />
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>
