@@ -27,7 +27,8 @@ class ProjectAdapter(private var projects: List<Project>):
         val project = projects[position]
         holder.sizeView.text = "${project.width} X ${project.height}"
         holder.startDateView.text = project.startDate
-        holder.planDateView.text = project.finishDreamDate
+        holder.planDateView.text = if(project.projStatusId == 3) project.finishDate
+            else project.finishDreamDate
         holder.stitchedView.text = project.stitchedCrossBeforeRegistration.toString()
         holder.projNameView.text = project.projName
         if(project.projStatusId == 1) {
