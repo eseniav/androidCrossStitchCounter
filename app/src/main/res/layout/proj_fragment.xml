@@ -89,7 +89,6 @@
             android:layout_below="@id/regDate"
             />
     </RelativeLayout>
-
     <RelativeLayout
         android:id="@+id/layoutSpeed"
         android:layout_width="wrap_content"
@@ -119,11 +118,46 @@
             android:layout_centerHorizontal="true"
             />
     </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/currentProjHead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/layoutSpeed">
+        <TextView
+            android:id="@+id/size"
+            android:text="Размер"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/startDate"
+            android:text="Начало"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/planDate"
+            android:text="Планирую вышить к"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/stitched"
+            android:text="Вышито"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"/>
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tempList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layoutSpeed"
+        android:layout_below="@+id/currentProjHead"
         />
     <ScrollView
         android:id="@+id/scroll"
