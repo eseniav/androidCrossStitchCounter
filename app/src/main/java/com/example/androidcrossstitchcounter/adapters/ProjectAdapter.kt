@@ -29,6 +29,7 @@ class ProjectAdapter(private var projects: List<Project>):
         holder.startDateView.text = project.startDate
         holder.planDateView.text = project.finishDreamDate
         holder.stitchedView.text = project.stitchedCrossBeforeRegistration.toString()
+        holder.projNameView.text = project.projName
     }
 
     override fun getItemCount(): Int {
@@ -40,6 +41,7 @@ class ProjectAdapter(private var projects: List<Project>):
         val startDateView: TextView = itemView.findViewById<TextView>(R.id.startDate)
         val planDateView: TextView = itemView.findViewById<TextView>(R.id.planDate)
         val stitchedView: TextView = itemView.findViewById<TextView>(R.id.stitched)
+        val projNameView: TextView = itemView.findViewById<TextView>(R.id.projName)
     }
 
     fun updateProjects(newProjects: List<Project>) {
