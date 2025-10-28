@@ -53,7 +53,7 @@ class ProjFragment : Fragment() {
     fun loadProjects() {
         lifecycleScope.launch {
             val projects = projectDao.getProjectByUserId(app.user!!.id)
-            projAdapter.updateProjects(projects)
+            projAdapter.updateProjects(projects.filter { it.projStatusId == 2 })
         }
     }
 
