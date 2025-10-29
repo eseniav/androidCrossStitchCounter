@@ -85,6 +85,14 @@ class ProjFragment : Fragment() {
         mainActivity.toggleFragment(addProjFragment)
     }
 
+    private fun goToFragment(value: Int) {
+        val projDiaryFragment = ProjDiaryFragment()
+        val bundle = Bundle()
+        bundle.putInt("projId", value)
+        projDiaryFragment.arguments = bundle
+        mainActivity.toggleFragment(projDiaryFragment)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -94,10 +102,9 @@ class ProjFragment : Fragment() {
             mainActivity.toggleFragment(mainActivity.binding.profile,
                 ProfileFragment())
         }
-//        binding.projName.setOnClickListener {
-//            val intent = Intent(requireActivity(), ProjDiaryActivity::class.java)
-//            startActivity(intent)
-//        }
+        binding.avgSpeed.setOnClickListener {
+            goToFragment(1)
+        }
         // Переходы на страницы добавления проектов
         binding.imageAdd.setOnClickListener {
             goToFragment("present")
