@@ -2,6 +2,7 @@ package com.example.androidcrossstitchcounter.services
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.util.Log
 import android.widget.EditText
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -77,17 +78,22 @@ class CalendarUtils {
             val month = calendar.get(android.icu.util.Calendar.MONTH)
             val day = calendar.get(android.icu.util.Calendar.DAY_OF_MONTH)
 
-            val minCalendar = android.icu.util.Calendar.getInstance()
-            minCalendar.set(android.icu.util.Calendar.YEAR, year - min)
-            minCalendar.set(android.icu.util.Calendar.MONTH, month)
-            minCalendar.set(android.icu.util.Calendar.DAY_OF_MONTH, day)
-            datePickerdialog.datePicker.minDate = minCalendar.timeInMillis
+            try {
+                val minCalendar = android.icu.util.Calendar.getInstance()
+                minCalendar.set(android.icu.util.Calendar.YEAR, year - min)
+                minCalendar.set(android.icu.util.Calendar.MONTH, month)
+                minCalendar.set(android.icu.util.Calendar.DAY_OF_MONTH, day)
+                datePickerdialog.datePicker.minDate = minCalendar.timeInMillis
 
-            val maxCalendar = android.icu.util.Calendar.getInstance()
-            maxCalendar.set(android.icu.util.Calendar.YEAR, year - max)
-            maxCalendar.set(android.icu.util.Calendar.MONTH, month)
-            maxCalendar.set(android.icu.util.Calendar.DAY_OF_MONTH, day)
-            datePickerdialog.datePicker.maxDate = maxCalendar.timeInMillis
+                val maxCalendar = android.icu.util.Calendar.getInstance()
+                maxCalendar.set(android.icu.util.Calendar.YEAR, year - max)
+                maxCalendar.set(android.icu.util.Calendar.MONTH, month)
+                maxCalendar.set(android.icu.util.Calendar.DAY_OF_MONTH, day)
+                datePickerdialog.datePicker.maxDate = maxCalendar.timeInMillis
+            } catch (e: Exception) {
+                Log.e("CalendarUtils", "Ошибка при установке границ календаря: ${e.message}")
+            }
+
         }
     }
 }
