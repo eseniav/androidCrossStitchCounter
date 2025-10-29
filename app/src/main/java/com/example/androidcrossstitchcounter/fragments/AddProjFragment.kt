@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.TableRow
 import android.widget.Toast
@@ -16,6 +17,7 @@ import com.example.androidcrossstitchcounter.models.AppDataBase
 import com.example.androidcrossstitchcounter.models.DataBaseProvider
 import com.example.androidcrossstitchcounter.models.ProjDao
 import com.example.androidcrossstitchcounter.models.Project
+import com.example.androidcrossstitchcounter.services.CalendarUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -150,6 +152,17 @@ class AddProjFragment : Fragment() {
         binding.saveBtn.setOnClickListener {
             addProj()
         }
+
+        fun showCalendar(editText: EditText) {
+            editText.isFocusable = false
+            editText.isClickable = true
+            editText.setOnClickListener {
+                CalendarUtils.setDisplayCalendar(requireActivity(), editText).show()
+            }
+        }
+        showCalendar(binding.startDate)
+        showCalendar(binding.finishDream)
+        showCalendar(binding.finishDate)
     }
 
     companion object {
