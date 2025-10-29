@@ -116,15 +116,18 @@ class ProjFragment : Fragment() {
             goToFragment("finish")
         }
         // Анимация для свертывания списка проектов
-//        binding.present.setOnClickListener {
-//            Animation.Companion.hiding(binding.currentProj)
-//        }
-//        binding.future.setOnClickListener {
-//            Animation.Companion.hiding(binding.projTable)
-//        }
-//        binding.finish.setOnClickListener {
-//            Animation.Companion.hiding(binding.finishProjTable)
-//        }
+        binding.present.setOnClickListener {
+            Animation.Companion.hiding(binding.currentProjHead)
+            Animation.Companion.hiding(binding.currentList)
+        }
+        binding.future.setOnClickListener {
+            Animation.Companion.hiding(binding.futureProjHead)
+            Animation.Companion.hiding(binding.futureList)
+        }
+        binding.finish.setOnClickListener {
+            Animation.Companion.hiding(binding.finishedProjHead)
+            Animation.Companion.hiding(binding.finishedList)
+        }
 
         binding.currentList.layoutManager = LinearLayoutManager(requireContext())
         binding.futureList.layoutManager = LinearLayoutManager(requireContext())

@@ -195,24 +195,24 @@
                 android:layout_marginTop="0dp" />
 
             <LinearLayout
-        android:id="@+id/futureLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_below="@id/currentList">
-        <TextView
-            android:id="@+id/future"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Будущие"
-            style="@style/projNames"
-            android:layout_marginEnd="10dp" />
-        <ImageView
-            android:id="@+id/imageAddF"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:contentDescription="Добавить"
-            android:src="@drawable/add" />
+                android:id="@+id/futureLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_below="@id/currentList">
+                <TextView
+                    android:id="@+id/future"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Будущие"
+                    style="@style/projNames"
+                    android:layout_marginEnd="10dp" />
+                <ImageView
+                    android:id="@+id/imageAddF"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="Добавить"
+                    android:src="@drawable/add" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/futureProjHead"
