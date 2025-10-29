@@ -55,7 +55,7 @@ class RegActivity : AppCompatActivity() {
         date.isFocusable = false
         date.isClickable = true
         date.setOnClickListener {
-            CalendarUtils.setDisplayCalendar(this, date)
+            CalendarUtils.setDisplayCalendar(this, date).show()
         }
 
         binding.regBtnRegAct.setOnClickListener {

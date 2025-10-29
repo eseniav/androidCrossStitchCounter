@@ -14,6 +14,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.androidcrossstitchcounter.R
+import com.example.androidcrossstitchcounter.services.CalendarUtils
+import com.example.androidcrossstitchcounter.services.Validation
 
 class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
     private var profileValue: TextView
@@ -169,35 +171,9 @@ class ProfileFieldView @JvmOverloads constructor(context: Context, attrs: Attrib
         profileEditText.isFocusable = false
         profileEditText.isClickable = true
         profileEditText.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-            val datePickerdialog =
-                DatePickerDialog(context, { _, selectedYear, selectedMonth, selectedDay ->
-                    val formatedDate = String.format(
-                        "%02d.%02d.%04d",
-                        selectedDay,
-                        selectedMonth + 1,
-                        selectedYear
-                    )
-                    profileEditText.setText(formatedDate)
-                }, year, month, day)
-
-            val minCalendar = Calendar.getInstance()
-            minCalendar.set(Calendar.YEAR, year - 120)
-            minCalendar.set(Calendar.MONTH, month)
-            minCalendar.set(Calendar.DAY_OF_MONTH, day)
-            datePickerdialog.datePicker.minDate = minCalendar.timeInMillis
-
-            val maxCalendar = Calendar.getInstance()
-            maxCalendar.set(Calendar.YEAR, year - 5)
-            maxCalendar.set(Calendar.MONTH, month)
-            maxCalendar.set(Calendar.DAY_OF_MONTH, day)
-            datePickerdialog.datePicker.maxDate = maxCalendar.timeInMillis
-
-            datePickerdialog.show()
+            val calendar = CalendarUtils.setDisplayCalendar(context, profileEditText)
+            Validation.checkBirthDate(calendar)
+            calendar.show()
         }
     }
 }
