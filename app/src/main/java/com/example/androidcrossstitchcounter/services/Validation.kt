@@ -20,22 +20,7 @@ class Validation {
         fun checkPhone(input: String) = phonePattern.matches(input)
         fun checkEmail(input: String) = input.matches(emailPattern.toRegex())
         fun checkBirthDate(datePickerdialog: DatePickerDialog) {
-            val calendar = android.icu.util.Calendar.getInstance()
-            val year = calendar.get(android.icu.util.Calendar.YEAR)
-            val month = calendar.get(android.icu.util.Calendar.MONTH)
-            val day = calendar.get(android.icu.util.Calendar.DAY_OF_MONTH)
-
-            val minCalendar = android.icu.util.Calendar.getInstance()
-            minCalendar.set(android.icu.util.Calendar.YEAR, year - 120)
-            minCalendar.set(android.icu.util.Calendar.MONTH, month)
-            minCalendar.set(android.icu.util.Calendar.DAY_OF_MONTH, day)
-            datePickerdialog.datePicker.minDate = minCalendar.timeInMillis
-
-            val maxCalendar = android.icu.util.Calendar.getInstance()
-            maxCalendar.set(android.icu.util.Calendar.YEAR, year - 5)
-            maxCalendar.set(android.icu.util.Calendar.MONTH, month)
-            maxCalendar.set(android.icu.util.Calendar.DAY_OF_MONTH, day)
-            datePickerdialog.datePicker.maxDate = maxCalendar.timeInMillis
+            CalendarUtils.setCalendarBorders(datePickerdialog, 120, 5)
         }
     }
 }

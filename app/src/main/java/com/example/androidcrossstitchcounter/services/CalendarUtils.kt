@@ -70,5 +70,24 @@ class CalendarUtils {
                 }, year, month, day)
             return datePickerdialog
         }
+
+        fun setCalendarBorders(datePickerdialog: DatePickerDialog, min: Int, max: Int) {
+            val calendar = android.icu.util.Calendar.getInstance()
+            val year = calendar.get(android.icu.util.Calendar.YEAR)
+            val month = calendar.get(android.icu.util.Calendar.MONTH)
+            val day = calendar.get(android.icu.util.Calendar.DAY_OF_MONTH)
+
+            val minCalendar = android.icu.util.Calendar.getInstance()
+            minCalendar.set(android.icu.util.Calendar.YEAR, year - min)
+            minCalendar.set(android.icu.util.Calendar.MONTH, month)
+            minCalendar.set(android.icu.util.Calendar.DAY_OF_MONTH, day)
+            datePickerdialog.datePicker.minDate = minCalendar.timeInMillis
+
+            val maxCalendar = android.icu.util.Calendar.getInstance()
+            maxCalendar.set(android.icu.util.Calendar.YEAR, year - max)
+            maxCalendar.set(android.icu.util.Calendar.MONTH, month)
+            maxCalendar.set(android.icu.util.Calendar.DAY_OF_MONTH, day)
+            datePickerdialog.datePicker.maxDate = maxCalendar.timeInMillis
+        }
     }
 }
