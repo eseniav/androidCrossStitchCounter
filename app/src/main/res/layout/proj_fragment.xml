@@ -16,8 +16,8 @@
         >
         <ImageView
             android:id="@+id/imgAvatar"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:contentDescription="@string/avatar"
             android:src="@drawable/test"
             android:scaleType="centerCrop"
@@ -109,7 +109,7 @@
             android:text="Средняя скорость: "
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            style="@style/labelRose"
+            style="@style/labelNewStandartOld"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -118,8 +118,8 @@
             android:text="239 кр./день"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            style="@style/labelAcherus"
-            android:textSize="20sp"
+            style="@style/labelPrimusPlum"
+            android:textSize="25sp"
             android:textColor="@color/dark_plum"
             android:layout_centerHorizontal="true"
             />
