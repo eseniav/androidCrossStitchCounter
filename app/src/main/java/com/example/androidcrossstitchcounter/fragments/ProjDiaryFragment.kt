@@ -63,12 +63,12 @@ class ProjDiaryFragment : Fragment() {
 
     fun changeVisibility(isEdit: Boolean) {
         if(isEdit) {
-            binding.addRow.visibility = View.VISIBLE
+            binding.addCross.visibility = View.VISIBLE
             binding.imageCheck.visibility = View.VISIBLE
             binding.imageCancel.visibility = View.VISIBLE
             binding.imageAdd.visibility = View.GONE
         } else {
-            binding.addRow.visibility = View.GONE
+            binding.addCross.visibility = View.GONE
             binding.imageCheck.visibility = View.GONE
             binding.imageCancel.visibility = View.GONE
             binding.imageAdd.visibility = View.VISIBLE
