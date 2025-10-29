@@ -52,7 +52,7 @@ class CalendarUtils {
             }
         }
 
-        fun setDisplayCalendar(context: Context, date: EditText) {
+        fun setDisplayCalendar(context: Context, date: EditText): DatePickerDialog {
             val calendar = android.icu.util.Calendar.getInstance()
             val year = calendar.get(android.icu.util.Calendar.YEAR)
             val month = calendar.get(android.icu.util.Calendar.MONTH)
@@ -68,7 +68,7 @@ class CalendarUtils {
                     )
                     date.setText(formatedDate)
                 }, year, month, day)
-            datePickerdialog.show()
+            return datePickerdialog
         }
     }
 }
