@@ -22,5 +22,11 @@ class Validation {
         fun checkBirthDate(datePickerdialog: DatePickerDialog) {
             CalendarUtils.setCalendarBorders(datePickerdialog, 120, 5)
         }
+        fun checkStartFinishDate(datePickerdialog: DatePickerDialog) {
+            CalendarUtils.setCalendarBorders(datePickerdialog, 100, 0)
+        }
+        fun checkPlanDate(datePickerdialog: DatePickerDialog) {
+            CalendarUtils.setCalendarBorders(datePickerdialog, -1, 100)
+        }
     }
 }
