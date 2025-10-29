@@ -11,6 +11,8 @@ import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.databinding.ProjDiaryFragmentBinding
 import com.example.androidcrossstitchcounter.services.Animation
+import com.example.androidcrossstitchcounter.services.CalendarUtils
+import com.example.androidcrossstitchcounter.services.Validation
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,9 +51,32 @@ class ProjDiaryFragment : Fragment() {
         return binding.root
     }
 
+    fun setCalendar() {
+        binding.date.isFocusable = false
+        binding.date.isClickable = true
+        binding.date.setOnClickListener {
+            val calendar = CalendarUtils.setDisplayCalendar(requireActivity(), binding.date)
+            Validation.checkStartFinishDate(calendar)
+            calendar.show()
+        }
+    }
+
+    fun changeVisibility(isEdit: Boolean) {
+        if(isEdit) {
+            binding.addRow.visibility = View.VISIBLE
+            binding.imageCheck.visibility = View.VISIBLE
+            binding.imageCancel.visibility = View.VISIBLE
+            binding.imageAdd.visibility = View.GONE
+        } else {
+            binding.addRow.visibility = View.GONE
+            binding.imageCheck.visibility = View.GONE
+            binding.imageCancel.visibility = View.GONE
+            binding.imageAdd.visibility = View.VISIBLE
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         //Анимация
         binding.aboutProj.setOnClickListener {
             Animation.Companion.hiding(binding.innerLayout)
@@ -60,19 +85,7 @@ class ProjDiaryFragment : Fragment() {
             Animation.Companion.hiding(binding.statisticsInnerL)
         }
 
-        fun changeVisibility(isEdit: Boolean) {
-            if(isEdit) {
-                binding.addRow.visibility = View.VISIBLE
-                binding.imageCheck.visibility = View.VISIBLE
-                binding.imageCancel.visibility = View.VISIBLE
-                binding.imageAdd.visibility = View.GONE
-            } else {
-                binding.addRow.visibility = View.GONE
-                binding.imageCheck.visibility = View.GONE
-                binding.imageCancel.visibility = View.GONE
-                binding.imageAdd.visibility = View.VISIBLE
-            }
-        }
+
         changeVisibility(false)
 
         binding.imageAdd.setOnClickListener {
@@ -84,6 +97,7 @@ class ProjDiaryFragment : Fragment() {
         binding.imageCancel.setOnClickListener {
             changeVisibility(false)
         }
+        setCalendar()
     }
 
     companion object {

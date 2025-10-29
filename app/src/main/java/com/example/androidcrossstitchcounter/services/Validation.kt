@@ -1,5 +1,6 @@
 package com.example.androidcrossstitchcounter.services
 
+import android.app.DatePickerDialog
 import java.util.Calendar
 
 class Validation {
@@ -18,5 +19,14 @@ class Validation {
         }
         fun checkPhone(input: String) = phonePattern.matches(input)
         fun checkEmail(input: String) = input.matches(emailPattern.toRegex())
+        fun checkBirthDate(datePickerdialog: DatePickerDialog) {
+            CalendarUtils.setCalendarBorders(datePickerdialog, 120, 5)
+        }
+        fun checkStartFinishDate(datePickerdialog: DatePickerDialog) {
+            CalendarUtils.setCalendarBorders(datePickerdialog, 100, 0)
+        }
+        fun checkPlanDate(datePickerdialog: DatePickerDialog) {
+            CalendarUtils.setCalendarBorders(datePickerdialog, -1, 100)
+        }
     }
 }

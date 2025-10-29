@@ -1,5 +1,9 @@
 package com.example.androidcrossstitchcounter.services
 
+import android.app.DatePickerDialog
+import android.content.Context
+import android.util.Log
+import android.widget.EditText
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -46,6 +50,58 @@ class CalendarUtils {
                 val calendar = Calendar.getInstance()
                 val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
                 dateFormat.format(calendar.time)
+            }
+        }
+
+        fun setDisplayCalendar(context: Context, date: EditText): DatePickerDialog {
+            val calendar = android.icu.util.Calendar.getInstance()
+            val year = calendar.get(android.icu.util.Calendar.YEAR)
+            val month = calendar.get(android.icu.util.Calendar.MONTH)
+            val day = calendar.get(android.icu.util.Calendar.DAY_OF_MONTH)
+
+            val datePickerdialog =
+                DatePickerDialog(context, { _, selectedYear, selectedMonth, selectedDay ->
+                    val formatedDate = String.format(
+                        "%02d.%02d.%04d",
+                        selectedDay,
+                        selectedMonth + 1,
+                        selectedYear
+                    )
+                    date.setText(formatedDate)
+                }, year, month, day)
+            return datePickerdialog
+        }
+
+        fun setCalendarBorders(datePickerdialog: DatePickerDialog, min: Int, max: Int) {
+            val calendar = android.icu.util.Calendar.getInstance()
+            val year = calendar.get(android.icu.util.Calendar.YEAR)
+            val month = calendar.get(android.icu.util.Calendar.MONTH)
+            val day = calendar.get(android.icu.util.Calendar.DAY_OF_MONTH)
+
+            try {
+                val minCalendar = Calendar.getInstance()
+                if (min == -1) {
+                    minCalendar.add(Calendar.DAY_OF_MONTH, 1)
+                } else {
+                    minCalendar.set(Calendar.YEAR, year - min)
+                    minCalendar.set(Calendar.MONTH, month)
+                    minCalendar.set(Calendar.DAY_OF_MONTH, day)
+                }
+                datePickerdialog.datePicker.minDate = minCalendar.timeInMillis
+
+                val maxCalendar = Calendar.getInstance()
+                if (max == 100 && min == -1) {
+                    maxCalendar.add(Calendar.YEAR, 100)
+                    maxCalendar.set(Calendar.MONTH, month)
+                    maxCalendar.set(Calendar.DAY_OF_MONTH, day)
+                } else {
+                    maxCalendar.set(Calendar.YEAR, year - max)
+                    maxCalendar.set(Calendar.MONTH, month)
+                    maxCalendar.set(Calendar.DAY_OF_MONTH, day)
+                }
+                datePickerdialog.datePicker.maxDate = maxCalendar.timeInMillis
+            } catch (e: Exception) {
+                Log.e("CalendarUtils", "Ошибка при установке границ календаря: ${e.message}")
             }
         }
     }
