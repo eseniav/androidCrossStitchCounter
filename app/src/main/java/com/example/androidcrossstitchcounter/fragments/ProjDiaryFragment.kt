@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TableRow
 import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.databinding.ProjDiaryFragmentBinding
@@ -47,13 +49,42 @@ class ProjDiaryFragment : Fragment() {
         return binding.root
     }
 
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//            binding.aboutProj.setOnClickListener {
-//            Animation.Companion.hiding(aboutProjLayout)
-//        }
-//    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        //Анимация
+        binding.aboutProj.setOnClickListener {
+            Animation.Companion.hiding(binding.innerLayout)
+        }
+        binding.statistics.setOnClickListener {
+            Animation.Companion.hiding(binding.statisticsInnerL)
+        }
+
+        fun changeVisibility(isEdit: Boolean) {
+            if(isEdit) {
+                binding.addRow.visibility = View.VISIBLE
+                binding.imageCheck.visibility = View.VISIBLE
+                binding.imageCancel.visibility = View.VISIBLE
+                binding.imageAdd.visibility = View.GONE
+            } else {
+                binding.addRow.visibility = View.GONE
+                binding.imageCheck.visibility = View.GONE
+                binding.imageCancel.visibility = View.GONE
+                binding.imageAdd.visibility = View.VISIBLE
+            }
+        }
+        changeVisibility(false)
+
+        binding.imageAdd.setOnClickListener {
+            changeVisibility(true)
+        }
+        binding.imageCheck.setOnClickListener {
+            changeVisibility(false)
+        }
+        binding.imageCancel.setOnClickListener {
+            changeVisibility(false)
+        }
+    }
 
     companion object {
         /**
