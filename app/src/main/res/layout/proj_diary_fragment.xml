@@ -10,16 +10,16 @@
         android:id="@+id/headProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Пума"
-        style="@style/labelAcherus"
-        android:textSize="30sp"
+        android:text="Имя проекта"
+        style="@style/labelProjHeader"
+        android:textSize="25sp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         />
     <ImageView
         android:id="@+id/imgAvatar"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:contentDescription="@string/avatar"
         android:src="@drawable/test"
         android:background="@drawable/frame"
@@ -59,7 +59,7 @@
                     android:text="Автор дизайна: "
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    style="@style/labelAcherus"
+                    style="@style/labelPrimusDarkGreen"
                     />
                 <TextView
                     android:id="@+id/designerVal"
@@ -68,8 +68,7 @@
                     android:text="Dimensions"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@id/designer"
-                    style="@style/labelAcherus"
-                    android:textColor="@color/dark_blue"
+                    style="@style/labelPrimusDarkBlue"
                     />
                 <TextView
                     android:id="@+id/size"
@@ -78,7 +77,7 @@
                     android:text="Размер: "
                     app:layout_constraintTop_toBottomOf="@id/designer"
                     app:layout_constraintStart_toStartOf="parent"
-                    style="@style/labelAcherus"
+                    style="@style/labelPrimusDarkGreen"
                     />
                 <TextView
                     android:id="@+id/sizeVal"
@@ -87,8 +86,7 @@
                     android:text="140X250"
                     app:layout_constraintTop_toBottomOf="@id/designer"
                     app:layout_constraintStart_toEndOf="@id/size"
-                    style="@style/labelAcherus"
-                    android:textColor="@color/dark_blue"
+                    style="@style/labelPrimusDarkBlue"
                     />
                 <TextView
                     android:id="@+id/allCross"
@@ -97,7 +95,7 @@
                     android:text="Всего крестиков: "
                     app:layout_constraintTop_toBottomOf="@id/size"
                     app:layout_constraintStart_toStartOf="parent"
-                    style="@style/labelAcherus"
+                    style="@style/labelPrimusDarkGreen"
                     />
                 <TextView
                     android:id="@+id/allCrossVal"
@@ -106,8 +104,7 @@
                     android:text="35000"
                     app:layout_constraintTop_toBottomOf="@id/size"
                     app:layout_constraintStart_toEndOf="@id/allCross"
-                    style="@style/labelAcherus"
-                    android:textColor="@color/dark_blue"
+                    style="@style/labelPrimusDarkBlue"
                     />
                 <TextView
                     android:id="@+id/beforeRegCross"
@@ -116,7 +113,7 @@
                     android:text="Вышито до регистрации: "
                     app:layout_constraintTop_toBottomOf="@id/allCross"
                     app:layout_constraintStart_toStartOf="parent"
-                    style="@style/labelAcherus"
+                    style="@style/labelPrimusDarkGreen"
                     />
                 <TextView
                     android:id="@+id/beforeRegCrossVal"
@@ -125,8 +122,7 @@
                     android:text="3000"
                     app:layout_constraintTop_toBottomOf="@id/allCross"
                     app:layout_constraintStart_toEndOf="@id/beforeRegCross"
-                    style="@style/labelAcherus"
-                    android:textColor="@color/dark_blue"
+                    style="@style/labelPrimusDarkBlue"
                     />
                 <TextView
                     android:id="@+id/startDate"
@@ -135,7 +131,7 @@
                     android:text="Дата начала: "
                     app:layout_constraintTop_toBottomOf="@id/beforeRegCross"
                     app:layout_constraintStart_toStartOf="parent"
-                    style="@style/labelAcherus"
+                    style="@style/labelPrimusDarkGreen"
                     />
                 <TextView
                     android:id="@+id/startDateVal"
@@ -144,8 +140,7 @@
                     android:text="12.03.2025"
                     app:layout_constraintTop_toBottomOf="@id/beforeRegCross"
                     app:layout_constraintStart_toEndOf="@id/startDate"
-                    style="@style/labelAcherus"
-                    android:textColor="@color/dark_blue"
+                    style="@style/labelPrimusDarkBlue"
                     />
                 <TextView
                     android:id="@+id/planDate"
@@ -154,7 +149,7 @@
                     android:text="Планируется вышить к: "
                     app:layout_constraintTop_toBottomOf="@id/startDate"
                     app:layout_constraintStart_toStartOf="parent"
-                    style="@style/labelAcherus"
+                    style="@style/labelPrimusDarkGreen"
                     />
                 <TextView
                     android:id="@+id/planDateVal"
@@ -163,8 +158,7 @@
                     android:text="12.03.2026"
                     app:layout_constraintTop_toBottomOf="@id/startDate"
                     app:layout_constraintStart_toEndOf="@id/planDate"
-                    style="@style/labelAcherus"
-                    android:textColor="@color/dark_blue"
+                    style="@style/labelPrimusDarkBlue"
                     />
                 <TextView
                     android:id="@+id/finishDate"
@@ -173,7 +167,7 @@
                     android:text="Проект завершен: "
                     app:layout_constraintTop_toBottomOf="@id/planDate"
                     app:layout_constraintStart_toStartOf="parent"
-                    style="@style/labelAcherus"
+                    style="@style/labelPrimusDarkGreen"
                     />
                 <TextView
                     android:id="@+id/finishDateVal"
@@ -182,8 +176,7 @@
                     android:text="12.08.2025"
                     app:layout_constraintTop_toBottomOf="@id/planDate"
                     app:layout_constraintStart_toEndOf="@id/finishDate"
-                    style="@style/labelAcherus"
-                    android:textColor="@color/dark_blue"
+                    style="@style/labelPrimusDarkBlue"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <TextView
@@ -205,7 +198,7 @@
                     android:text="Вышито: "
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    style="@style/labelAcherus"
+                    style="@style/labelPrimusDarkGreen"
                     />
                 <TextView
                     android:id="@+id/stitchedVal"
@@ -214,8 +207,7 @@
                     android:text="54185 кр./ 3515 дн."
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@id/stitched"
-                    style="@style/labelAcherus"
-                    android:textColor="@color/dark_blue"
+                    style="@style/labelPrimusDarkBlue"
                     />
                 <TextView
                     android:id="@+id/rest"
@@ -224,7 +216,7 @@
                     android:text="Осталось: "
                     app:layout_constraintTop_toBottomOf="@id/stitched"
                     app:layout_constraintStart_toStartOf="parent"
-                    style="@style/labelAcherus"
+                    style="@style/labelPrimusDarkGreen"
                     />
                 <TextView
                     android:id="@+id/restVal"
@@ -233,8 +225,7 @@
                     android:text="4827 кр./ 322 дн."
                     app:layout_constraintTop_toBottomOf="@id/stitched"
                     app:layout_constraintStart_toEndOf="@id/rest"
-                    style="@style/labelAcherus"
-                    android:textColor="@color/dark_blue"
+                    style="@style/labelPrimusDarkBlue"
                     />
                 <TextView
                     android:id="@+id/avgSpeed"
@@ -243,7 +234,7 @@
                     android:text="Средняя скорость: "
                     app:layout_constraintTop_toBottomOf="@id/rest"
                     app:layout_constraintStart_toStartOf="parent"
-                    style="@style/labelAcherus"
+                    style="@style/labelPrimusDarkGreen"
                     />
                 <TextView
                     android:id="@+id/avgSpeedVal"
@@ -252,8 +243,7 @@
                     android:text="15 кр./день"
                     app:layout_constraintTop_toBottomOf="@id/rest"
                     app:layout_constraintStart_toEndOf="@id/avgSpeed"
-                    style="@style/labelAcherus"
-                    android:textColor="@color/dark_blue"
+                    style="@style/labelPrimusDarkBlue"
                     />
                 <TextView
                     android:id="@+id/prognosis"
@@ -262,7 +252,7 @@
                     android:text="Прогноз окончания: "
                     app:layout_constraintTop_toBottomOf="@id/avgSpeed"
                     app:layout_constraintStart_toStartOf="parent"
-                    style="@style/labelAcherus"
+                    style="@style/labelPrimusDarkGreen"
                     />
                 <TextView
                     android:id="@+id/prognosisVal"
@@ -271,8 +261,7 @@
                     android:text="04.07.2026"
                     app:layout_constraintTop_toBottomOf="@id/avgSpeed"
                     app:layout_constraintStart_toEndOf="@id/prognosis"
-                    style="@style/labelAcherus"
-                    android:textColor="@color/dark_blue"
+                    style="@style/labelPrimusDarkBlue"
                     />
                 <TextView
                     android:id="@+id/percent"
@@ -281,7 +270,7 @@
                     android:text="Вышито в процентах: "
                     app:layout_constraintTop_toBottomOf="@id/prognosis"
                     app:layout_constraintStart_toStartOf="parent"
-                    style="@style/labelAcherus"
+                    style="@style/labelPrimusDarkGreen"
                     />
                 <TextView
                     android:id="@+id/percentVal"
@@ -290,8 +279,7 @@
                     android:text="92%"
                     app:layout_constraintTop_toBottomOf="@id/prognosis"
                     app:layout_constraintStart_toEndOf="@id/percent"
-                    style="@style/labelAcherus"
-                    android:textColor="@color/dark_blue"
+                    style="@style/labelPrimusDarkBlue"
                     />
                 <TextView
                     android:id="@+id/necessarySpeed"
@@ -300,7 +288,7 @@
                     android:text="Необходимая скорость: "
                     app:layout_constraintTop_toBottomOf="@id/percent"
                     app:layout_constraintStart_toStartOf="parent"
-                    style="@style/labelAcherus"
+                    style="@style/labelPrimusDarkGreen"
                     />
                 <TextView
                     android:id="@+id/necessarySpeedVal"
@@ -309,8 +297,7 @@
                     android:text="302 кр./день"
                     app:layout_constraintTop_toBottomOf="@id/percent"
                     app:layout_constraintStart_toEndOf="@id/necessarySpeed"
-                    style="@style/labelAcherus"
-                    android:textColor="@color/dark_plum"
+                    style="@style/labelPrimusPlum"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <LinearLayout
