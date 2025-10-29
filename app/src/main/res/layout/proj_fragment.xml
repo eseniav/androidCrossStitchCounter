@@ -16,8 +16,8 @@
         >
         <ImageView
             android:id="@+id/imgAvatar"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:contentDescription="@string/avatar"
             android:src="@drawable/test"
             android:scaleType="centerCrop"
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="anna"
-            style="@style/labelCakra"
+            style="@style/labelPrimusDarkBlue"
             android:textSize="25sp"
             android:layout_toEndOf="@id/imgAvatar"
             android:textStyle="italic|bold"
@@ -38,7 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nameProjLine"
-            style="@style/labelAcherus"
+            style="@style/labelPrimusDarkGreen"
+            android:textSize="16sp"
             android:layout_toEndOf="@id/imgAvatar"
             android:layout_below="@id/logProj"
             />
@@ -46,7 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" Анна"
-            style="@style/labelAcherus"
+            style="@style/labelPrimusPlum"
+            android:textSize="16sp"
             android:textColor="@color/dark_plum"
             android:layout_toEndOf="@id/nameProj"
             android:layout_below="@id/logProj"
@@ -56,7 +58,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/regDateLine"
-            style="@style/labelAcherus"
+            style="@style/labelPrimusDarkGreen"
+            android:textSize="16sp"
             android:layout_toEndOf="@id/imgAvatar"
             android:layout_below="@id/nameProj"
             />
@@ -65,7 +68,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" 18.02.2025"
-            style="@style/labelAcherus"
+            style="@style/labelPrimusPlum"
+            android:textSize="16sp"
             android:textColor="@color/dark_plum"
             android:layout_toEndOf="@id/imgAvatar"
             android:layout_below="@id/regDateProj"
@@ -75,7 +79,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ageLine"
-            style="@style/labelAcherus"
+            style="@style/labelPrimusDarkGreen"
+            android:textSize="16sp"
             android:layout_toEndOf="@id/imgAvatar"
             android:layout_below="@id/regDate"
             />
@@ -83,7 +88,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" 30"
-            style="@style/labelAcherus"
+            style="@style/labelPrimusPlum"
+            android:textSize="16sp"
             android:textColor="@color/dark_plum"
             android:layout_toEndOf="@id/ageProj"
             android:layout_below="@id/regDate"
@@ -103,7 +109,7 @@
             android:text="Средняя скорость: "
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            style="@style/labelRose"
+            style="@style/labelNewStandartOld"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -112,8 +118,8 @@
             android:text="239 кр./день"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            style="@style/labelAcherus"
-            android:textSize="20sp"
+            style="@style/labelPrimusPlum"
+            android:textSize="25sp"
             android:textColor="@color/dark_plum"
             android:layout_centerHorizontal="true"
             />
@@ -163,54 +169,60 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"/>
+            android:gravity="center"
+            style="@style/labelPrimusPlum"/>
         <TextView
             android:id="@+id/startDate"
             android:text="Начало"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"/>
+            android:gravity="center"
+            style="@style/labelPrimusPlum"/>
         <TextView
             android:id="@+id/planDate"
             android:text="Планирую вышить к"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"/>
+            android:gravity="center"
+            style="@style/labelPrimusPlum"/>
         <TextView
             android:id="@+id/stitched"
             android:text="Вышито"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"/>
+            android:gravity="center"
+            style="@style/labelPrimusPlum"/>
     </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/currentList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/currentProjHead"
-        />
-    <LinearLayout
-        android:id="@+id/futureLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_below="@id/currentList">
-        <TextView
-            android:id="@+id/future"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Будущие"
-            style="@style/projNames"
-            android:layout_marginEnd="10dp" />
-        <ImageView
-            android:id="@+id/imageAddF"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:contentDescription="Добавить"
-            android:src="@drawable/add" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/currentList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/currentProjHead"
+                android:layout_marginTop="0dp" />
+
+            <LinearLayout
+                android:id="@+id/futureLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_below="@id/currentList">
+                <TextView
+                    android:id="@+id/future"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Будущие"
+                    style="@style/projNames"
+                    android:layout_marginEnd="10dp" />
+                <ImageView
+                    android:id="@+id/imageAddF"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="Добавить"
+                    android:src="@drawable/add" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/futureProjHead"
@@ -224,14 +236,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"/>
+            android:gravity="center"
+            style="@style/labelPrimusPlum"/>
         <TextView
             android:id="@+id/planDateF"
             android:text="Планирую вышить к"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"/>
+            android:gravity="center"
+            style="@style/labelPrimusPlum"/>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/futureList"
@@ -271,28 +285,32 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    style="@style/labelPrimusPlum"/>
                 <TextView
                     android:id="@+id/startDateFin"
                     android:text="Начало"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    style="@style/labelPrimusPlum"/>
                 <TextView
                     android:id="@+id/planDateFin"
                     android:text="Завершен"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    style="@style/labelPrimusPlum"/>
                 <TextView
                     android:id="@+id/stitchedFin"
                     android:text="Вышито"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    style="@style/labelPrimusPlum"/>
             </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/finishedList"

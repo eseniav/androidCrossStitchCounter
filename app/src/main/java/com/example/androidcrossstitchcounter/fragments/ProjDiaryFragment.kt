@@ -5,7 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TableRow
+import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
+import com.example.androidcrossstitchcounter.databinding.ProjDiaryFragmentBinding
+import com.example.androidcrossstitchcounter.services.Animation
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +26,12 @@ class ProjDiaryFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private val binding by lazy {
+        ProjDiaryFragmentBinding.inflate(layoutInflater)
+    }
+    private val app: App by lazy {
+        requireActivity().application as App
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +46,44 @@ class ProjDiaryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.proj_diary_fragment, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        //Анимация
+        binding.aboutProj.setOnClickListener {
+            Animation.Companion.hiding(binding.innerLayout)
+        }
+        binding.statistics.setOnClickListener {
+            Animation.Companion.hiding(binding.statisticsInnerL)
+        }
+
+        fun changeVisibility(isEdit: Boolean) {
+            if(isEdit) {
+                binding.addRow.visibility = View.VISIBLE
+                binding.imageCheck.visibility = View.VISIBLE
+                binding.imageCancel.visibility = View.VISIBLE
+                binding.imageAdd.visibility = View.GONE
+            } else {
+                binding.addRow.visibility = View.GONE
+                binding.imageCheck.visibility = View.GONE
+                binding.imageCancel.visibility = View.GONE
+                binding.imageAdd.visibility = View.VISIBLE
+            }
+        }
+        changeVisibility(false)
+
+        binding.imageAdd.setOnClickListener {
+            changeVisibility(true)
+        }
+        binding.imageCheck.setOnClickListener {
+            changeVisibility(false)
+        }
+        binding.imageCancel.setOnClickListener {
+            changeVisibility(false)
+        }
     }
 
     companion object {

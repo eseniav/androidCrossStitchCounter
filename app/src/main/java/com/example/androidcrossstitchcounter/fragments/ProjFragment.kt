@@ -85,6 +85,14 @@ class ProjFragment : Fragment() {
         mainActivity.toggleFragment(addProjFragment)
     }
 
+    private fun goToFragment(value: Int) {
+        val projDiaryFragment = ProjDiaryFragment()
+        val bundle = Bundle()
+        bundle.putInt("projId", value)
+        projDiaryFragment.arguments = bundle
+        mainActivity.toggleFragment(projDiaryFragment)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -94,10 +102,9 @@ class ProjFragment : Fragment() {
             mainActivity.toggleFragment(mainActivity.binding.profile,
                 ProfileFragment())
         }
-//        binding.projName.setOnClickListener {
-//            val intent = Intent(requireActivity(), ProjDiaryActivity::class.java)
-//            startActivity(intent)
-//        }
+        binding.avgSpeed.setOnClickListener {
+            goToFragment(1)
+        }
         // Переходы на страницы добавления проектов
         binding.imageAdd.setOnClickListener {
             goToFragment("present")
@@ -109,15 +116,18 @@ class ProjFragment : Fragment() {
             goToFragment("finish")
         }
         // Анимация для свертывания списка проектов
-//        binding.present.setOnClickListener {
-//            Animation.Companion.hiding(binding.currentProj)
-//        }
-//        binding.future.setOnClickListener {
-//            Animation.Companion.hiding(binding.projTable)
-//        }
-//        binding.finish.setOnClickListener {
-//            Animation.Companion.hiding(binding.finishProjTable)
-//        }
+        binding.present.setOnClickListener {
+            Animation.Companion.hiding(binding.currentProjHead)
+            Animation.Companion.hiding(binding.currentList)
+        }
+        binding.future.setOnClickListener {
+            Animation.Companion.hiding(binding.futureProjHead)
+            Animation.Companion.hiding(binding.futureList)
+        }
+        binding.finish.setOnClickListener {
+            Animation.Companion.hiding(binding.finishedProjHead)
+            Animation.Companion.hiding(binding.finishedList)
+        }
 
         binding.currentList.layoutManager = LinearLayoutManager(requireContext())
         binding.futureList.layoutManager = LinearLayoutManager(requireContext())
