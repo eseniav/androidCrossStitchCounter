@@ -318,6 +318,26 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/finishedProjHead"
                 />
+            <LinearLayout
+                android:id="@+id/archiveLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_below="@id/finishedList">
+                <TextView
+                    android:id="@+id/archive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Архив"
+                    style="@style/projNames"
+                    android:layout_marginEnd="10dp" />
+                <ImageView
+                    android:id="@+id/imageAddArchive"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="Добавить"
+                    android:src="@drawable/add" />
+            </LinearLayout>
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>
