@@ -18,6 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.example.androidcrossstitchcounter.models.DataBaseProvider
+import com.example.androidcrossstitchcounter.services.CalendarUtils
 
 class RegActivity : AppCompatActivity() {
     private lateinit var userDao: UserDao
@@ -54,22 +55,7 @@ class RegActivity : AppCompatActivity() {
         date.isFocusable = false
         date.isClickable = true
         date.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-            val datePickerdialog =
-                DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
-                    val formatedDate = String.format(
-                        "%02d.%02d.%04d",
-                        selectedDay,
-                        selectedMonth + 1,
-                        selectedYear
-                    )
-                    date.setText(formatedDate)
-                }, year, month, day)
-            datePickerdialog.show()
+            CalendarUtils.setDisplayCalendar(this, date)
         }
 
         binding.regBtnRegAct.setOnClickListener {

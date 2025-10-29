@@ -1,5 +1,8 @@
 package com.example.androidcrossstitchcounter.services
 
+import android.app.DatePickerDialog
+import android.content.Context
+import android.widget.EditText
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -47,6 +50,25 @@ class CalendarUtils {
                 val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
                 dateFormat.format(calendar.time)
             }
+        }
+
+        fun setDisplayCalendar(context: Context, date: EditText) {
+            val calendar = android.icu.util.Calendar.getInstance()
+            val year = calendar.get(android.icu.util.Calendar.YEAR)
+            val month = calendar.get(android.icu.util.Calendar.MONTH)
+            val day = calendar.get(android.icu.util.Calendar.DAY_OF_MONTH)
+
+            val datePickerdialog =
+                DatePickerDialog(context, { _, selectedYear, selectedMonth, selectedDay ->
+                    val formatedDate = String.format(
+                        "%02d.%02d.%04d",
+                        selectedDay,
+                        selectedMonth + 1,
+                        selectedYear
+                    )
+                    date.setText(formatedDate)
+                }, year, month, day)
+            datePickerdialog.show()
         }
     }
 }
