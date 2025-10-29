@@ -349,8 +349,8 @@
                     <TextView android:text="Осталось" style="@style/tableStyle"/>
                 </TableRow>
                 <TableRow android:id="@+id/addRow" android:padding="5dp" >
-                    <EditText/>
-                    <EditText/>
+                    <EditText
+                        android:id="@+id/date"/>
                     <EditText/>
                     <TextView/>
                 </TableRow>
