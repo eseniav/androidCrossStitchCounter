@@ -1,6 +1,7 @@
 package com.example.androidcrossstitchcounter.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.example.androidcrossstitchcounter.models.DataBaseProvider
 import com.example.androidcrossstitchcounter.models.ProjDao
 import com.example.androidcrossstitchcounter.models.Project
 import com.example.androidcrossstitchcounter.services.CalendarUtils
+import com.example.androidcrossstitchcounter.services.Validation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -156,8 +158,22 @@ class AddProjFragment : Fragment() {
         fun showCalendar(editText: EditText) {
             editText.isFocusable = false
             editText.isClickable = true
+
             editText.setOnClickListener {
-                CalendarUtils.setDisplayCalendar(requireActivity(), editText).show()
+                try {
+                    val calendarDialog = CalendarUtils.setDisplayCalendar(requireActivity(), editText)
+                    when (editText) {
+                        binding.finishDream -> {
+                            Validation.checkPlanDate(calendarDialog)
+                        }
+                        else -> {
+                            Validation.checkStartFinishDate(calendarDialog)
+                        }
+                    }
+                    calendarDialog.show()
+                } catch (e: Exception) {
+                    Log.e("CalendarError", "Ошибка при показе календаря: ${e.message}")
+                }
             }
         }
         showCalendar(binding.startDate)
