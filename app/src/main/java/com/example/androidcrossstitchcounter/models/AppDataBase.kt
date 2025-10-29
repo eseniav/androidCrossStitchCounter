@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.example.androidcrossstitchcounter.models.ProjStatusDao
 
-@Database(entities = [User::class, ProjStatus::class, Project::class], version = 5)
+@Database(entities = [User::class, ProjStatus::class, Project::class], version = 6)
 abstract class AppDataBase: RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun projDao(): ProjDao
@@ -50,7 +50,8 @@ abstract class AppDataBase: RoomDatabase() {
                 val initialStatuses = listOf(
                     ProjStatus(statusName = "Будущий"),
                     ProjStatus(statusName = "Текущий"),
-                    ProjStatus(statusName = "Завершенный")
+                    ProjStatus(statusName = "Завершенный"),
+                    ProjStatus(statusName = "Архив")
                 )
                 statusDao.insertAll(initialStatuses)
                 Log.d("AppDataBase", "Inserted ${initialStatuses.size} initial statuses")
