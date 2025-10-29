@@ -5,9 +5,12 @@
     android:layout_height="wrap_content">
     <TextView
         android:id="@+id/projName"
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"/>
+        android:gravity="center"
+        style="@style/labelPrimusDarkGreen"
+        android:textSize="20sp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,31 +18,39 @@
         <TextView
             android:id="@+id/size"
             android:text="104X205"
+            android:paddingBottom="7dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"/>
+            android:gravity="center"
+            style="@style/labelPrimusDarkBlue"/>
         <TextView
             android:id="@+id/startDate"
             android:text="18.03.2025"
+            android:paddingBottom="7dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"/>
+            android:gravity="center"
+            style="@style/labelPrimusDarkBlue"/>
         <TextView
             android:id="@+id/planDate"
             android:text="20/05/2025"
+            android:paddingBottom="7dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"/>
+            android:gravity="center"
+            style="@style/labelPrimusDarkBlue"/>
         <TextView
             android:id="@+id/stitched"
             android:text="2500"
+            android:paddingBottom="7dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"/>
+            android:gravity="center"
+            style="@style/labelPrimusDarkBlue"/>
     </LinearLayout>
     <View android:layout_width="match_parent"
         android:layout_height="1dp"
