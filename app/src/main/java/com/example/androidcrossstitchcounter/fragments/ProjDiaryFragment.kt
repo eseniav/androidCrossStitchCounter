@@ -119,6 +119,7 @@ class ProjDiaryFragment : Fragment() {
             diaryDao.insertProjDiary(diaryEntry)
             withContext(Dispatchers.Main) {
                 Toast.makeText(requireActivity(), "Запись добавлена!", Toast.LENGTH_SHORT).show()
+                loadEntries()
             }
         }
     }
