@@ -93,9 +93,30 @@ class ProjFragment : Fragment() {
         mainActivity.toggleFragment(projDiaryFragment)
     }
 
+    fun Animation() {
+        binding.present.setOnClickListener {
+            Animation.Companion.hiding(binding.currentProjHead)
+            Animation.Companion.hiding(binding.currentList)
+        }
+        binding.future.setOnClickListener {
+            Animation.Companion.hiding(binding.futureProjHead)
+            Animation.Companion.hiding(binding.futureList)
+        }
+        binding.finish.setOnClickListener {
+            Animation.Companion.hiding(binding.finishedProjHead)
+            Animation.Companion.hiding(binding.finishedList)
+        }
+    }
+
+    fun setValues() {
+        binding.userName.text = app.user!!.userName ?: "не указано"
+        binding.regDate.text = app.user!!.regDate
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setValues()
         val db = AppDataBase.getInstance(requireContext())
         projectDao = db.projDao()
         binding.logProj.setOnClickListener {
@@ -115,19 +136,8 @@ class ProjFragment : Fragment() {
         binding.imageAddFinish.setOnClickListener {
             goToFragment("finish")
         }
-        // Анимация для свертывания списка проектов
-        binding.present.setOnClickListener {
-            Animation.Companion.hiding(binding.currentProjHead)
-            Animation.Companion.hiding(binding.currentList)
-        }
-        binding.future.setOnClickListener {
-            Animation.Companion.hiding(binding.futureProjHead)
-            Animation.Companion.hiding(binding.futureList)
-        }
-        binding.finish.setOnClickListener {
-            Animation.Companion.hiding(binding.finishedProjHead)
-            Animation.Companion.hiding(binding.finishedList)
-        }
+
+        Animation()
 
         binding.currentList.layoutManager = LinearLayoutManager(requireContext())
         binding.futureList.layoutManager = LinearLayoutManager(requireContext())

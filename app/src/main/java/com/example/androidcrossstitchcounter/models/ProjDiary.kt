@@ -38,6 +38,18 @@ interface ProjDiaryDao {
             "SET crossQuantity = crossQuantity + :amount " +
             "WHERE id = :diaryId")
     suspend fun increaseCrossQuantity(diaryId: Int, amount: Int)
+    @Query("SELECT * FROM projDiaries WHERE date = :date")
+    suspend fun getEntrуByDate(date: String): ProjDiary
+    @Query("""
+    UPDATE projDiaries 
+    SET crossQuantity = crossQuantity + :amount 
+    WHERE date = :date
+            """)
+    suspend fun increaseCrossQuantityByDate(
+        date: String,
+        amount: Int
+    )
+
     @Update
     suspend fun updateProjDiary(projDiary: ProjDiary)
 }
