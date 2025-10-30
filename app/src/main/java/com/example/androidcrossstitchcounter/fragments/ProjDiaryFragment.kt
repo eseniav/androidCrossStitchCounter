@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TableRow
+import android.widget.Toast
 import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.databinding.ProjDiaryFragmentBinding
 import com.example.androidcrossstitchcounter.models.DataBaseProvider
 import com.example.androidcrossstitchcounter.models.ProjDiary
 import com.example.androidcrossstitchcounter.models.ProjDiaryDao
+import com.example.androidcrossstitchcounter.models.Project
 import com.example.androidcrossstitchcounter.models.User
 import com.example.androidcrossstitchcounter.models.UserDao
 import com.example.androidcrossstitchcounter.services.Animation
@@ -21,12 +23,12 @@ import com.example.androidcrossstitchcounter.services.Validation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-private var projId: Int? = null
 
 /**
  * A simple [Fragment] subclass.
@@ -37,6 +39,7 @@ class ProjDiaryFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var projId: Int? = null
     private val binding by lazy {
         ProjDiaryFragmentBinding.inflate(layoutInflater)
     }
@@ -96,6 +99,20 @@ class ProjDiaryFragment : Fragment() {
         }
     }
 
+    fun addDiaryEntry() {
+        val diaryEntry = ProjDiary(
+            date = binding.date.text.toString(),
+            crossQuantity = binding.crossDayQuantity.text.toString().toInt(),
+            projId = projId!!
+        )
+        CoroutineScope(Dispatchers.IO).launch {
+            diaryDao.insertProjDiary(diaryEntry)
+            withContext(Dispatchers.Main) {
+                Toast.makeText(requireActivity(), "Запись добавлена!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val db = DataBaseProvider.getDB(requireContext())
@@ -114,6 +131,10 @@ class ProjDiaryFragment : Fragment() {
             changeVisibility(false)
         }
         setCalendar()
+
+        binding.imageCheck.setOnClickListener {
+            addDiaryEntry()
+        }
     }
 
     companion object {

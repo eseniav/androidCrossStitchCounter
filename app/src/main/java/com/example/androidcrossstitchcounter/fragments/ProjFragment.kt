@@ -123,9 +123,6 @@ class ProjFragment : Fragment() {
             mainActivity.toggleFragment(mainActivity.binding.profile,
                 ProfileFragment())
         }
-        binding.avgSpeed.setOnClickListener {
-            goToFragment(1)
-        }
         // Переходы на страницы добавления проектов
         binding.imageAdd.setOnClickListener {
             goToFragment("present")
