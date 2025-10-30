@@ -127,7 +127,11 @@ class ProfileFragment : Fragment() {
         userDao = db.userDao()
         loadImage()
         binding.nameRow.setLabel("Имя")
+        binding.nameRow.setValue(user.userName ?: "Не указано")
+
         binding.patrRow.setLabel("Отчество")
+        binding.patrRow.setValue(user.userPatr ?: "Не указано")
+        binding.surnameRow.setValue(user.userLastName ?: "Не указано")
 
         binding.logRow.setLabel("Логин")
         binding.logRow.setValue(user.login)
@@ -165,6 +169,7 @@ class ProfileFragment : Fragment() {
         }
 
         binding.birthDateRow.setLabel("Дата рождения")
+        binding.birthDateRow.setValue(user.birthDate ?: "Не указано")
 
         binding.imgAvatar.setOnClickListener {
             setImage.launch("image/*")
