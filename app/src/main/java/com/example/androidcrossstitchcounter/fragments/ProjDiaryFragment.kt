@@ -132,7 +132,7 @@ class ProjDiaryFragment : Fragment() {
                 val remains = project.totalCross?.minus(done)
                 ProjDiaryEntry(it, done, remains)
             }
-            diaryAdapter.updateDiaryNotes(entries)
+            diaryAdapter.updateDiaryNotes(entries.reversed())
         }
     }
     fun loadProject() {
