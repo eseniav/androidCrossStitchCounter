@@ -26,13 +26,15 @@ data class ProjDiary(
     val projId: Int
 )
 
+data class ProjDiaryEntry(val diary: ProjDiary, var done: Int, var remains: Int?)
+
 @Dao
 interface ProjDiaryDao {
     @Insert
     suspend fun insertProjDiary(projDiary: ProjDiary)
     @Query("SELECT * FROM projDiaries WHERE id = :id LIMIT 1")
     suspend fun getEntryById(id: Int): ProjDiary?
-    @Query("SELECT * FROM projDiaries WHERE projId = :projId")
+    @Query("SELECT * FROM projDiaries WHERE projId = :projId ORDER BY date")
     suspend fun getProjEntriesById(projId: Int): List<ProjDiary>
     @Query("UPDATE projDiaries " +
             "SET crossQuantity = crossQuantity + :amount " +
