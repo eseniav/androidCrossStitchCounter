@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.models.Project
 
-class ProjectAdapter(private var projects: List<Project>):
+class ProjectAdapter(private var projects: List<Project>,
+                     private val onItemClick: (Project) -> Unit):
     RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -34,6 +35,9 @@ class ProjectAdapter(private var projects: List<Project>):
         if(project.projStatusId == 1) {
             holder.startDateView.visibility = View.GONE
             holder.stitchedView.visibility = View.GONE
+        }
+        holder.projNameView.setOnClickListener {
+            onItemClick(project)
         }
     }
 

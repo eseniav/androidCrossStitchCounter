@@ -142,11 +142,17 @@ class ProjFragment : Fragment() {
         binding.currentList.layoutManager = LinearLayoutManager(requireContext())
         binding.futureList.layoutManager = LinearLayoutManager(requireContext())
         binding.finishedList.layoutManager = LinearLayoutManager(requireContext())
-        currentAdapter = ProjectAdapter(emptyList())
+        currentAdapter = ProjectAdapter(emptyList()) { project ->
+            goToFragment(project.id)
+        }
         binding.currentList.adapter = currentAdapter
-        futureAdapter = ProjectAdapter(emptyList())
+        futureAdapter = ProjectAdapter(emptyList()) { project ->
+            goToFragment(project.id)
+        }
         binding.futureList.adapter = futureAdapter
-        finishedAdapter = ProjectAdapter(emptyList())
+        finishedAdapter = ProjectAdapter(emptyList()) { project ->
+            goToFragment(project.id)
+        }
         binding.finishedList.adapter = finishedAdapter
         loadProjects()
     }
