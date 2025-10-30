@@ -13,10 +13,11 @@ import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.models.ProjDao
 import com.example.androidcrossstitchcounter.models.ProjDiary
 import com.example.androidcrossstitchcounter.models.ProjDiaryDao
+import com.example.androidcrossstitchcounter.models.ProjDiaryEntry
 import com.example.androidcrossstitchcounter.models.Project
 
 class ProjDiaryAdapter(
-    private var diaryNotes: List<ProjDiary>,
+    private var diaryNotes: List<ProjDiaryEntry>,
     private val diaryDao: ProjDiaryDao,
     private val projDao: ProjDao,
     private val lifecycleOwner: LifecycleOwner
@@ -41,24 +42,10 @@ class ProjDiaryAdapter(
         position: Int
     ) {
         val diaryNote = diaryNotes[position]
-        holder.dateView.text = diaryNote.date
-        holder.dayCrossView.text = diaryNote.crossQuantity.toString()
-
-        lifecycleOwner.lifecycleScope.launch {
-            try {
-                val crossDone = getTotalCrossDone(diaryNote.projId)
-                holder.crossDoneView.text = crossDone.toString()
-
-                val project = projDao.getProjectById(diaryNote.projId)
-                val remains = project?.let {
-                    it.totalCross?.minus(crossDone) ?: 0
-                } ?: 0
-
-                holder.remainsView.text = remains.toString()
-            } catch (e: Exception) {
-                Log.e("ProjDiaryAdapter", "Ошибка при вычислении: ${e.message}")
-            }
-        }
+        holder.dateView.text = diaryNote.diary.date
+        holder.dayCrossView.text = diaryNote.diary.crossQuantity.toString()
+        holder.crossDoneView.text = diaryNote.done.toString()
+        holder.remainsView.text = diaryNote.remains.toString()
     }
 
     override fun getItemCount(): Int {
@@ -72,7 +59,7 @@ class ProjDiaryAdapter(
         val remainsView: TextView = itemView.findViewById(R.id.remains)
     }
 
-    fun updateDiaryNotes(newDiaryNotes: List<ProjDiary>) {
+    fun updateDiaryNotes(newDiaryNotes: List<ProjDiaryEntry>) {
         diaryNotes = newDiaryNotes
         notifyDataSetChanged()
     }

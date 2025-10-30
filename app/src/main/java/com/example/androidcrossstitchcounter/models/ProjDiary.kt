@@ -26,6 +26,8 @@ data class ProjDiary(
     val projId: Int
 )
 
+data class ProjDiaryEntry(val diary: ProjDiary, var done: Int, var remains: Int?)
+
 @Dao
 interface ProjDiaryDao {
     @Insert

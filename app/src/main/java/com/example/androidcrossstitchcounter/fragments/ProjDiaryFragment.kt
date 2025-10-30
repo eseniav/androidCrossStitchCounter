@@ -20,6 +20,7 @@ import com.example.androidcrossstitchcounter.models.DataBaseProvider
 import com.example.androidcrossstitchcounter.models.ProjDao
 import com.example.androidcrossstitchcounter.models.ProjDiary
 import com.example.androidcrossstitchcounter.models.ProjDiaryDao
+import com.example.androidcrossstitchcounter.models.ProjDiaryEntry
 import com.example.androidcrossstitchcounter.models.Project
 import com.example.androidcrossstitchcounter.models.User
 import com.example.androidcrossstitchcounter.models.UserDao
@@ -55,6 +56,7 @@ class ProjDiaryFragment : Fragment() {
     private lateinit var diaryDao: ProjDiaryDao
     private lateinit var projDao: ProjDao
     private lateinit var diary: ProjDiary
+    private lateinit var project: Project
     private lateinit var diaryAdapter: ProjDiaryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -123,11 +125,22 @@ class ProjDiaryFragment : Fragment() {
 
     fun loadEntries() {
         lifecycleScope.launch {
-            val entries = diaryDao.getProjEntriesById(projId!!)
+            val dbEntries = diaryDao.getProjEntriesById(projId!!)
+            var done = 0
+            val entries = dbEntries.map {
+                done += it.crossQuantity + project.stitchedCrossBeforeRegistration
+                val remains = project.totalCross?.minus(done)
+                ProjDiaryEntry(it, done, remains)
+            }
             diaryAdapter.updateDiaryNotes(entries)
         }
     }
-
+    fun loadProject() {
+        lifecycleScope.launch {
+            project = projDao.getProjectById(projId!!)!!
+            loadEntries()
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val db = DataBaseProvider.getDB(requireContext())
@@ -154,7 +167,7 @@ class ProjDiaryFragment : Fragment() {
             requireContext() as LifecycleOwner
         )
         binding.diaryList.adapter = diaryAdapter
-        loadEntries()
+        loadProject()
     }
 
     companion object {
