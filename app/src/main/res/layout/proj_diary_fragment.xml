@@ -401,10 +401,9 @@
                 android:visibility="invisible"/>
         </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/currentList"
+                android:id="@+id/diaryList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/currentProjHead"
                 android:layout_marginTop="0dp" />
         </LinearLayout>
     </ScrollView>

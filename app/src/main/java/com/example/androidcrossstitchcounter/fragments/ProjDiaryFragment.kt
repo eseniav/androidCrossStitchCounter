@@ -8,10 +8,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TableRow
 import android.widget.Toast
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
+import com.example.androidcrossstitchcounter.adapters.ProjDiaryAdapter
+import com.example.androidcrossstitchcounter.adapters.ProjectAdapter
 import com.example.androidcrossstitchcounter.databinding.ProjDiaryFragmentBinding
 import com.example.androidcrossstitchcounter.models.DataBaseProvider
+import com.example.androidcrossstitchcounter.models.ProjDao
 import com.example.androidcrossstitchcounter.models.ProjDiary
 import com.example.androidcrossstitchcounter.models.ProjDiaryDao
 import com.example.androidcrossstitchcounter.models.Project
@@ -47,7 +53,9 @@ class ProjDiaryFragment : Fragment() {
         requireActivity().application as App
     }
     private lateinit var diaryDao: ProjDiaryDao
+    private lateinit var projDao: ProjDao
     private lateinit var diary: ProjDiary
+    private lateinit var diaryAdapter: ProjDiaryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,10 +121,18 @@ class ProjDiaryFragment : Fragment() {
         }
     }
 
+    fun loadEntries() {
+        lifecycleScope.launch {
+            val entries = diaryDao.getProjEntriesById(projId!!)
+            diaryAdapter.updateDiaryNotes(entries)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val db = DataBaseProvider.getDB(requireContext())
         diaryDao = db.diaryDao()
+        projDao = db.projDao()
 
         Animation()
         changeVisibility(false)
@@ -135,6 +151,12 @@ class ProjDiaryFragment : Fragment() {
         binding.imageCheck.setOnClickListener {
             addDiaryEntry()
         }
+        binding.diaryList.layoutManager = LinearLayoutManager(requireContext())
+        diaryAdapter = ProjDiaryAdapter(emptyList(), diaryDao, projDao,
+            requireContext() as LifecycleOwner
+        )
+        binding.diaryList.adapter = diaryAdapter
+        loadEntries()
     }
 
     companion object {
