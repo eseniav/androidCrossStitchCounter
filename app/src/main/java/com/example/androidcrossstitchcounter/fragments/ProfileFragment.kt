@@ -71,6 +71,11 @@ class ProfileFragment : Fragment() {
             "phoneNumber" -> user.phoneNumber = propValue
             "email" -> user.email = propValue
             "password" -> user.password = propValue
+            "name" -> user.userName = propValue
+            "lName" -> user.userLastName = propValue
+            "patr" -> user.userPatr = propValue
+            "login" -> user.login = propValue
+            "birthDate" -> user.birthDate = propValue
         }
         CoroutineScope(Dispatchers.IO).launch {
             userDao.updateUser(user)
@@ -128,13 +133,26 @@ class ProfileFragment : Fragment() {
         loadImage()
         binding.nameRow.setLabel("Имя")
         binding.nameRow.setValue(user.userName ?: "Не указано")
+        binding.nameRow.onSaveValue = { newValue ->
+            updateUserProp("name", newValue)
+        }
 
         binding.patrRow.setLabel("Отчество")
         binding.patrRow.setValue(user.userPatr ?: "Не указано")
+        binding.patrRow.onSaveValue = { newValue ->
+            updateUserProp("patr", newValue)
+        }
+
         binding.surnameRow.setValue(user.userLastName ?: "Не указано")
+        binding.surnameRow.onSaveValue = { newValue ->
+            updateUserProp("lName", newValue)
+        }
 
         binding.logRow.setLabel("Логин")
         binding.logRow.setValue(user.login)
+        binding.logRow.onSaveValue = { newValue ->
+            updateUserProp("login", newValue)
+        }
 
         binding.passRow.setLabel("Пароль")
         binding.passRow.setValue(user.password)
@@ -170,6 +188,9 @@ class ProfileFragment : Fragment() {
 
         binding.birthDateRow.setLabel("Дата рождения")
         binding.birthDateRow.setValue(user.birthDate ?: "Не указано")
+        binding.birthDateRow.onSaveValue = { newValue ->
+            updateUserProp("birthDate", newValue)
+        }
 
         binding.imgAvatar.setOnClickListener {
             setImage.launch("image/*")
