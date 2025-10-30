@@ -140,9 +140,6 @@ class ProjDiaryFragment : Fragment() {
         binding.imageAdd.setOnClickListener {
             changeVisibility(true)
         }
-        binding.imageCheck.setOnClickListener {
-            changeVisibility(false)
-        }
         binding.imageCancel.setOnClickListener {
             changeVisibility(false)
         }
@@ -150,6 +147,7 @@ class ProjDiaryFragment : Fragment() {
 
         binding.imageCheck.setOnClickListener {
             addDiaryEntry()
+            changeVisibility(false)
         }
         binding.diaryList.layoutManager = LinearLayoutManager(requireContext())
         diaryAdapter = ProjDiaryAdapter(emptyList(), diaryDao, projDao,
