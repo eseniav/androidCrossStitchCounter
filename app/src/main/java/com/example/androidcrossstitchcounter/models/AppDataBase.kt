@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.example.androidcrossstitchcounter.models.ProjStatusDao
 
-@Database(entities = [User::class, ProjStatus::class, Project::class], version = 8)
+@Database(entities = [User::class, ProjStatus::class, Project::class, ProjDiary::class], version = 9)
 abstract class AppDataBase: RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun projDao(): ProjDao
