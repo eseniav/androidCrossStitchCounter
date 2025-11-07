@@ -139,6 +139,8 @@ class ProjDiaryFragment : Fragment() {
     fun loadProject() {
         lifecycleScope.launch {
             project = projDao.getProjectById(projId!!)!!
+            binding.headProfile.text = project.projName
+            binding.designerVal.text = project.projDesigner ?: "Не указано"
             loadEntries()
         }
     }
