@@ -19,6 +19,7 @@ import com.example.androidcrossstitchcounter.models.ProjDiaryDao
 import com.example.androidcrossstitchcounter.models.ProjDiaryEntry
 import com.example.androidcrossstitchcounter.models.Project
 import java.time.format.DateTimeFormatter
+import com.example.androidcrossstitchcounter.listeners.DoubleTapListener
 
 class ProjDiaryAdapter(
     private var diaryNotes: List<ProjDiaryEntry>,
@@ -38,6 +39,14 @@ class ProjDiaryAdapter(
     ): DiaryViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.proj_diary_item, parent, false)
+        view.setOnTouchListener(DoubleTapListener {
+            // Ваша логика при двойном клике
+            Log.d("DoubleTap", "Двойной клик по элементу!")
+            // Здесь можно, например:
+            // - открыть диалог редактирования
+            // - перейти на другой экран
+            // - изменить состояние элемента
+        })
         return DiaryViewHolder(view)
     }
 
