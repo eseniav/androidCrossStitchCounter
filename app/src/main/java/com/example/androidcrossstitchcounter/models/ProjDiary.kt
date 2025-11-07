@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.Update
 import com.example.androidcrossstitchcounter.services.CalendarUtils
+import java.time.LocalDate
 
 @Entity(
     tableName = "projDiaries",
@@ -21,7 +22,7 @@ import com.example.androidcrossstitchcounter.services.CalendarUtils
 )
 data class ProjDiary(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val date: String = CalendarUtils.getCurrentDateStringCompat(),
+    val date: LocalDate = LocalDate.now(),
     var crossQuantity: Int = 0,
     val projId: Int
 )

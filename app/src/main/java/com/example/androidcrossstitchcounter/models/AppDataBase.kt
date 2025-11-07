@@ -5,7 +5,9 @@ import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.androidcrossstitchcounter.converters.LocalDateConverter
 import com.example.androidcrossstitchcounter.models.User
 import com.example.androidcrossstitchcounter.models.UserDao
 import kotlinx.coroutines.CoroutineScope
@@ -13,7 +15,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.example.androidcrossstitchcounter.models.ProjStatusDao
 
-@Database(entities = [User::class, ProjStatus::class, Project::class, ProjDiary::class], version = 9)
+@Database(entities = [User::class, ProjStatus::class, Project::class, ProjDiary::class], version = 10)
+@TypeConverters(LocalDateConverter::class)
 abstract class AppDataBase: RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun projDao(): ProjDao

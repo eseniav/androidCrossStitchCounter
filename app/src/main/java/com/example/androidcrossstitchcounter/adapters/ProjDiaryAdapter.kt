@@ -18,6 +18,7 @@ import com.example.androidcrossstitchcounter.models.ProjDiary
 import com.example.androidcrossstitchcounter.models.ProjDiaryDao
 import com.example.androidcrossstitchcounter.models.ProjDiaryEntry
 import com.example.androidcrossstitchcounter.models.Project
+import java.time.format.DateTimeFormatter
 
 class ProjDiaryAdapter(
     private var diaryNotes: List<ProjDiaryEntry>,
@@ -45,7 +46,7 @@ class ProjDiaryAdapter(
         position: Int
     ) {
         val diaryNote = diaryNotes[position]
-        holder.dateView.text = diaryNote.diary.date
+        holder.dateView.text = diaryNote.diary.date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
         holder.dayCrossView.text = diaryNote.diary.crossQuantity.toString()
         holder.crossDoneView.text = diaryNote.done.toString()
         holder.remainsView.text = diaryNote.remains.toString()
