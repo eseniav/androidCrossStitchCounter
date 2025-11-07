@@ -25,16 +25,39 @@
             android:layout_weight="1"
             android:gravity="center"
             style="@style/labelPrimusDarkBlue"/>
-        <EditText
-            android:id="@+id/editCross"
-            android:text="200"
-            android:paddingBottom="7dp"
+        <LinearLayout
+            android:id="@+id/editLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:visibility="gone"
-            style="@style/labelPrimusDarkBlue"/>
+            android:visibility="gone">
+            <EditText
+                android:id="@+id/editCross"
+                android:text="200"
+                android:paddingBottom="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                style="@style/labelPrimusDarkBlue"/>
+            <ImageView
+                android:id="@+id/imageCheck"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:contentDescription="Подтвердить изменения"
+                android:src="@drawable/check"
+                android:gravity="center"
+                android:layout_margin="3dp"
+                />
+            <ImageView
+                android:id="@+id/imageCancel"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:contentDescription="Отмена"
+                android:src="@drawable/cancel"
+                android:gravity="center"
+                android:layout_margin="3dp"
+                />
+        </LinearLayout>
         <TextView
             android:id="@+id/crossDone"
             android:text="2390"
