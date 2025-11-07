@@ -4,7 +4,8 @@ import android.view.MotionEvent
 import android.view.View
 
 class DoubleTapListener(
-    private val onDoubleTap: () -> Unit
+    private val position: Int,
+    private val onDoubleTap: (Int) -> Unit
 ) : View.OnTouchListener {
 
     companion object {
@@ -17,7 +18,7 @@ class DoubleTapListener(
         if (event?.action == MotionEvent.ACTION_DOWN) {
             val currentTime = System.currentTimeMillis()
             if (currentTime - lastClickTime < DOUBLE_TAP_TIMEOUT) {
-                onDoubleTap()
+                onDoubleTap(position)
                 lastClickTime = 0 // сброс, чтобы не срабатывало повторно
                 return true
             }
