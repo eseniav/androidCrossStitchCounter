@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
@@ -46,6 +47,11 @@ class ProjDiaryAdapter(
         holder.dayCrossView.text = diaryNote.diary.crossQuantity.toString()
         holder.crossDoneView.text = diaryNote.done.toString()
         holder.remainsView.text = diaryNote.remains.toString()
+        holder.editCrossView.setText(diaryNote.diary.crossQuantity.toString())
+        holder.dayCrossView.setOnClickListener {
+            holder.dayCrossView.visibility = View.GONE
+            holder.editCrossView.visibility = View.VISIBLE
+        }
     }
 
     override fun getItemCount(): Int {
@@ -57,6 +63,7 @@ class ProjDiaryAdapter(
         val dayCrossView: TextView = itemView.findViewById(R.id.dayCross)
         val crossDoneView: TextView = itemView.findViewById(R.id.crossDone)
         val remainsView: TextView = itemView.findViewById(R.id.remains)
+        val editCrossView: EditText = itemView.findViewById(R.id.editCross)
     }
 
     fun updateDiaryNotes(newDiaryNotes: List<ProjDiaryEntry>) {
