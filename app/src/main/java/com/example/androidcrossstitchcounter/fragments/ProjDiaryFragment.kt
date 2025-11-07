@@ -31,6 +31,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -111,7 +113,8 @@ class ProjDiaryFragment : Fragment() {
 
     fun addDiaryEntry() {
         val diaryEntry = ProjDiary(
-            date = binding.date.text.toString(),
+            date = LocalDate.parse(binding.date.text.toString(),
+                DateTimeFormatter.ofPattern("dd.MM.yyyy")),
             crossQuantity = binding.crossDayQuantity.text.toString().toInt(),
             projId = projId!!
         )
