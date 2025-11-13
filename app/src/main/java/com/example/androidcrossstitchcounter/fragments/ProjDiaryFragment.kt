@@ -11,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RadioButton
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
@@ -115,7 +117,10 @@ class ProjDiaryFragment : Fragment() {
         val editDate = dialogView.findViewById<TextView>(R.id.date)
         val editCross = dialogView.findViewById<EditText>(R.id.editCross)
         val editDateField = dialogView.findViewById<EditText>(R.id.editDate)
-        val textMessage = dialogView.findViewById<TextView>(R.id.textMessage)
+        val textMessage = dialogView.findViewById<LinearLayout>(R.id.textMessage)
+        val addVal = dialogView.findViewById<RadioButton>(R.id.add)
+        val editVal = dialogView.findViewById<RadioButton>(R.id.edit)
+
         // Заполняем текущие значения
         editDateField.visibility = View.VISIBLE
         editDate.visibility = View.GONE
@@ -123,15 +128,19 @@ class ProjDiaryFragment : Fragment() {
         editDateField.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")))
         builder.setView(dialogView)
         setCalendar(editDateField)
+        fun handleDateChange() {
+            val date = LocalDate.parse(editDateField.text.toString(),
+                DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+            if(diaryNotes.any{it.diary.date.isEqual(date)}) {
+                textMessage.visibility = View.VISIBLE
+            }
+        }
+        handleDateChange()
 
         editDateField.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
-                textMessage.visibility = View.GONE
-                val date = LocalDate.parse(editDateField.text.toString(),
-                    DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-                if(diaryNotes.any{it.diary.date.isEqual(date)}) {
-                    textMessage.visibility = View.VISIBLE
-                }
+                textMessage.visibility = View.INVISIBLE
+                handleDateChange()
             }
 
             override fun beforeTextChanged(
