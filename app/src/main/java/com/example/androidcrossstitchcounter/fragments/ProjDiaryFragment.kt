@@ -3,6 +3,8 @@ package com.example.androidcrossstitchcounter.fragments
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -113,18 +115,50 @@ class ProjDiaryFragment : Fragment() {
         val editDate = dialogView.findViewById<TextView>(R.id.date)
         val editCross = dialogView.findViewById<EditText>(R.id.editCross)
         val editDateField = dialogView.findViewById<EditText>(R.id.editDate)
-
+        val textMessage = dialogView.findViewById<TextView>(R.id.textMessage)
         // Заполняем текущие значения
         editDateField.visibility = View.VISIBLE
         editDate.visibility = View.GONE
+
         editDateField.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")))
         builder.setView(dialogView)
+        setCalendar(editDateField)
+
+        editDateField.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+                textMessage.visibility = View.GONE
+                val date = LocalDate.parse(editDateField.text.toString(),
+                    DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+                if(diaryNotes.any{it.diary.date.isEqual(date)}) {
+                    textMessage.visibility = View.VISIBLE
+                }
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+
+            }
+
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+
+            }
+        })
 
         builder.setPositiveButton("Сохранить") { _, _ ->
             // Получаем новые значения
             val newCross = editCross.text.toString().toIntOrNull() ?: return@setPositiveButton
             val date = LocalDate.parse(editDateField.text.toString(),
                 DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+
             addDiaryEntry(date, newCross)
         }
         builder.setNegativeButton("Отмена", null)
