@@ -11,9 +11,53 @@
         android:hint="11.09.2025"
         android:inputType="date"/>
     <EditText
+        android:id="@+id/editDate"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="gone"/>
+    <EditText
         android:id="@+id/editCross"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Количество крестиков"
         android:inputType="number"/>
+    <LinearLayout
+        android:id="@+id/textMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="invisible">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Данные за эту дату уже есть. Что Вы хотите сделать?"
+            />
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/imgAvatar"
+            >
+            <RadioButton
+                android:id="@+id/add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Добавить"
+                style="@style/labelAcherus.Small"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:checked="true"/>
+            <RadioButton
+                android:id="@+id/edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Переписать"
+                style="@style/labelAcherus.Small"
+                android:minHeight="0dp"
+                android:minWidth="0dp"/>
+        </RadioGroup>
+    </LinearLayout>
+
 </LinearLayout>

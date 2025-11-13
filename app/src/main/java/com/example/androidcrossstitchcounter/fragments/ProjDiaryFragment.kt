@@ -1,12 +1,20 @@
 package com.example.androidcrossstitchcounter.fragments
 
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RadioButton
 import android.widget.TableRow
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -60,6 +68,7 @@ class ProjDiaryFragment : Fragment() {
     private lateinit var diary: ProjDiary
     private lateinit var project: Project
     private lateinit var diaryAdapter: ProjDiaryAdapter
+    private lateinit var diaryNotes: List<ProjDiaryEntry>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,27 +87,13 @@ class ProjDiaryFragment : Fragment() {
         return binding.root
     }
 
-    fun setCalendar() {
-        binding.date.isFocusable = false
-        binding.date.isClickable = true
-        binding.date.setOnClickListener {
-            val calendar = CalendarUtils.setDisplayCalendar(requireActivity(), binding.date)
+    fun setCalendar(date: EditText) {
+        date.isFocusable = false
+        date.isClickable = true
+        date.setOnClickListener {
+            val calendar = CalendarUtils.setDisplayCalendar(requireActivity(), date)
             Validation.checkStartFinishDate(calendar)
             calendar.show()
-        }
-    }
-
-    fun changeVisibility(isEdit: Boolean) {
-        if(isEdit) {
-            binding.addCross.visibility = View.VISIBLE
-            binding.imageCheck.visibility = View.VISIBLE
-            binding.imageCancel.visibility = View.VISIBLE
-            binding.imageAdd.visibility = View.GONE
-        } else {
-            binding.addCross.visibility = View.GONE
-            binding.imageCheck.visibility = View.GONE
-            binding.imageCancel.visibility = View.GONE
-            binding.imageAdd.visibility = View.VISIBLE
         }
     }
 
@@ -111,17 +106,105 @@ class ProjDiaryFragment : Fragment() {
         }
     }
 
-    fun addDiaryEntry() {
+    private fun showEditDialog() {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Редактировать запись")
+
+        // Создаём View для диалога (можно использовать layout)
+        val dialogView = LayoutInflater.from(context)
+            .inflate(R.layout.dialog_edit_diary, null)
+
+        val editDate = dialogView.findViewById<TextView>(R.id.date)
+        val editCross = dialogView.findViewById<EditText>(R.id.editCross)
+        val editDateField = dialogView.findViewById<EditText>(R.id.editDate)
+        val textMessage = dialogView.findViewById<LinearLayout>(R.id.textMessage)
+        val addVal = dialogView.findViewById<RadioButton>(R.id.add)
+        val editVal = dialogView.findViewById<RadioButton>(R.id.edit)
+        var isEqual = false
+        // Заполняем текущие значения
+        editDateField.visibility = View.VISIBLE
+        editDate.visibility = View.GONE
+
+        editDateField.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")))
+        builder.setView(dialogView)
+        setCalendar(editDateField)
+        fun handleDateChange() {
+            val date = LocalDate.parse(editDateField.text.toString(),
+                DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+            if(diaryNotes.any{it.diary.date.isEqual(date)}) {
+                textMessage.visibility = View.VISIBLE
+                isEqual = true
+            }
+        }
+        handleDateChange()
+
+        editDateField.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+                textMessage.visibility = View.INVISIBLE
+                isEqual = false
+                handleDateChange()
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+
+            }
+
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+
+            }
+        })
+
+        builder.setPositiveButton("Сохранить") { _, _ ->
+            // Получаем новые значения
+            val newCross = editCross.text.toString().toIntOrNull() ?: return@setPositiveButton
+            val date = LocalDate.parse(editDateField.text.toString(),
+                DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+            if(isEqual) {
+                val foundEntry = diaryNotes.find { it.diary.date.isEqual(date) }
+                updateDiaryEntry(foundEntry!!.diary, addVal.isChecked, newCross)
+            } else {
+                addDiaryEntry(date, newCross)
+            }
+        }
+        builder.setNegativeButton("Отмена", null)
+        builder.show()
+    }
+
+    fun addDiaryEntry(date: LocalDate, crossDayQuantityVal: Int) {
         val diaryEntry = ProjDiary(
-            date = LocalDate.parse(binding.date.text.toString(),
-                DateTimeFormatter.ofPattern("dd.MM.yyyy")),
-            crossQuantity = binding.crossDayQuantity.text.toString().toInt(),
+            date = date,
+            crossQuantity = crossDayQuantityVal,
             projId = projId!!
         )
         CoroutineScope(Dispatchers.IO).launch {
             diaryDao.insertProjDiary(diaryEntry)
             withContext(Dispatchers.Main) {
                 Toast.makeText(requireActivity(), "Запись добавлена!", Toast.LENGTH_SHORT).show()
+                loadEntries()
+            }
+        }
+    }
+
+    fun updateDiaryEntry(diaryEntry: ProjDiary, isAdd: Boolean, newCross: Int) {
+        if(isAdd) {
+            diaryEntry.crossQuantity += newCross
+        } else {
+            diaryEntry.crossQuantity = newCross
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            diaryDao.updateProjDiary(diaryEntry)
+            withContext(Dispatchers.Main) {
+                Toast.makeText(requireActivity(), "Запись обновлена!", Toast.LENGTH_SHORT).show()
                 loadEntries()
             }
         }
@@ -137,6 +220,7 @@ class ProjDiaryFragment : Fragment() {
                 ProjDiaryEntry(it, done, remains)
             }
             diaryAdapter.updateDiaryNotes(entries.reversed())
+            diaryNotes = entries
         }
     }
     fun loadProject() {
@@ -154,20 +238,11 @@ class ProjDiaryFragment : Fragment() {
         projDao = db.projDao()
 
         Animation()
-        changeVisibility(false)
 
         binding.imageAdd.setOnClickListener {
-            changeVisibility(true)
+            showEditDialog()
         }
-        binding.imageCancel.setOnClickListener {
-            changeVisibility(false)
-        }
-        setCalendar()
 
-        binding.imageCheck.setOnClickListener {
-            addDiaryEntry()
-            changeVisibility(false)
-        }
         binding.diaryList.layoutManager = LinearLayoutManager(requireContext())
         diaryAdapter = ProjDiaryAdapter(emptyList(), diaryDao, projDao,
             requireContext() as LifecycleOwner
