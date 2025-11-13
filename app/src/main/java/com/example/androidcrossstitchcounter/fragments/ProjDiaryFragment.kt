@@ -120,7 +120,7 @@ class ProjDiaryFragment : Fragment() {
         val textMessage = dialogView.findViewById<LinearLayout>(R.id.textMessage)
         val addVal = dialogView.findViewById<RadioButton>(R.id.add)
         val editVal = dialogView.findViewById<RadioButton>(R.id.edit)
-
+        var isEqual = false
         // Заполняем текущие значения
         editDateField.visibility = View.VISIBLE
         editDate.visibility = View.GONE
@@ -133,6 +133,7 @@ class ProjDiaryFragment : Fragment() {
                 DateTimeFormatter.ofPattern("dd.MM.yyyy"))
             if(diaryNotes.any{it.diary.date.isEqual(date)}) {
                 textMessage.visibility = View.VISIBLE
+                isEqual = true
             }
         }
         handleDateChange()
@@ -140,6 +141,7 @@ class ProjDiaryFragment : Fragment() {
         editDateField.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
                 textMessage.visibility = View.INVISIBLE
+                isEqual = false
                 handleDateChange()
             }
 
@@ -167,8 +169,12 @@ class ProjDiaryFragment : Fragment() {
             val newCross = editCross.text.toString().toIntOrNull() ?: return@setPositiveButton
             val date = LocalDate.parse(editDateField.text.toString(),
                 DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-
-            addDiaryEntry(date, newCross)
+            if(isEqual) {
+                val foundEntry = diaryNotes.find { it.diary.date.isEqual(date) }
+                updateDiaryEntry(foundEntry!!.diary, addVal.isChecked, newCross)
+            } else {
+                addDiaryEntry(date, newCross)
+            }
         }
         builder.setNegativeButton("Отмена", null)
         builder.show()
@@ -184,6 +190,21 @@ class ProjDiaryFragment : Fragment() {
             diaryDao.insertProjDiary(diaryEntry)
             withContext(Dispatchers.Main) {
                 Toast.makeText(requireActivity(), "Запись добавлена!", Toast.LENGTH_SHORT).show()
+                loadEntries()
+            }
+        }
+    }
+
+    fun updateDiaryEntry(diaryEntry: ProjDiary, isAdd: Boolean, newCross: Int) {
+        if(isAdd) {
+            diaryEntry.crossQuantity += newCross
+        } else {
+            diaryEntry.crossQuantity = newCross
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            diaryDao.updateProjDiary(diaryEntry)
+            withContext(Dispatchers.Main) {
+                Toast.makeText(requireActivity(), "Запись обновлена!", Toast.LENGTH_SHORT).show()
                 loadEntries()
             }
         }
