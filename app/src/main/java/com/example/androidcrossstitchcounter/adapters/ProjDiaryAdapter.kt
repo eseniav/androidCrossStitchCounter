@@ -96,25 +96,7 @@ class ProjDiaryAdapter(
         holder.dayCrossView.text = diaryNote.diary.crossQuantity.toString()
         holder.crossDoneView.text = diaryNote.done.toString()
         holder.remainsView.text = diaryNote.remains.toString()
-        holder.editCrossView.setText(diaryNote.diary.crossQuantity.toString())
-        fun changeVisibility(isEdit: Boolean) {
-            if(isEdit) {
-                holder.dayCrossView.visibility = View.GONE
-                holder.editLayoutView.visibility = View.VISIBLE
-            } else {
-                holder.dayCrossView.visibility = View.VISIBLE
-                holder.editLayoutView.visibility = View.GONE
-            }
-        }
-        holder.dayCrossView.setOnClickListener {
-            changeVisibility(true)
-        }
-        holder.imageCheckView.setOnClickListener {
-            changeVisibility(false)
-        }
-        holder.imageCancelView.setOnClickListener {
-            changeVisibility(false)
-        }
+
         holder.itemView.setOnTouchListener(DoubleTapListener(holder.adapterPosition) { position ->
             showEditDialog(position, holder.itemView.context)
             //showDialog(holder.itemView.context, position)
@@ -131,10 +113,6 @@ class ProjDiaryAdapter(
         val dayCrossView: TextView = itemView.findViewById(R.id.dayCross)
         val crossDoneView: TextView = itemView.findViewById(R.id.crossDone)
         val remainsView: TextView = itemView.findViewById(R.id.remains)
-        val editCrossView: EditText = itemView.findViewById(R.id.editCross)
-        val editLayoutView: LinearLayout = itemView.findViewById(R.id.editLayout)
-        val imageCheckView: ImageView = itemView.findViewById(R.id.imageCheck)
-        val imageCancelView: ImageView = itemView.findViewById(R.id.imageCancel)
     }
 
     fun updateDiaryNotes(newDiaryNotes: List<ProjDiaryEntry>) {
