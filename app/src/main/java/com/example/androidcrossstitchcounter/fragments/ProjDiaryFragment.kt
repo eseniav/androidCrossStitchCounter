@@ -83,27 +83,13 @@ class ProjDiaryFragment : Fragment() {
         return binding.root
     }
 
-    fun setCalendar() {
-        binding.date.isFocusable = false
-        binding.date.isClickable = true
-        binding.date.setOnClickListener {
-            val calendar = CalendarUtils.setDisplayCalendar(requireActivity(), binding.date)
+    fun setCalendar(date: EditText) {
+        date.isFocusable = false
+        date.isClickable = true
+        date.setOnClickListener {
+            val calendar = CalendarUtils.setDisplayCalendar(requireActivity(), date)
             Validation.checkStartFinishDate(calendar)
             calendar.show()
-        }
-    }
-
-    fun changeVisibility(isEdit: Boolean) {
-        if(isEdit) {
-            binding.addCross.visibility = View.VISIBLE
-            binding.imageCheck.visibility = View.VISIBLE
-            binding.imageCancel.visibility = View.VISIBLE
-            binding.imageAdd.visibility = View.GONE
-        } else {
-            binding.addCross.visibility = View.GONE
-            binding.imageCheck.visibility = View.GONE
-            binding.imageCancel.visibility = View.GONE
-            binding.imageAdd.visibility = View.VISIBLE
         }
     }
 
@@ -149,11 +135,11 @@ class ProjDiaryFragment : Fragment() {
         builder.show()
     }
 
-    fun addDiaryEntry() {
+    fun addDiaryEntry(dateString: String, crossDayQuantityVal: String) {
         val diaryEntry = ProjDiary(
-            date = LocalDate.parse(binding.date.text.toString(),
+            date = LocalDate.parse(dateString,
                 DateTimeFormatter.ofPattern("dd.MM.yyyy")),
-            crossQuantity = binding.crossDayQuantity.text.toString().toInt(),
+            crossQuantity = crossDayQuantityVal.toInt(),
             projId = projId!!
         )
         CoroutineScope(Dispatchers.IO).launch {
@@ -193,21 +179,11 @@ class ProjDiaryFragment : Fragment() {
         projDao = db.projDao()
 
         Animation()
-        changeVisibility(false)
 
         binding.imageAdd.setOnClickListener {
-            changeVisibility(true)
             showEditDialog()
         }
-        binding.imageCancel.setOnClickListener {
-            changeVisibility(false)
-        }
-        setCalendar()
 
-        binding.imageCheck.setOnClickListener {
-            addDiaryEntry()
-            changeVisibility(false)
-        }
         binding.diaryList.layoutManager = LinearLayoutManager(requireContext())
         diaryAdapter = ProjDiaryAdapter(emptyList(), diaryDao, projDao,
             requireContext() as LifecycleOwner

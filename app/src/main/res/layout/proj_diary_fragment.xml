@@ -319,22 +319,6 @@
                     android:src="@drawable/add"
                     android:paddingStart="10dp"
                     />
-                <ImageView
-                    android:id="@+id/imageCheck"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:contentDescription="Подтвердить изменения"
-                    android:src="@drawable/check"
-                    android:paddingStart="10dp"
-                    />
-                <ImageView
-                    android:id="@+id/imageCancel"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:contentDescription="Отмена"
-                    android:src="@drawable/cancel"
-                    android:paddingStart="10dp"
-                    />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/progressTableHead"
@@ -374,32 +358,6 @@
                     android:gravity="center"
                     style="@style/labelPrimusPlum"/>
             </LinearLayout>
-        <LinearLayout
-            android:id="@+id/addCross"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/date"/>
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/crossDayQuantity"/>
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:visibility="invisible"/>
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:visibility="invisible"/>
-        </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/diaryList"
                 android:layout_width="match_parent"
