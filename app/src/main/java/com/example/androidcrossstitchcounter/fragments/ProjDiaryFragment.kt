@@ -123,23 +123,18 @@ class ProjDiaryFragment : Fragment() {
         builder.setPositiveButton("Сохранить") { _, _ ->
             // Получаем новые значения
             val newCross = editCross.text.toString().toIntOrNull() ?: return@setPositiveButton
-
-
-            // Обновляем данные
-            lifecycleScope.launch {
-
-
-            }
+            val date = LocalDate.parse(editDateField.text.toString(),
+                DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+            addDiaryEntry(date, newCross)
         }
         builder.setNegativeButton("Отмена", null)
         builder.show()
     }
 
-    fun addDiaryEntry(dateString: String, crossDayQuantityVal: String) {
+    fun addDiaryEntry(date: LocalDate, crossDayQuantityVal: Int) {
         val diaryEntry = ProjDiary(
-            date = LocalDate.parse(dateString,
-                DateTimeFormatter.ofPattern("dd.MM.yyyy")),
-            crossQuantity = crossDayQuantityVal.toInt(),
+            date = date,
+            crossQuantity = crossDayQuantityVal,
             projId = projId!!
         )
         CoroutineScope(Dispatchers.IO).launch {
