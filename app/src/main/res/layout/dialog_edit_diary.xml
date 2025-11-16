@@ -3,25 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/light_blueberry_transparent">
     <TextView
         android:id="@+id/date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="11.09.2025"
-        android:inputType="date"/>
+        android:inputType="date"
+        style="@style/labelPrimusDarkBlue"/>
     <EditText
         android:id="@+id/editDate"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        style="@style/labelPrimusDarkBlue"/>
     <EditText
         android:id="@+id/editCross"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Количество крестиков"
-        android:inputType="number"/>
+        android:inputType="number"
+        style="@style/labelPrimusDarkBlue"/>
     <LinearLayout
         android:id="@+id/textMessage"
         android:layout_width="match_parent"
@@ -32,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Данные за эту дату уже есть. Что Вы хотите сделать?"
+            style="@style/labelPrimusPlum"
             />
         <RadioGroup
             android:id="@+id/radioGroup"
@@ -45,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Добавить"
-                style="@style/labelAcherus.Small"
+                style="@style/labelPrimusDarkBlue"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
                 android:checked="true"/>
@@ -54,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Переписать"
-                style="@style/labelAcherus.Small"
+                style="@style/labelPrimusDarkBlue"
                 android:minHeight="0dp"
                 android:minWidth="0dp"/>
         </RadioGroup>
