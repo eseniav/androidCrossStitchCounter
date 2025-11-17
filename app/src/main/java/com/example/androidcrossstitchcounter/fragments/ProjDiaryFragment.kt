@@ -265,14 +265,9 @@ class ProjDiaryFragment : Fragment() {
 
         binding.diaryList.layoutManager = LinearLayoutManager(requireContext())
         diaryAdapter = ProjDiaryAdapter(emptyList(), diaryDao, projDao,
-            requireContext() as LifecycleOwner,
+            requireContext() as LifecycleOwner, binding.diaryList,
         {
             loadEntries()
-            Toast.makeText(requireActivity(), "Запись удалена!", Toast.LENGTH_SHORT).show()
-        },
-        {
-            loadEntries()
-            Toast.makeText(requireActivity(), "Запись отредактирована!", Toast.LENGTH_SHORT).show()
         }
         )
         binding.diaryList.adapter = diaryAdapter
