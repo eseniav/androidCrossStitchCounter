@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ItemTouchHelper
 import kotlinx.coroutines.launch
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.models.ProjDao
@@ -108,6 +109,12 @@ class ProjDiaryAdapter(
         return diaryNotes.size
     }
 
+    fun removeItem(position: Int) {
+        val notes = diaryNotes.toMutableList()
+        notes.removeAt(position)
+        diaryNotes = notes
+        notifyItemRemoved(position)
+    }
     inner class DiaryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val dateView: TextView = itemView.findViewById(R.id.date)
         val dayCrossView: TextView = itemView.findViewById(R.id.dayCross)
@@ -115,6 +122,22 @@ class ProjDiaryAdapter(
         val remainsView: TextView = itemView.findViewById(R.id.remains)
     }
 
+    inner class SwipeToDeleteCallback(private  val adapter: ProjDiaryAdapter): ItemTouchHelper.SimpleCallback(0,
+        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean = false
+
+        override fun onSwiped(
+            viewHolder: RecyclerView.ViewHolder,
+            direction: Int
+        ) {
+            adapter.removeItem(viewHolder.adapterPosition)
+        }
+
+    }
     fun updateDiaryNotes(newDiaryNotes: List<ProjDiaryEntry>) {
         diaryNotes = newDiaryNotes
         notifyDataSetChanged()

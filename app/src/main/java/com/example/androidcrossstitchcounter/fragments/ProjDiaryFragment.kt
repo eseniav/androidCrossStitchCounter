@@ -18,6 +18,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
@@ -266,6 +267,9 @@ class ProjDiaryFragment : Fragment() {
             requireContext() as LifecycleOwner
         )
         binding.diaryList.adapter = diaryAdapter
+        val swipeCallback = diaryAdapter.SwipeToDeleteCallback(diaryAdapter)
+        val itemTouchHelper = ItemTouchHelper(swipeCallback)
+        itemTouchHelper.attachToRecyclerView(binding.diaryList)
         loadProject()
     }
 
