@@ -228,6 +228,24 @@ class ProjDiaryFragment : Fragment() {
             project = projDao.getProjectById(projId!!)!!
             binding.headProfile.text = project.projName
             binding.designerVal.text = project.projDesigner ?: "Не указано"
+            binding.sizeVal.text = "${project.width} X ${project.height}"
+            binding.allCrossVal.text = project.totalCross.toString()
+            binding.beforeRegCrossVal.text = project.stitchedCrossBeforeRegistration.toString()
+            binding.startDateVal.text = project.startDate
+            if(project.projStatusId == 3) {
+                binding.finishDate.visibility = View.VISIBLE
+                binding.finishDateVal.visibility = View.VISIBLE
+                binding.finishDateVal.text = project.finishDate
+            }
+            binding.stitchedVal.text = "/"
+            if(project.projStatusId == 3) {
+                binding.restVal.visibility = View.GONE
+            }
+            binding.restVal.text = "/"
+            binding.avgSpeedVal.text = ""
+            binding.prognosisVal.text = ""
+            binding.percentVal.text = "%"
+            binding.necessarySpeedVal.text = "кр./день"
             loadEntries()
         }
     }
