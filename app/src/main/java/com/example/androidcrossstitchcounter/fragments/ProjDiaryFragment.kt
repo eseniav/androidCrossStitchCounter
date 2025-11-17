@@ -266,10 +266,15 @@ class ProjDiaryFragment : Fragment() {
         binding.diaryList.layoutManager = LinearLayoutManager(requireContext())
         diaryAdapter = ProjDiaryAdapter(emptyList(), diaryDao, projDao,
             requireContext() as LifecycleOwner,
-        ) {
+        {
             loadEntries()
             Toast.makeText(requireActivity(), "Запись удалена!", Toast.LENGTH_SHORT).show()
+        },
+        {
+            loadEntries()
+            Toast.makeText(requireActivity(), "Запись отредактирована!", Toast.LENGTH_SHORT).show()
         }
+        )
         binding.diaryList.adapter = diaryAdapter
         val swipeCallback = SwipeToDeleteCallback(diaryAdapter)
         val itemTouchHelper = ItemTouchHelper(swipeCallback)

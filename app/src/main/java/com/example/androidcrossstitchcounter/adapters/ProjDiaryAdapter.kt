@@ -35,7 +35,8 @@ class ProjDiaryAdapter(
     private val diaryDao: ProjDiaryDao,
     private val projDao: ProjDao,
     private val lifecycleOwner: LifecycleOwner,
-    private val onDelete: () -> Unit
+    private val onDelete: () -> Unit,
+    private val onEdit: () -> Unit
 ): RecyclerView.Adapter<ProjDiaryAdapter.DiaryViewHolder>()  {
 
     private suspend fun getTotalCrossDone(projId: Int): Int {
@@ -78,6 +79,7 @@ class ProjDiaryAdapter(
                     set(position, ProjDiaryEntry(updatedEntry, diaryEntry.done, diaryEntry.remains))
                 }
                 notifyItemChanged(position)
+                onEdit()
             }
         }
         builder.setNegativeButton("Отмена", null)
