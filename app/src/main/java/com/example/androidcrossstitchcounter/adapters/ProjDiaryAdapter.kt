@@ -26,6 +26,7 @@ import com.example.androidcrossstitchcounter.models.ProjDiaryEntry
 import com.example.androidcrossstitchcounter.models.Project
 import java.time.format.DateTimeFormatter
 import com.example.androidcrossstitchcounter.listeners.DoubleTapListener
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -35,6 +36,7 @@ class ProjDiaryAdapter(
     private val diaryDao: ProjDiaryDao,
     private val projDao: ProjDao,
     private val lifecycleOwner: LifecycleOwner,
+    private val view: RecyclerView,
     private val onDelete: () -> Unit,
     private val onEdit: () -> Unit
 ): RecyclerView.Adapter<ProjDiaryAdapter.DiaryViewHolder>()  {
@@ -44,6 +46,7 @@ class ProjDiaryAdapter(
             .sumOf { it.crossQuantity }
     }
 
+    private var deletedItem: ProjDiary? = null
     private fun showEditDialog(position: Int, context: Context) {
         val diaryEntry = diaryNotes.getOrNull(position) ?: return
 
@@ -116,15 +119,32 @@ class ProjDiaryAdapter(
         return diaryNotes.size
     }
 
+    fun undoDel() {
+        deletedItem?.let { item ->
+            CoroutineScope(Dispatchers.IO).launch {
+                diaryDao.insertProjDiary(item)
+                withContext(Dispatchers.Main) {
+                    onDelete()
+                }
+            }
+        }
+    }
+    fun showUndoDialog() {
+        Snackbar.make(view, "Запись удалена!", Snackbar.LENGTH_LONG)
+            .setAction("Отмена"){undoDel()}.show()
+    }
+
     fun removeItem(position: Int) {
         val notes = diaryNotes.toMutableList()
+        deletedItem = notes[position].diary
         CoroutineScope(Dispatchers.IO).launch {
-            diaryDao.deleteEntry(notes[position].diary)
+            diaryDao.deleteEntry(deletedItem!!)
             withContext(Dispatchers.Main) {
                 notes.removeAt(position)
                 diaryNotes = notes
                 notifyItemRemoved(position)
                 onDelete()
+                showUndoDialog()
             }
         }
     }
