@@ -25,6 +25,7 @@ import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.adapters.ProjDiaryAdapter
 import com.example.androidcrossstitchcounter.adapters.ProjectAdapter
 import com.example.androidcrossstitchcounter.databinding.ProjDiaryFragmentBinding
+import com.example.androidcrossstitchcounter.listeners.SwipeToDeleteCallback
 import com.example.androidcrossstitchcounter.models.DataBaseProvider
 import com.example.androidcrossstitchcounter.models.ProjDao
 import com.example.androidcrossstitchcounter.models.ProjDiary
@@ -267,7 +268,7 @@ class ProjDiaryFragment : Fragment() {
             requireContext() as LifecycleOwner
         )
         binding.diaryList.adapter = diaryAdapter
-        val swipeCallback = diaryAdapter.SwipeToDeleteCallback(diaryAdapter)
+        val swipeCallback = SwipeToDeleteCallback(diaryAdapter)
         val itemTouchHelper = ItemTouchHelper(swipeCallback)
         itemTouchHelper.attachToRecyclerView(binding.diaryList)
         loadProject()

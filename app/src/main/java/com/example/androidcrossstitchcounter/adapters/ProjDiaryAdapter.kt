@@ -122,22 +122,6 @@ class ProjDiaryAdapter(
         val remainsView: TextView = itemView.findViewById(R.id.remains)
     }
 
-    inner class SwipeToDeleteCallback(private  val adapter: ProjDiaryAdapter): ItemTouchHelper.SimpleCallback(0,
-        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ): Boolean = false
-
-        override fun onSwiped(
-            viewHolder: RecyclerView.ViewHolder,
-            direction: Int
-        ) {
-            adapter.removeItem(viewHolder.adapterPosition)
-        }
-
-    }
     fun updateDiaryNotes(newDiaryNotes: List<ProjDiaryEntry>) {
         diaryNotes = newDiaryNotes
         notifyDataSetChanged()
