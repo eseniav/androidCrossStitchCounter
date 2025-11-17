@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.activities.MainActivity
-import com.example.androidcrossstitchcounter.activities.ProjDiaryActivity
 import com.example.androidcrossstitchcounter.adapters.ProjectAdapter
 import com.example.androidcrossstitchcounter.databinding.ProjFragmentBinding
 import com.example.androidcrossstitchcounter.models.AppDataBase

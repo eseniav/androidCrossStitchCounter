@@ -31,8 +31,7 @@ class ProjActivity : AppCompatActivity() {
 
         val projName = findViewById<TextView>(R.id.projName)
         projName.setOnClickListener {
-            val intent = Intent(this@ProjActivity, ProjDiaryActivity::class.java)
-            startActivity(intent)
+
         }
 
         val addPresent = findViewById<ImageView>(R.id.imageAdd)
