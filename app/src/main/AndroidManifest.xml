@@ -14,9 +14,6 @@
         android:name=".App"
         >
         <activity
-            android:name=".activities.ProjActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.RegActivity"
             android:exported="false" />
         <activity
