@@ -268,10 +268,6 @@ class ProjDiaryFragment : Fragment() {
             requireContext() as LifecycleOwner, binding.diaryList,
         {
             loadEntries()
-        },
-        {
-            loadEntries()
-            Toast.makeText(requireActivity(), "Запись отредактирована!", Toast.LENGTH_SHORT).show()
         }
         )
         binding.diaryList.adapter = diaryAdapter

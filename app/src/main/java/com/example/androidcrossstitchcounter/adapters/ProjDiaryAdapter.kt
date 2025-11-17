@@ -37,8 +37,7 @@ class ProjDiaryAdapter(
     private val projDao: ProjDao,
     private val lifecycleOwner: LifecycleOwner,
     private val view: RecyclerView,
-    private val onDelete: () -> Unit,
-    private val onEdit: () -> Unit
+    private val onChange: () -> Unit
 ): RecyclerView.Adapter<ProjDiaryAdapter.DiaryViewHolder>()  {
 
     private suspend fun getTotalCrossDone(projId: Int): Int {
@@ -82,7 +81,8 @@ class ProjDiaryAdapter(
                     set(position, ProjDiaryEntry(updatedEntry, diaryEntry.done, diaryEntry.remains))
                 }
                 notifyItemChanged(position)
-                onEdit()
+                onChange()
+                Toast.makeText(lifecycleOwner as Context, "Запись обновлена!", Toast.LENGTH_SHORT).show()
             }
         }
         builder.setNegativeButton("Отмена", null)
@@ -124,7 +124,7 @@ class ProjDiaryAdapter(
             CoroutineScope(Dispatchers.IO).launch {
                 diaryDao.insertProjDiary(item)
                 withContext(Dispatchers.Main) {
-                    onDelete()
+                    onChange()
                     Toast.makeText(lifecycleOwner as Context, "Запись восстановлена!", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -144,7 +144,7 @@ class ProjDiaryAdapter(
                 notes.removeAt(position)
                 diaryNotes = notes
                 notifyItemRemoved(position)
-                onDelete()
+                onChange()
                 showUndoDialog()
             }
         }
