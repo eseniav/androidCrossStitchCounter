@@ -25,6 +25,9 @@ import com.example.androidcrossstitchcounter.models.ProjDiaryEntry
 import com.example.androidcrossstitchcounter.models.Project
 import java.time.format.DateTimeFormatter
 import com.example.androidcrossstitchcounter.listeners.DoubleTapListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class ProjDiaryAdapter(
     private var diaryNotes: List<ProjDiaryEntry>,
@@ -111,9 +114,14 @@ class ProjDiaryAdapter(
 
     fun removeItem(position: Int) {
         val notes = diaryNotes.toMutableList()
-        notes.removeAt(position)
-        diaryNotes = notes
-        notifyItemRemoved(position)
+        CoroutineScope(Dispatchers.IO).launch {
+            diaryDao.deleteEntry(notes[position].diary)
+            withContext(Dispatchers.Main) {
+                notes.removeAt(position)
+                diaryNotes = notes
+                notifyItemRemoved(position)
+            }
+        }
     }
     inner class DiaryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val dateView: TextView = itemView.findViewById(R.id.date)
