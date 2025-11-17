@@ -35,9 +35,6 @@
             android:name=".activities.ProjDiaryActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.AddProjActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.AuthActivity"
             android:exported="false" />
     </application>

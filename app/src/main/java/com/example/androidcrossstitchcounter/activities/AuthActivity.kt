@@ -60,7 +60,7 @@ class AuthActivity : AppCompatActivity() {
                     app.user = user
                     handleRememberMe(user.id)
                     Toast.makeText(this, "Добро пожаловать, ${app.user!!.login}!", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this@AuthActivity, ProjActivity::class.java)
+                    val intent = Intent(this@AuthActivity, MainActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {

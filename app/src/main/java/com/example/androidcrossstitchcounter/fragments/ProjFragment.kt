@@ -14,7 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
-import com.example.androidcrossstitchcounter.activities.AddProjActivity
 import com.example.androidcrossstitchcounter.activities.MainActivity
 import com.example.androidcrossstitchcounter.activities.ProjDiaryActivity
 import com.example.androidcrossstitchcounter.adapters.ProjectAdapter
