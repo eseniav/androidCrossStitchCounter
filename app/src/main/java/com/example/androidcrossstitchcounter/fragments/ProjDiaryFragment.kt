@@ -18,12 +18,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.adapters.ProjDiaryAdapter
 import com.example.androidcrossstitchcounter.adapters.ProjectAdapter
 import com.example.androidcrossstitchcounter.databinding.ProjDiaryFragmentBinding
+import com.example.androidcrossstitchcounter.listeners.SwipeToDeleteCallback
 import com.example.androidcrossstitchcounter.models.DataBaseProvider
 import com.example.androidcrossstitchcounter.models.ProjDao
 import com.example.androidcrossstitchcounter.models.ProjDiary
@@ -263,9 +265,15 @@ class ProjDiaryFragment : Fragment() {
 
         binding.diaryList.layoutManager = LinearLayoutManager(requireContext())
         diaryAdapter = ProjDiaryAdapter(emptyList(), diaryDao, projDao,
-            requireContext() as LifecycleOwner
-        )
+            requireContext() as LifecycleOwner,
+        ) {
+            loadEntries()
+            Toast.makeText(requireActivity(), "Запись удалена!", Toast.LENGTH_SHORT).show()
+        }
         binding.diaryList.adapter = diaryAdapter
+        val swipeCallback = SwipeToDeleteCallback(diaryAdapter)
+        val itemTouchHelper = ItemTouchHelper(swipeCallback)
+        itemTouchHelper.attachToRecyclerView(binding.diaryList)
         loadProject()
     }
 

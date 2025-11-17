@@ -12,9 +12,11 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ItemTouchHelper
 import kotlinx.coroutines.launch
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.models.ProjDao
@@ -24,12 +26,16 @@ import com.example.androidcrossstitchcounter.models.ProjDiaryEntry
 import com.example.androidcrossstitchcounter.models.Project
 import java.time.format.DateTimeFormatter
 import com.example.androidcrossstitchcounter.listeners.DoubleTapListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class ProjDiaryAdapter(
     private var diaryNotes: List<ProjDiaryEntry>,
     private val diaryDao: ProjDiaryDao,
     private val projDao: ProjDao,
-    private val lifecycleOwner: LifecycleOwner
+    private val lifecycleOwner: LifecycleOwner,
+    private val onDelete: () -> Unit
 ): RecyclerView.Adapter<ProjDiaryAdapter.DiaryViewHolder>()  {
 
     private suspend fun getTotalCrossDone(projId: Int): Int {
@@ -108,6 +114,18 @@ class ProjDiaryAdapter(
         return diaryNotes.size
     }
 
+    fun removeItem(position: Int) {
+        val notes = diaryNotes.toMutableList()
+        CoroutineScope(Dispatchers.IO).launch {
+            diaryDao.deleteEntry(notes[position].diary)
+            withContext(Dispatchers.Main) {
+                notes.removeAt(position)
+                diaryNotes = notes
+                notifyItemRemoved(position)
+                onDelete()
+            }
+        }
+    }
     inner class DiaryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val dateView: TextView = itemView.findViewById(R.id.date)
         val dayCrossView: TextView = itemView.findViewById(R.id.dayCross)

@@ -1,6 +1,7 @@
 package com.example.androidcrossstitchcounter.models
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Insert
@@ -52,6 +53,8 @@ interface ProjDiaryDao {
         date: String,
         amount: Int
     )
+    @Delete
+    suspend fun deleteEntry(projDiary: ProjDiary)
 
     @Update
     suspend fun updateProjDiary(projDiary: ProjDiary)
