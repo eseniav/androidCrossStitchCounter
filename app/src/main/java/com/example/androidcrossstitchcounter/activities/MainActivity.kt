@@ -48,9 +48,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun redirect(page: String) {
+    fun redirect() {
         val intent = Intent(this@MainActivity,
-            if(page == "Auth") AuthActivity::class.java else ProjActivity::class.java)
+            AuthActivity::class.java)
         startActivity(intent)
         finish()
     }
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("app_data", MODE_PRIVATE)
         val userId = sharedPreferences.getInt("user_id", -1)
         if(userId == -1) {
-            redirect("Auth")
+            redirect()
         } else {
             checkUser(userId) { user ->
               if(user != null) {
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                   toggleFragment(binding.projectList, proj)
 
               } else
-                  redirect("Auth")
+                  redirect()
             }
         }
     }
@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity() {
         binding.logout.setOnClickListener {
             resetColor()
             setColor(binding.logout)
-            redirect("Auth")
+            redirect()
         }
     }
 }

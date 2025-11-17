@@ -14,9 +14,6 @@
         android:name=".App"
         >
         <activity
-            android:name=".activities.ProjActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.RegActivity"
             android:exported="false" />
         <activity
@@ -28,15 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities.ProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.ProjDiaryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.AddProjActivity"
-            android:exported="false" />
         <activity
             android:name=".activities.AuthActivity"
             android:exported="false" />
