@@ -125,6 +125,7 @@ class ProjDiaryAdapter(
                 diaryDao.insertProjDiary(item)
                 withContext(Dispatchers.Main) {
                     onDelete()
+                    Toast.makeText(lifecycleOwner as Context, "Запись восстановлена!", Toast.LENGTH_SHORT).show()
                 }
             }
         }
