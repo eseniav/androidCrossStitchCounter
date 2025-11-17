@@ -24,9 +24,7 @@ class ProjActivity : AppCompatActivity() {
         loginVal.text = login
 
         loginVal.setOnClickListener {
-            val intent = Intent(this@ProjActivity, ProfileActivity::class.java)
-            startActivity(intent)
-            finish()
+
         }
 
         val projName = findViewById<TextView>(R.id.projName)
