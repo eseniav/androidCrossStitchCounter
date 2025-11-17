@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import androidx.lifecycle.lifecycleScope
@@ -33,7 +34,8 @@ class ProjDiaryAdapter(
     private var diaryNotes: List<ProjDiaryEntry>,
     private val diaryDao: ProjDiaryDao,
     private val projDao: ProjDao,
-    private val lifecycleOwner: LifecycleOwner
+    private val lifecycleOwner: LifecycleOwner,
+    private val onDelete: () -> Unit
 ): RecyclerView.Adapter<ProjDiaryAdapter.DiaryViewHolder>()  {
 
     private suspend fun getTotalCrossDone(projId: Int): Int {
@@ -120,6 +122,7 @@ class ProjDiaryAdapter(
                 notes.removeAt(position)
                 diaryNotes = notes
                 notifyItemRemoved(position)
+                onDelete()
             }
         }
     }
