@@ -20,6 +20,7 @@ import com.example.androidcrossstitchcounter.models.ProjDao
 import com.example.androidcrossstitchcounter.models.Project
 import com.example.androidcrossstitchcounter.services.CalendarUtils
 import com.example.androidcrossstitchcounter.services.Validation
+import com.example.androidcrossstitchcounter.utils.toStringOrNull
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -77,12 +78,12 @@ class AddProjFragment : Fragment() {
             val project = Project(
                 projName = binding.nameProj.text.toString(),
                 userId = app.user!!.id,
-                projDesigner = binding.designerProj.text.toString(),
+                projDesigner = binding.designerProj.text.toString().toStringOrNull(),
                 totalCross = binding.totalCross.text.toString().toIntOrNull(),
-                finishDreamDate = binding.finishDream.text.toString(),
+                finishDreamDate = binding.finishDream.text.toString().toStringOrNull(),
                 stitchedCrossBeforeRegistration = binding.beforeRegCross.text.toString().toIntOrNull() ?: 0,
-                startDate = binding.startDate.text.toString(),
-                finishDate = binding.finishDate.text.toString(),
+                startDate = binding.startDate.text.toString().toStringOrNull(),
+                finishDate = binding.finishDate.text.toString().toStringOrNull(),
                 width = binding.width.text.toString().toIntOrNull() ?: 0,
                 height = binding.height.text.toString().toIntOrNull() ?: 0,
                 projStatusId =
