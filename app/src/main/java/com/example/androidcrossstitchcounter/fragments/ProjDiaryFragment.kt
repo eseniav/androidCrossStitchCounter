@@ -43,6 +43,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -212,6 +213,46 @@ class ProjDiaryFragment : Fragment() {
         }
     }
 
+    fun updateProjInfo() {
+        val done = if (diaryNotes.size != 0) diaryNotes[diaryNotes.size - 1].done else project.stitchedCrossBeforeRegistration
+        val dayDone = ChronoUnit.DAYS.between(LocalDate.parse(project.startDate, DateTimeFormatter.ofPattern("dd.MM.yyyy")), LocalDate.now())
+        var remains: Int? = null
+        var dayRemains: Long? = null
+        if(project.projStatusId == 3 || project.totalCross == null) {
+            binding.restVal.visibility = View.GONE
+        }
+        else {
+            remains = if (diaryNotes.size == 0) project.totalCross!! - project.stitchedCrossBeforeRegistration else diaryNotes[diaryNotes.size - 1].remains
+            if (!project.finishDreamDate.isNullOrEmpty()) {
+                val dreamDate = LocalDate.parse(project.finishDreamDate, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+                dayRemains = ChronoUnit.DAYS.between(LocalDate.now(), dreamDate)
+            }
+            binding.restVal.text = "${remains} кр." + "${if (dayRemains == null || dayRemains <= 0) "" else "/ " + dayRemains + "дн."}"
+        }
+        binding.stitchedVal.text = "$done кр./ $dayDone дн."
+        val avgSpeed = if(dayDone == 0L) 0 else done / dayDone
+        binding.avgSpeedVal.text = "${avgSpeed} кр./день"
+        if (avgSpeed == 0L || remains == null) {
+            binding.prognosisVal.visibility = View.GONE
+            binding.prognosis.visibility = View.GONE
+        } else {
+            val prognosisDay = remains / avgSpeed
+            val prognosisDate = LocalDate.now().plusDays(prognosisDay)
+            binding.prognosisVal.text = "${prognosisDate} (${prognosisDay} дн.)"
+        }
+        if (project.totalCross != null) {
+            binding.percentVal.text = "${done * 100 / project.totalCross!!}%"
+        } else {
+            binding.percentVal.visibility = View.GONE
+            binding.percent.visibility = View.GONE
+        }
+        if (remains == null || dayRemains == null || dayRemains <= 0) {
+            binding.necessarySpeedVal.visibility = View.GONE
+            binding.necessarySpeed.visibility = View.GONE
+        } else {
+            binding.necessarySpeedVal.text = "${remains / dayRemains} кр./день"
+        }
+    }
     fun loadEntries() {
         lifecycleScope.launch {
             val dbEntries = diaryDao.getProjEntriesById(projId!!)
@@ -223,6 +264,7 @@ class ProjDiaryFragment : Fragment() {
             }
             diaryAdapter.updateDiaryNotes(entries.reversed())
             diaryNotes = entries
+            updateProjInfo()
         }
     }
     fun loadProject() {
@@ -239,15 +281,7 @@ class ProjDiaryFragment : Fragment() {
                 binding.finishDateVal.visibility = View.VISIBLE
                 binding.finishDateVal.text = project.finishDate
             }
-            binding.stitchedVal.text = "/"
-            if(project.projStatusId == 3) {
-                binding.restVal.visibility = View.GONE
-            }
-            binding.restVal.text = "/"
-            binding.avgSpeedVal.text = ""
-            binding.prognosisVal.text = ""
-            binding.percentVal.text = "%"
-            binding.necessarySpeedVal.text = "кр./день"
+            binding.planDateVal.text = project.finishDreamDate ?: "Не указано"
             loadEntries()
         }
     }
