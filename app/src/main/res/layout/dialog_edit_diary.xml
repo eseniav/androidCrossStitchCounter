@@ -26,6 +26,14 @@
         android:hint="Количество крестиков"
         android:inputType="number"
         style="@style/labelPrimusDarkBlue"/>
+    <TextView
+        android:id="@+id/remains"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Вводимые данные превышают остаток!"
+        style="@style/labelPrimusPlum"
+        android:visibility="gone"
+        />
     <LinearLayout
         android:id="@+id/textMessage"
         android:layout_width="match_parent"

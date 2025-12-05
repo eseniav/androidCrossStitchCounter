@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
@@ -72,6 +73,7 @@ class ProjDiaryFragment : Fragment() {
     private lateinit var project: Project
     private lateinit var diaryAdapter: ProjDiaryAdapter
     private lateinit var diaryNotes: List<ProjDiaryEntry>
+    private var remains: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,6 +111,10 @@ class ProjDiaryFragment : Fragment() {
         }
     }
 
+    fun calculateRemains() {
+
+    }
+
     private fun showEditDialog() {
         val builder = AlertDialog.Builder(context)
         builder.setTitle("Редактировать запись")
@@ -123,6 +129,8 @@ class ProjDiaryFragment : Fragment() {
         val textMessage = dialogView.findViewById<LinearLayout>(R.id.textMessage)
         val addVal = dialogView.findViewById<RadioButton>(R.id.add)
         val editVal = dialogView.findViewById<RadioButton>(R.id.edit)
+        val remainsText = dialogView.findViewById<TextView>(R.id.remains)
+        val radioGroup = dialogView.findViewById<RadioGroup>(R.id.radioGroup)
         var isEqual = false
         // Заполняем текущие значения
         editDateField.visibility = View.VISIBLE
@@ -131,6 +139,8 @@ class ProjDiaryFragment : Fragment() {
         editDateField.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")))
         builder.setView(dialogView)
         setCalendar(editDateField)
+
+        var foundCrossEntry: ProjDiaryEntry? = null
         fun handleDateChange() {
             val date = LocalDate.parse(editDateField.text.toString(),
                 DateTimeFormatter.ofPattern("dd.MM.yyyy"))
@@ -138,8 +148,50 @@ class ProjDiaryFragment : Fragment() {
                 textMessage.visibility = View.VISIBLE
                 isEqual = true
             }
+            foundCrossEntry = diaryNotes.find { it.diary.date == date}
         }
         handleDateChange()
+
+        fun handleRemains(s: Editable?) {
+            remainsText.visibility = View.GONE
+            var newRemains = remains
+            if (foundCrossEntry != null && editVal.isChecked) {
+                newRemains = newRemains?.plus(foundCrossEntry!!.diary.crossQuantity)
+            }
+            s.toString().toIntOrNull()?.also {
+                if(it > newRemains!!) {
+                    remainsText.visibility = View.VISIBLE
+                }
+            }
+        }
+
+        if(remains != null) {
+            editCross.addTextChangedListener(object : TextWatcher{
+                override fun afterTextChanged(s: Editable?) {
+                    handleRemains(s)
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+
+                }
+
+                override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int
+                ) {
+
+                }
+            })
+        }
+
+        radioGroup.setOnCheckedChangeListener{_, _ -> handleRemains(editCross.text)}
 
         editDateField.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
@@ -216,7 +268,6 @@ class ProjDiaryFragment : Fragment() {
     fun updateProjInfo() {
         val done = if (diaryNotes.size != 0) diaryNotes[diaryNotes.size - 1].done else project.stitchedCrossBeforeRegistration
         val dayDone = ChronoUnit.DAYS.between(LocalDate.parse(project.startDate, DateTimeFormatter.ofPattern("dd.MM.yyyy")), LocalDate.now())
-        var remains: Int? = null
         var dayRemains: Long? = null
         if(project.projStatusId == 3 || project.totalCross == null) {
             binding.restVal.visibility = View.GONE
@@ -236,7 +287,7 @@ class ProjDiaryFragment : Fragment() {
             binding.prognosisVal.visibility = View.GONE
             binding.prognosis.visibility = View.GONE
         } else {
-            val prognosisDay = remains / avgSpeed
+            val prognosisDay = remains!! / avgSpeed
             val prognosisDate = LocalDate.now().plusDays(prognosisDay)
             binding.prognosisVal.text = "${prognosisDate} (${prognosisDay} дн.)"
         }
@@ -250,7 +301,7 @@ class ProjDiaryFragment : Fragment() {
             binding.necessarySpeedVal.visibility = View.GONE
             binding.necessarySpeed.visibility = View.GONE
         } else {
-            binding.necessarySpeedVal.text = "${remains / dayRemains} кр./день"
+            binding.necessarySpeedVal.text = "${remains!! / dayRemains} кр./день"
         }
     }
     fun loadEntries() {
