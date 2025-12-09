@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.Fragment
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -58,11 +60,52 @@ class ProjDiaryAdapter(
 
         val editDate = dialogView.findViewById<TextView>(R.id.date)
         val editCross = dialogView.findViewById<EditText>(R.id.editCross)
-
+        val remainsText = dialogView.findViewById<TextView>(R.id.remains)
         // Заполняем текущие значения
         editDate.text = diaryEntry.diary.date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
         editCross.setText(diaryEntry.diary.crossQuantity.toString())
 
+        var remains = diaryNotes.first().remains
+
+        fun handleRemains(s: Editable?) {
+            remainsText.visibility = View.GONE
+            var newCrossEdit = s.toString().toIntOrNull()
+            var newRemains: Int?
+            if (remains != null && newCrossEdit != null) {
+                newRemains = remains - newCrossEdit + diaryEntry.diary.crossQuantity
+                if (newRemains < 0) {
+                    remainsText.visibility = View.VISIBLE
+                }
+            }
+        }
+
+        if (remains != null) {
+            editCross.addTextChangedListener(
+                object : TextWatcher{
+                    override fun afterTextChanged(s: Editable?) {
+                        handleRemains(s)
+                    }
+
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+
+                    }
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+
+                    }
+                }
+            )
+        }
         builder.setView(dialogView)
 
         builder.setPositiveButton("Сохранить") { _, _ ->
@@ -85,6 +128,7 @@ class ProjDiaryAdapter(
                 Toast.makeText(lifecycleOwner as Context, "Запись обновлена!", Toast.LENGTH_SHORT).show()
             }
         }
+
         builder.setNegativeButton("Отмена", null)
         builder.show()
     }
@@ -107,7 +151,6 @@ class ProjDiaryAdapter(
         holder.dayCrossView.text = diaryNote.diary.crossQuantity.toString()
         holder.crossDoneView.text = diaryNote.done.toString()
         holder.remainsView.text = diaryNote.remains.toString()
-
         holder.itemView.setOnTouchListener(DoubleTapListener(holder.adapterPosition) { position ->
             showEditDialog(position, holder.itemView.context)
             //showDialog(holder.itemView.context, position)
