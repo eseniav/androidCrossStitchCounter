@@ -141,12 +141,14 @@ class ProjDiaryFragment : Fragment() {
         setCalendar(editDateField)
 
         var foundCrossEntry: ProjDiaryEntry? = null
+        lateinit var dialog: AlertDialog
         fun handleDateChange() {
             val date = LocalDate.parse(editDateField.text.toString(),
                 DateTimeFormatter.ofPattern("dd.MM.yyyy"))
             if(diaryNotes.any{it.diary.date.isEqual(date)}) {
                 textMessage.visibility = View.VISIBLE
                 isEqual = true
+
             }
             foundCrossEntry = diaryNotes.find { it.diary.date == date}
         }
@@ -154,6 +156,7 @@ class ProjDiaryFragment : Fragment() {
 
         fun handleRemains(s: Editable?) {
             remainsText.visibility = View.GONE
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = true
             var newRemains = remains
             if (foundCrossEntry != null && editVal.isChecked) {
                 newRemains = newRemains?.plus(foundCrossEntry!!.diary.crossQuantity)
@@ -161,6 +164,7 @@ class ProjDiaryFragment : Fragment() {
             s.toString().toIntOrNull()?.also {
                 if(it > newRemains!!) {
                     remainsText.visibility = View.VISIBLE
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
                 }
             }
         }
@@ -232,7 +236,8 @@ class ProjDiaryFragment : Fragment() {
             }
         }
         builder.setNegativeButton("Отмена", null)
-        builder.show()
+        dialog = builder.create()
+        dialog.show()
     }
 
     fun addDiaryEntry(date: LocalDate, crossDayQuantityVal: Int) {
