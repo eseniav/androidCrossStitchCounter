@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -65,16 +66,18 @@ class ProjDiaryAdapter(
         editDate.text = diaryEntry.diary.date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
         editCross.setText(diaryEntry.diary.crossQuantity.toString())
 
-        var remains = diaryNotes.first().remains
-
+        val remains = diaryNotes.first().remains
+        var dialog: AlertDialog? = null
         fun handleRemains(s: Editable?) {
             remainsText.visibility = View.GONE
-            var newCrossEdit = s.toString().toIntOrNull()
+            dialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = true
+            val newCrossEdit = s.toString().toIntOrNull()
             var newRemains: Int?
             if (remains != null && newCrossEdit != null) {
                 newRemains = remains - newCrossEdit + diaryEntry.diary.crossQuantity
                 if (newRemains < 0) {
                     remainsText.visibility = View.VISIBLE
+                    dialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
                 }
             }
         }
@@ -130,7 +133,8 @@ class ProjDiaryAdapter(
         }
 
         builder.setNegativeButton("Отмена", null)
-        builder.show()
+        dialog = builder.create()
+        dialog.show()
     }
 
     override fun onCreateViewHolder(
