@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.CompoundButton
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -21,12 +23,14 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.withTransaction
 import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.adapters.ProjDiaryAdapter
 import com.example.androidcrossstitchcounter.adapters.ProjectAdapter
 import com.example.androidcrossstitchcounter.databinding.ProjDiaryFragmentBinding
 import com.example.androidcrossstitchcounter.listeners.SwipeToDeleteCallback
+import com.example.androidcrossstitchcounter.models.AppDataBase
 import com.example.androidcrossstitchcounter.models.DataBaseProvider
 import com.example.androidcrossstitchcounter.models.ProjDao
 import com.example.androidcrossstitchcounter.models.ProjDiary
@@ -60,7 +64,9 @@ class ProjDiaryFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var db: AppDataBase
     private var projId: Int? = null
+    private var isFinish = false
     private val binding by lazy {
         ProjDiaryFragmentBinding.inflate(layoutInflater)
     }
@@ -131,6 +137,8 @@ class ProjDiaryFragment : Fragment() {
         val editVal = dialogView.findViewById<RadioButton>(R.id.edit)
         val remainsText = dialogView.findViewById<TextView>(R.id.remains)
         val radioGroup = dialogView.findViewById<RadioGroup>(R.id.radioGroup)
+        val finishProj = dialogView.findViewById<LinearLayout>(R.id.finishProj)
+        val finishCheck = dialogView.findViewById<CheckBox>(R.id.finishCheck)
         var isEqual = false
         // Заполняем текущие значения
         editDateField.visibility = View.VISIBLE
@@ -156,13 +164,20 @@ class ProjDiaryFragment : Fragment() {
 
         fun handleRemains(s: Editable?) {
             remainsText.visibility = View.GONE
+            finishProj.visibility = View.GONE
+            finishCheck.isChecked = false
+            isFinish = false
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = true
             var newRemains = remains
             if (foundCrossEntry != null && editVal.isChecked) {
                 newRemains = newRemains?.plus(foundCrossEntry!!.diary.crossQuantity)
             }
             s.toString().toIntOrNull()?.also {
-                if(it > newRemains!!) {
+                if (newRemains == it) {
+                    finishProj.visibility = View.VISIBLE
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
+                }
+                else if(it > newRemains!!) {
                     remainsText.visibility = View.VISIBLE
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
                 }
@@ -228,6 +243,9 @@ class ProjDiaryFragment : Fragment() {
             val newCross = editCross.text.toString().toIntOrNull() ?: return@setPositiveButton
             val date = LocalDate.parse(editDateField.text.toString(),
                 DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+            if(isFinish) {
+                project.projStatusId = 3
+            }
             if(isEqual) {
                 val foundEntry = diaryNotes.find { it.diary.date.isEqual(date) }
                 updateDiaryEntry(foundEntry!!.diary, addVal.isChecked, newCross)
@@ -238,21 +256,48 @@ class ProjDiaryFragment : Fragment() {
         builder.setNegativeButton("Отмена", null)
         dialog = builder.create()
         dialog.show()
+
+        finishCheck.setOnCheckedChangeListener {_, isChecked ->
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = isChecked
+            isFinish = isChecked
+        }
     }
 
+    fun runTransaction(diaryEntry: ProjDiary, isAdded: Boolean) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                // Единая транзакция: обе операции либо пройдут, либо нет
+                db.withTransaction {
+                    if (isAdded)
+                        diaryDao.insertProjDiary(diaryEntry)
+                    else
+                        diaryDao.updateProjDiary(diaryEntry)
+                    if (isFinish)
+                        projDao.updateProject(project)
+                }
+
+                // Если всё прошло успешно — обновляем UI
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireActivity(), "Запись ${if(isAdded) "добавлена" else "обновлена"}!", Toast.LENGTH_SHORT).show()
+                    loadEntries()
+                    if (isFinish)
+                        Toast.makeText(requireActivity(), "Проект перенесён в завершённые!", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                // Обработка ошибки (транзакция автоматически откатится)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireActivity(), "Ошибка: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
     fun addDiaryEntry(date: LocalDate, crossDayQuantityVal: Int) {
         val diaryEntry = ProjDiary(
             date = date,
             crossQuantity = crossDayQuantityVal,
             projId = projId!!
         )
-        CoroutineScope(Dispatchers.IO).launch {
-            diaryDao.insertProjDiary(diaryEntry)
-            withContext(Dispatchers.Main) {
-                Toast.makeText(requireActivity(), "Запись добавлена!", Toast.LENGTH_SHORT).show()
-                loadEntries()
-            }
-        }
+        runTransaction(diaryEntry, true)
     }
 
     fun updateDiaryEntry(diaryEntry: ProjDiary, isAdd: Boolean, newCross: Int) {
@@ -261,13 +306,7 @@ class ProjDiaryFragment : Fragment() {
         } else {
             diaryEntry.crossQuantity = newCross
         }
-        CoroutineScope(Dispatchers.IO).launch {
-            diaryDao.updateProjDiary(diaryEntry)
-            withContext(Dispatchers.Main) {
-                Toast.makeText(requireActivity(), "Запись обновлена!", Toast.LENGTH_SHORT).show()
-                loadEntries()
-            }
-        }
+        runTransaction(diaryEntry, false)
     }
 
     fun updateProjInfo() {
@@ -343,7 +382,7 @@ class ProjDiaryFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val db = DataBaseProvider.getDB(requireContext())
+        db = DataBaseProvider.getDB(requireContext())
         diaryDao = db.diaryDao()
         projDao = db.projDao()
 
