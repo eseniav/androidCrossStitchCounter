@@ -66,6 +66,7 @@ class ProjDiaryFragment : Fragment() {
     private var param2: String? = null
     private lateinit var db: AppDataBase
     private var projId: Int? = null
+    private var isFinish = false
     private val binding by lazy {
         ProjDiaryFragmentBinding.inflate(layoutInflater)
     }
@@ -139,7 +140,6 @@ class ProjDiaryFragment : Fragment() {
         val finishProj = dialogView.findViewById<LinearLayout>(R.id.finishProj)
         val finishCheck = dialogView.findViewById<CheckBox>(R.id.finishCheck)
         var isEqual = false
-        var isFinish = false
         // Заполняем текущие значения
         editDateField.visibility = View.VISIBLE
         editDate.visibility = View.GONE
@@ -274,13 +274,16 @@ class ProjDiaryFragment : Fragment() {
                 // Единая транзакция: обе операции либо пройдут, либо нет
                 db.withTransaction {
                     diaryDao.insertProjDiary(diaryEntry)
-                    projDao.updateProject(project)
+                    if (isFinish)
+                        projDao.updateProject(project)
                 }
 
                 // Если всё прошло успешно — обновляем UI
                 withContext(Dispatchers.Main) {
                     Toast.makeText(requireActivity(), "Запись добавлена!", Toast.LENGTH_SHORT).show()
                     loadEntries()
+                    if (isFinish)
+                        Toast.makeText(requireActivity(), "Проект перенесён в завершённые!", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 // Обработка ошибки (транзакция автоматически откатится)
@@ -302,13 +305,16 @@ class ProjDiaryFragment : Fragment() {
                 // Единая транзакция: обе операции либо пройдут, либо нет
                 db.withTransaction {
                     diaryDao.updateProjDiary(diaryEntry)
-                    projDao.updateProject(project)
+                    if (isFinish)
+                        projDao.updateProject(project)
                 }
 
                 // Если всё прошло успешно — обновляем UI
                 withContext(Dispatchers.Main) {
                     Toast.makeText(requireActivity(), "Запись обновлена!", Toast.LENGTH_SHORT).show()
                     loadEntries()
+                    if (isFinish)
+                        Toast.makeText(requireActivity(), "Проект перенесён в завершённые!", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 // Обработка ошибки (транзакция автоматически откатится)
