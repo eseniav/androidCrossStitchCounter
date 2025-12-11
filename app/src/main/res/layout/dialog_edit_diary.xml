@@ -34,14 +34,34 @@
         style="@style/labelPrimusPlum"
         android:visibility="gone"
         />
-    <TextView
+    <LinearLayout
         android:id="@+id/finishProj"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Проект будет завершён"
-        style="@style/labelPrimusPlum"
-        android:visibility="gone"
-        />
+        android:orientation="vertical"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Проект будет завершён"
+            style="@style/labelPrimusPlum"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/finishCheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Завершить проект"
+                style="@style/labelPrimusPlum"
+                />
+        </LinearLayout>
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/textMessage"
         android:layout_width="match_parent"

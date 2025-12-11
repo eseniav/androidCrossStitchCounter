@@ -131,7 +131,7 @@ class ProjDiaryFragment : Fragment() {
         val editVal = dialogView.findViewById<RadioButton>(R.id.edit)
         val remainsText = dialogView.findViewById<TextView>(R.id.remains)
         val radioGroup = dialogView.findViewById<RadioGroup>(R.id.radioGroup)
-        val finishProj = dialogView.findViewById<TextView>(R.id.finishProj)
+        val finishProj = dialogView.findViewById<LinearLayout>(R.id.finishProj)
         var isEqual = false
         // Заполняем текущие значения
         editDateField.visibility = View.VISIBLE
