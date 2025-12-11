@@ -312,9 +312,9 @@ class ProjDiaryFragment : Fragment() {
     fun loadEntries() {
         lifecycleScope.launch {
             val dbEntries = diaryDao.getProjEntriesById(projId!!)
-            var done = 0
+            var done = 0 + project.stitchedCrossBeforeRegistration
             val entries = dbEntries.map {
-                done += it.crossQuantity + project.stitchedCrossBeforeRegistration
+                done += it.crossQuantity
                 val remains = project.totalCross?.minus(done)
                 ProjDiaryEntry(it, done, remains)
             }
