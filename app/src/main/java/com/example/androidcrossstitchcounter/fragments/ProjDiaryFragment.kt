@@ -131,6 +131,7 @@ class ProjDiaryFragment : Fragment() {
         val editVal = dialogView.findViewById<RadioButton>(R.id.edit)
         val remainsText = dialogView.findViewById<TextView>(R.id.remains)
         val radioGroup = dialogView.findViewById<RadioGroup>(R.id.radioGroup)
+        val finishProj = dialogView.findViewById<TextView>(R.id.finishProj)
         var isEqual = false
         // Заполняем текущие значения
         editDateField.visibility = View.VISIBLE
@@ -162,7 +163,10 @@ class ProjDiaryFragment : Fragment() {
                 newRemains = newRemains?.plus(foundCrossEntry!!.diary.crossQuantity)
             }
             s.toString().toIntOrNull()?.also {
-                if(it > newRemains!!) {
+                if (newRemains == it) {
+                    finishProj.visibility = View.VISIBLE
+                }
+                else if(it > newRemains!!) {
                     remainsText.visibility = View.VISIBLE
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
                 }
