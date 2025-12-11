@@ -23,12 +23,14 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.withTransaction
 import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.adapters.ProjDiaryAdapter
 import com.example.androidcrossstitchcounter.adapters.ProjectAdapter
 import com.example.androidcrossstitchcounter.databinding.ProjDiaryFragmentBinding
 import com.example.androidcrossstitchcounter.listeners.SwipeToDeleteCallback
+import com.example.androidcrossstitchcounter.models.AppDataBase
 import com.example.androidcrossstitchcounter.models.DataBaseProvider
 import com.example.androidcrossstitchcounter.models.ProjDao
 import com.example.androidcrossstitchcounter.models.ProjDiary
@@ -62,6 +64,7 @@ class ProjDiaryFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var db: AppDataBase
     private var projId: Int? = null
     private val binding by lazy {
         ProjDiaryFragmentBinding.inflate(layoutInflater)
@@ -240,20 +243,14 @@ class ProjDiaryFragment : Fragment() {
             val newCross = editCross.text.toString().toIntOrNull() ?: return@setPositiveButton
             val date = LocalDate.parse(editDateField.text.toString(),
                 DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+            if(isFinish) {
+                project.projStatusId = 3
+            }
             if(isEqual) {
                 val foundEntry = diaryNotes.find { it.diary.date.isEqual(date) }
                 updateDiaryEntry(foundEntry!!.diary, addVal.isChecked, newCross)
             } else {
                 addDiaryEntry(date, newCross)
-            }
-            if(isFinish) {
-                project.projStatusId = 3
-                CoroutineScope(Dispatchers.IO).launch {
-                    projDao.updateProject(project)
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(requireActivity(), "Проект перенесён в завершённые", Toast.LENGTH_SHORT).show()
-                    }
-                }
             }
         }
         builder.setNegativeButton("Отмена", null)
@@ -273,10 +270,23 @@ class ProjDiaryFragment : Fragment() {
             projId = projId!!
         )
         CoroutineScope(Dispatchers.IO).launch {
-            diaryDao.insertProjDiary(diaryEntry)
-            withContext(Dispatchers.Main) {
-                Toast.makeText(requireActivity(), "Запись добавлена!", Toast.LENGTH_SHORT).show()
-                loadEntries()
+            try {
+                // Единая транзакция: обе операции либо пройдут, либо нет
+                db.withTransaction {
+                    diaryDao.insertProjDiary(diaryEntry)
+                    projDao.updateProject(project)
+                }
+
+                // Если всё прошло успешно — обновляем UI
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireActivity(), "Запись добавлена!", Toast.LENGTH_SHORT).show()
+                    loadEntries()
+                }
+            } catch (e: Exception) {
+                // Обработка ошибки (транзакция автоматически откатится)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireActivity(), "Ошибка: ${e.message}", Toast.LENGTH_LONG).show()
+                }
             }
         }
     }
@@ -288,10 +298,23 @@ class ProjDiaryFragment : Fragment() {
             diaryEntry.crossQuantity = newCross
         }
         CoroutineScope(Dispatchers.IO).launch {
-            diaryDao.updateProjDiary(diaryEntry)
-            withContext(Dispatchers.Main) {
-                Toast.makeText(requireActivity(), "Запись обновлена!", Toast.LENGTH_SHORT).show()
-                loadEntries()
+            try {
+                // Единая транзакция: обе операции либо пройдут, либо нет
+                db.withTransaction {
+                    diaryDao.updateProjDiary(diaryEntry)
+                    projDao.updateProject(project)
+                }
+
+                // Если всё прошло успешно — обновляем UI
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireActivity(), "Запись обновлена!", Toast.LENGTH_SHORT).show()
+                    loadEntries()
+                }
+            } catch (e: Exception) {
+                // Обработка ошибки (транзакция автоматически откатится)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireActivity(), "Ошибка: ${e.message}", Toast.LENGTH_LONG).show()
+                }
             }
         }
     }
@@ -369,7 +392,7 @@ class ProjDiaryFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val db = DataBaseProvider.getDB(requireContext())
+        db = DataBaseProvider.getDB(requireContext())
         diaryDao = db.diaryDao()
         projDao = db.projDao()
 
