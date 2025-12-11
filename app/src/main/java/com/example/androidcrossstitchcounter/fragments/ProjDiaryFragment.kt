@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.CompoundButton
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -132,6 +134,7 @@ class ProjDiaryFragment : Fragment() {
         val remainsText = dialogView.findViewById<TextView>(R.id.remains)
         val radioGroup = dialogView.findViewById<RadioGroup>(R.id.radioGroup)
         val finishProj = dialogView.findViewById<LinearLayout>(R.id.finishProj)
+        val finishCheck = dialogView.findViewById<CheckBox>(R.id.finishCheck)
         var isEqual = false
         // Заполняем текущие значения
         editDateField.visibility = View.VISIBLE
@@ -157,6 +160,8 @@ class ProjDiaryFragment : Fragment() {
 
         fun handleRemains(s: Editable?) {
             remainsText.visibility = View.GONE
+            finishProj.visibility = View.GONE
+            finishCheck.isChecked = false
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = true
             var newRemains = remains
             if (foundCrossEntry != null && editVal.isChecked) {
@@ -165,6 +170,7 @@ class ProjDiaryFragment : Fragment() {
             s.toString().toIntOrNull()?.also {
                 if (newRemains == it) {
                     finishProj.visibility = View.VISIBLE
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
                 }
                 else if(it > newRemains!!) {
                     remainsText.visibility = View.VISIBLE
@@ -242,6 +248,10 @@ class ProjDiaryFragment : Fragment() {
         builder.setNegativeButton("Отмена", null)
         dialog = builder.create()
         dialog.show()
+
+        finishCheck.setOnCheckedChangeListener {_, isChecked ->
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = isChecked
+        }
     }
 
     fun addDiaryEntry(date: LocalDate, crossDayQuantityVal: Int) {
