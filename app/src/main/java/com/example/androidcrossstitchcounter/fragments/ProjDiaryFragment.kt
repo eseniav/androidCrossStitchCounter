@@ -136,6 +136,7 @@ class ProjDiaryFragment : Fragment() {
         val finishProj = dialogView.findViewById<LinearLayout>(R.id.finishProj)
         val finishCheck = dialogView.findViewById<CheckBox>(R.id.finishCheck)
         var isEqual = false
+        var isFinish = false
         // Заполняем текущие значения
         editDateField.visibility = View.VISIBLE
         editDate.visibility = View.GONE
@@ -162,6 +163,7 @@ class ProjDiaryFragment : Fragment() {
             remainsText.visibility = View.GONE
             finishProj.visibility = View.GONE
             finishCheck.isChecked = false
+            isFinish = false
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = true
             var newRemains = remains
             if (foundCrossEntry != null && editVal.isChecked) {
@@ -244,6 +246,15 @@ class ProjDiaryFragment : Fragment() {
             } else {
                 addDiaryEntry(date, newCross)
             }
+            if(isFinish) {
+                project.projStatusId = 3
+                CoroutineScope(Dispatchers.IO).launch {
+                    projDao.updateProject(project)
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(requireActivity(), "Проект перенесён в завершённые", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
         builder.setNegativeButton("Отмена", null)
         dialog = builder.create()
@@ -251,6 +262,7 @@ class ProjDiaryFragment : Fragment() {
 
         finishCheck.setOnCheckedChangeListener {_, isChecked ->
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = isChecked
+            isFinish = isChecked
         }
     }
 
