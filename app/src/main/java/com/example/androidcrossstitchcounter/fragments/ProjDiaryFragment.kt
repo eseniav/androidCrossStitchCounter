@@ -263,24 +263,22 @@ class ProjDiaryFragment : Fragment() {
         }
     }
 
-    fun addDiaryEntry(date: LocalDate, crossDayQuantityVal: Int) {
-        val diaryEntry = ProjDiary(
-            date = date,
-            crossQuantity = crossDayQuantityVal,
-            projId = projId!!
-        )
+    fun runTransaction(diaryEntry: ProjDiary, isAdded: Boolean) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 // Единая транзакция: обе операции либо пройдут, либо нет
                 db.withTransaction {
-                    diaryDao.insertProjDiary(diaryEntry)
+                    if (isAdded)
+                        diaryDao.insertProjDiary(diaryEntry)
+                    else
+                        diaryDao.updateProjDiary(diaryEntry)
                     if (isFinish)
                         projDao.updateProject(project)
                 }
 
                 // Если всё прошло успешно — обновляем UI
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(requireActivity(), "Запись добавлена!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), "Запись ${if(isAdded) "добавлена" else "обновлена"}!", Toast.LENGTH_SHORT).show()
                     loadEntries()
                     if (isFinish)
                         Toast.makeText(requireActivity(), "Проект перенесён в завершённые!", Toast.LENGTH_SHORT).show()
@@ -293,6 +291,14 @@ class ProjDiaryFragment : Fragment() {
             }
         }
     }
+    fun addDiaryEntry(date: LocalDate, crossDayQuantityVal: Int) {
+        val diaryEntry = ProjDiary(
+            date = date,
+            crossQuantity = crossDayQuantityVal,
+            projId = projId!!
+        )
+        runTransaction(diaryEntry, true)
+    }
 
     fun updateDiaryEntry(diaryEntry: ProjDiary, isAdd: Boolean, newCross: Int) {
         if(isAdd) {
@@ -300,29 +306,7 @@ class ProjDiaryFragment : Fragment() {
         } else {
             diaryEntry.crossQuantity = newCross
         }
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                // Единая транзакция: обе операции либо пройдут, либо нет
-                db.withTransaction {
-                    diaryDao.updateProjDiary(diaryEntry)
-                    if (isFinish)
-                        projDao.updateProject(project)
-                }
-
-                // Если всё прошло успешно — обновляем UI
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(requireActivity(), "Запись обновлена!", Toast.LENGTH_SHORT).show()
-                    loadEntries()
-                    if (isFinish)
-                        Toast.makeText(requireActivity(), "Проект перенесён в завершённые!", Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: Exception) {
-                // Обработка ошибки (транзакция автоматически откатится)
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(requireActivity(), "Ошибка: ${e.message}", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
+        runTransaction(diaryEntry, false)
     }
 
     fun updateProjInfo() {
