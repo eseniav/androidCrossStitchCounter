@@ -402,8 +402,6 @@ class ProjDiaryFragment : Fragment() {
 
         binding.diaryList.layoutManager = LinearLayoutManager(requireContext())
 
-
-
         lifecycleScope.launch {
             project = getLoadProject()
             diaryAdapter = ProjDiaryAdapter(emptyList(), diaryDao,
@@ -420,9 +418,7 @@ class ProjDiaryFragment : Fragment() {
                 val itemTouchHelper = ItemTouchHelper(swipeCallback)
                 itemTouchHelper.attachToRecyclerView(binding.diaryList)
             }
-
         }
-
     }
 
     companion object {
