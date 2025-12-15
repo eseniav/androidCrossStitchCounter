@@ -307,7 +307,8 @@ class ProjDiaryFragment : Fragment() {
 
     fun updateProjInfo() {
         val done = if (diaryNotes.size != 0) diaryNotes[diaryNotes.size - 1].done else project.stitchedCrossBeforeRegistration
-        val dayDone = ChronoUnit.DAYS.between(LocalDate.parse(project.startDate, DateTimeFormatter.ofPattern("dd.MM.yyyy")), LocalDate.now())
+        val lastDate = if (project.projStatusId == 3) project.finishDate else LocalDate.now()
+        val dayDone = ChronoUnit.DAYS.between(LocalDate.parse(project.startDate, DateTimeFormatter.ofPattern("dd.MM.yyyy")), lastDate)
         var dayRemains: Long? = null
         if(project.projStatusId == 3 || project.totalCross == null) {
             binding.restVal.visibility = View.GONE
@@ -368,6 +369,8 @@ class ProjDiaryFragment : Fragment() {
             binding.beforeRegCrossVal.text = project.stitchedCrossBeforeRegistration.toString()
             binding.startDateVal.text = project.startDate
             if(project.projStatusId == 3) {
+                binding.restVal.visibility = View.GONE
+                binding.rest.visibility = View.GONE
                 binding.finishDate.visibility = View.VISIBLE
                 binding.finishDateVal.visibility = View.VISIBLE
                 binding.finishDateVal.text = project.finishDate?.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
