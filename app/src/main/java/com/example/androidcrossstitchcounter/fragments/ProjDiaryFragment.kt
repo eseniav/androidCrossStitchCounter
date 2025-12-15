@@ -1,7 +1,6 @@
 package com.example.androidcrossstitchcounter.fragments
 
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,13 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.CompoundButton
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
@@ -27,7 +23,6 @@ import androidx.room.withTransaction
 import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.adapters.ProjDiaryAdapter
-import com.example.androidcrossstitchcounter.adapters.ProjectAdapter
 import com.example.androidcrossstitchcounter.databinding.ProjDiaryFragmentBinding
 import com.example.androidcrossstitchcounter.listeners.SwipeToDeleteCallback
 import com.example.androidcrossstitchcounter.models.AppDataBase
@@ -37,8 +32,6 @@ import com.example.androidcrossstitchcounter.models.ProjDiary
 import com.example.androidcrossstitchcounter.models.ProjDiaryDao
 import com.example.androidcrossstitchcounter.models.ProjDiaryEntry
 import com.example.androidcrossstitchcounter.models.Project
-import com.example.androidcrossstitchcounter.models.User
-import com.example.androidcrossstitchcounter.models.UserDao
 import com.example.androidcrossstitchcounter.services.Animation
 import com.example.androidcrossstitchcounter.services.CalendarUtils
 import com.example.androidcrossstitchcounter.services.Validation
@@ -243,9 +236,7 @@ class ProjDiaryFragment : Fragment() {
             val newCross = editCross.text.toString().toIntOrNull() ?: return@setPositiveButton
             val date = LocalDate.parse(editDateField.text.toString(),
                 DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-            if(isFinish) {
-                project.projStatusId = 3
-            }
+
             if(isEqual) {
                 val foundEntry = diaryNotes.find { it.diary.date.isEqual(date) }
                 updateDiaryEntry(foundEntry!!.diary, addVal.isChecked, newCross)
@@ -263,7 +254,7 @@ class ProjDiaryFragment : Fragment() {
         }
     }
 
-    fun runTransaction(diaryEntry: ProjDiary, isAdded: Boolean) {
+    fun runTransaction(diaryEntry: ProjDiary, isFinish: Boolean, isAdded: Boolean = false) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 // Единая транзакция: обе операции либо пройдут, либо нет
@@ -272,8 +263,10 @@ class ProjDiaryFragment : Fragment() {
                         diaryDao.insertProjDiary(diaryEntry)
                     else
                         diaryDao.updateProjDiary(diaryEntry)
-                    if (isFinish)
+                    if (isFinish) {
+                        project.projStatusId = 3
                         projDao.updateProject(project)
+                    }
                 }
 
                 // Если всё прошло успешно — обновляем UI
@@ -297,7 +290,7 @@ class ProjDiaryFragment : Fragment() {
             crossQuantity = crossDayQuantityVal,
             projId = projId!!
         )
-        runTransaction(diaryEntry, true)
+        runTransaction(diaryEntry, isFinish  ,true)
     }
 
     fun updateDiaryEntry(diaryEntry: ProjDiary, isAdd: Boolean, newCross: Int) {
@@ -306,7 +299,7 @@ class ProjDiaryFragment : Fragment() {
         } else {
             diaryEntry.crossQuantity = newCross
         }
-        runTransaction(diaryEntry, false)
+        runTransaction(diaryEntry, isFinish, false)
     }
 
     fun updateProjInfo() {
@@ -397,7 +390,9 @@ class ProjDiaryFragment : Fragment() {
             requireContext() as LifecycleOwner, binding.diaryList,
         {
             loadEntries()
-        }
+        }, { diaryEntry: ProjDiary, isFinished: Boolean ->
+                runTransaction(diaryEntry, isFinished)
+            }
         )
         binding.diaryList.adapter = diaryAdapter
         val swipeCallback = SwipeToDeleteCallback(diaryAdapter)
