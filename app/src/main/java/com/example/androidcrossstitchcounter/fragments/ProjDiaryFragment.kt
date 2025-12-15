@@ -386,7 +386,7 @@ class ProjDiaryFragment : Fragment() {
         }
 
         binding.diaryList.layoutManager = LinearLayoutManager(requireContext())
-        diaryAdapter = ProjDiaryAdapter(emptyList(), diaryDao, projDao,
+        diaryAdapter = ProjDiaryAdapter(emptyList(), diaryDao,
             requireContext() as LifecycleOwner, binding.diaryList,
         {
             loadEntries()

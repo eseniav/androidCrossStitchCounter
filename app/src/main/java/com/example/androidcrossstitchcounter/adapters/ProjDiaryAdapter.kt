@@ -38,17 +38,11 @@ import kotlinx.coroutines.withContext
 class ProjDiaryAdapter(
     private var diaryNotes: List<ProjDiaryEntry>,
     private val diaryDao: ProjDiaryDao,
-    private val projDao: ProjDao,
     private val lifecycleOwner: LifecycleOwner,
     private val view: RecyclerView,
     private val onChange: () -> Unit,
     private val onUpdate: (diaryEntry: ProjDiary, isFinished: Boolean) -> Unit
 ): RecyclerView.Adapter<ProjDiaryAdapter.DiaryViewHolder>()  {
-
-    private suspend fun getTotalCrossDone(projId: Int): Int {
-        return diaryDao.getProjEntriesById(projId)
-            .sumOf { it.crossQuantity }
-    }
 
     private var deletedItem: ProjDiary? = null
     var isFinish= false
