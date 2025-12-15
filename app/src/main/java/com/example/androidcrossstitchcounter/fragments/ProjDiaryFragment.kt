@@ -265,6 +265,9 @@ class ProjDiaryFragment : Fragment() {
                         diaryDao.updateProjDiary(diaryEntry)
                     if (isFinish) {
                         project.projStatusId = 3
+                        project.finishDate =
+                            if (diaryEntry.date < diaryNotes.first().diary.date) diaryNotes.first().diary.date
+                            else diaryEntry.date
                         projDao.updateProject(project)
                     }
                 }
@@ -367,7 +370,7 @@ class ProjDiaryFragment : Fragment() {
             if(project.projStatusId == 3) {
                 binding.finishDate.visibility = View.VISIBLE
                 binding.finishDateVal.visibility = View.VISIBLE
-                binding.finishDateVal.text = project.finishDate
+                binding.finishDateVal.text = project.finishDate?.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
             }
             binding.planDateVal.text = project.finishDreamDate ?: "Не указано"
             loadEntries()

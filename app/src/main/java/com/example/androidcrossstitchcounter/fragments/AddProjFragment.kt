@@ -25,6 +25,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.LocalDate
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -83,7 +84,8 @@ class AddProjFragment : Fragment() {
                 finishDreamDate = binding.finishDream.text.toString().toStringOrNull(),
                 stitchedCrossBeforeRegistration = binding.beforeRegCross.text.toString().toIntOrNull() ?: 0,
                 startDate = binding.startDate.text.toString().toStringOrNull(),
-                finishDate = binding.finishDate.text.toString().toStringOrNull(),
+                finishDate = binding.finishDate.text.toString().toStringOrNull()?.let { LocalDate.parse(it)
+                },
                 width = binding.width.text.toString().toIntOrNull() ?: 0,
                 height = binding.height.text.toString().toIntOrNull() ?: 0,
                 projStatusId =

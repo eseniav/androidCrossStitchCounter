@@ -8,6 +8,7 @@ import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.models.Project
+import java.time.format.DateTimeFormatter
 
 class ProjectAdapter(private var projects: List<Project>,
                      private val onItemClick: (Project) -> Unit):
@@ -28,7 +29,7 @@ class ProjectAdapter(private var projects: List<Project>,
         val project = projects[position]
         holder.sizeView.text = "${project.width} X ${project.height}"
         holder.startDateView.text = project.startDate
-        holder.planDateView.text = if(project.projStatusId == 3) project.finishDate
+        holder.planDateView.text = if(project.projStatusId == 3) project.finishDate?.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
             else project.finishDreamDate
         holder.stitchedView.text = project.stitchedCrossBeforeRegistration.toString()
         holder.projNameView.text = project.projName

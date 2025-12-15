@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.Update
 import com.example.androidcrossstitchcounter.services.CalendarUtils
+import java.time.LocalDate
 import java.util.Calendar
 
 @Entity(
@@ -33,7 +34,7 @@ data class Project(
     var finishDreamDate: String? = null,
     var stitchedCrossBeforeRegistration: Int = 0,
     var startDate: String? = null,
-    var finishDate: String? = null,
+    var finishDate: LocalDate? = null,
     val registrationDate: String = CalendarUtils.getCurrentDateStringCompat(),
     var width: Int = 0,
     var height: Int = 0,
