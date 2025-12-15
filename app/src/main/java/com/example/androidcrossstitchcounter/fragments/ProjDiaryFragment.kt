@@ -376,6 +376,7 @@ class ProjDiaryFragment : Fragment() {
             binding.rest.visibility = View.GONE
             binding.finishDate.visibility = View.VISIBLE
             binding.finishDateVal.visibility = View.VISIBLE
+            binding.imageAdd.visibility = View.GONE
             binding.finishDateVal.text = loadedProject.finishDate?.format(
                 DateTimeFormatter.ofPattern("dd.MM.yyyy")
             )
