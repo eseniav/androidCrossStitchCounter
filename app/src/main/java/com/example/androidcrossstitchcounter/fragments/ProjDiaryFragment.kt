@@ -265,7 +265,9 @@ class ProjDiaryFragment : Fragment() {
                         diaryDao.updateProjDiary(diaryEntry)
                     if (isFinish) {
                         project.projStatusId = 3
-                        project.finishDate = diaryNotes.first().diary.date
+                        project.finishDate =
+                            if (diaryEntry.date < diaryNotes.first().diary.date) diaryNotes.first().diary.date
+                            else diaryEntry.date
                         projDao.updateProject(project)
                     }
                 }
