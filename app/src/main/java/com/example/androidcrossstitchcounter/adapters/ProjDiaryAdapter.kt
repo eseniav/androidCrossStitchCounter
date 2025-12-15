@@ -40,6 +40,7 @@ class ProjDiaryAdapter(
     private val diaryDao: ProjDiaryDao,
     private val lifecycleOwner: LifecycleOwner,
     private val view: RecyclerView,
+    private val isReadOnly: Boolean,
     private val onChange: () -> Unit,
     private val onUpdate: (diaryEntry: ProjDiary, isFinished: Boolean) -> Unit
 ): RecyclerView.Adapter<ProjDiaryAdapter.DiaryViewHolder>()  {
@@ -151,11 +152,13 @@ class ProjDiaryAdapter(
         holder.dayCrossView.text = diaryNote.diary.crossQuantity.toString()
         holder.crossDoneView.text = diaryNote.done.toString()
         holder.remainsView.text = diaryNote.remains.toString()
-        holder.itemView.setOnTouchListener(DoubleTapListener(holder.adapterPosition) { position ->
-            showEditDialog(position, holder.itemView.context)
-            //showDialog(holder.itemView.context, position)
-            Log.d("DoubleTap", "Двойной клик по элементу!")
-        })
+        if (!isReadOnly) {
+            holder.itemView.setOnTouchListener(DoubleTapListener(holder.adapterPosition) { position ->
+                showEditDialog(position, holder.itemView.context)
+                //showDialog(holder.itemView.context, position)
+                Log.d("DoubleTap", "Двойной клик по элементу!")
+            })
+        }
     }
 
     override fun getItemCount(): Int {
