@@ -52,6 +52,12 @@ interface ProjDao {
     suspend fun getProjectById(id: Int): Project?
     @Query("SELECT * FROM projects WHERE userId = :userId AND projStatusId = :projStatusId" )
     suspend fun getProjectByUserIdAndStatus(userId: Int, projStatusId: Int): Project?
+    @Query("""
+    SELECT SUM(pd.crossQuantity) AS totalCrossStitched
+    FROM projDiaries pd
+    JOIN projects p ON pd.projId = p.id
+    WHERE p.userId = :userId""")
+    suspend fun getTotalCrossStitchedByUserId(userId: Int): Int?
     @Update
     suspend fun updateProject(project: Project)
 }
