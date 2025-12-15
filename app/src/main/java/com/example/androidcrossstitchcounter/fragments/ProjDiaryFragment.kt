@@ -359,26 +359,35 @@ class ProjDiaryFragment : Fragment() {
             updateProjInfo()
         }
     }
-    fun loadProject() {
-        lifecycleScope.launch {
-            project = projDao.getProjectById(projId!!)!!
-            binding.headProfile.text = project.projName
-            binding.designerVal.text = project.projDesigner ?: "Не указано"
-            binding.sizeVal.text = "${project.width} X ${project.height}"
-            binding.allCrossVal.text = project.totalCross.toString()
-            binding.beforeRegCrossVal.text = project.stitchedCrossBeforeRegistration.toString()
-            binding.startDateVal.text = project.startDate
-            if(project.projStatusId == 3) {
-                binding.restVal.visibility = View.GONE
-                binding.rest.visibility = View.GONE
-                binding.finishDate.visibility = View.VISIBLE
-                binding.finishDateVal.visibility = View.VISIBLE
-                binding.finishDateVal.text = project.finishDate?.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-            }
-            binding.planDateVal.text = project.finishDreamDate ?: "Не указано"
-            loadEntries()
+
+    private suspend fun getLoadProject(): Project {
+        val loadedProject = projDao.getProjectById(projId!!)!!
+
+        // Обновляем UI
+        binding.headProfile.text = loadedProject.projName
+        binding.designerVal.text = loadedProject.projDesigner ?: "Не указано"
+        binding.sizeVal.text = "${loadedProject.width} X ${loadedProject.height}"
+        binding.allCrossVal.text = loadedProject.totalCross.toString()
+        binding.beforeRegCrossVal.text = loadedProject.stitchedCrossBeforeRegistration.toString()
+        binding.startDateVal.text = loadedProject.startDate
+
+        if (loadedProject.projStatusId == 3) {
+            binding.restVal.visibility = View.GONE
+            binding.rest.visibility = View.GONE
+            binding.finishDate.visibility = View.VISIBLE
+            binding.finishDateVal.visibility = View.VISIBLE
+            binding.finishDateVal.text = loadedProject.finishDate?.format(
+                DateTimeFormatter.ofPattern("dd.MM.yyyy")
+            )
         }
+
+        binding.planDateVal.text = loadedProject.finishDreamDate ?: "Не указано"
+
+        loadEntries()
+
+        return loadedProject  // Возвращаем загруженный проект
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         db = DataBaseProvider.getDB(requireContext())
@@ -401,10 +410,15 @@ class ProjDiaryFragment : Fragment() {
             }
         )
         binding.diaryList.adapter = diaryAdapter
-        val swipeCallback = SwipeToDeleteCallback(diaryAdapter)
-        val itemTouchHelper = ItemTouchHelper(swipeCallback)
-        itemTouchHelper.attachToRecyclerView(binding.diaryList)
-        loadProject()
+
+        lifecycleScope.launch {
+            project = getLoadProject()
+            if (project.projStatusId == 2) {
+                val swipeCallback = SwipeToDeleteCallback(diaryAdapter)
+                val itemTouchHelper = ItemTouchHelper(swipeCallback)
+                itemTouchHelper.attachToRecyclerView(binding.diaryList)
+            }
+        }
     }
 
     companion object {
