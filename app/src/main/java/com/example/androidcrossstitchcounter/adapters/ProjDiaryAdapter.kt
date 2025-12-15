@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -37,18 +38,14 @@ import kotlinx.coroutines.withContext
 class ProjDiaryAdapter(
     private var diaryNotes: List<ProjDiaryEntry>,
     private val diaryDao: ProjDiaryDao,
-    private val projDao: ProjDao,
     private val lifecycleOwner: LifecycleOwner,
     private val view: RecyclerView,
-    private val onChange: () -> Unit
+    private val onChange: () -> Unit,
+    private val onUpdate: (diaryEntry: ProjDiary, isFinished: Boolean) -> Unit
 ): RecyclerView.Adapter<ProjDiaryAdapter.DiaryViewHolder>()  {
 
-    private suspend fun getTotalCrossDone(projId: Int): Int {
-        return diaryDao.getProjEntriesById(projId)
-            .sumOf { it.crossQuantity }
-    }
-
     private var deletedItem: ProjDiary? = null
+    var isFinish= false
     private fun showEditDialog(position: Int, context: Context) {
         val diaryEntry = diaryNotes.getOrNull(position) ?: return
 
@@ -62,6 +59,8 @@ class ProjDiaryAdapter(
         val editDate = dialogView.findViewById<TextView>(R.id.date)
         val editCross = dialogView.findViewById<EditText>(R.id.editCross)
         val remainsText = dialogView.findViewById<TextView>(R.id.remains)
+        val finishProj = dialogView.findViewById<LinearLayout>(R.id.finishProj)
+        val finishCheck = dialogView.findViewById<CheckBox>(R.id.finishCheck)
         // Заполняем текущие значения
         editDate.text = diaryEntry.diary.date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
         editCross.setText(diaryEntry.diary.crossQuantity.toString())
@@ -70,14 +69,21 @@ class ProjDiaryAdapter(
         var dialog: AlertDialog? = null
         fun handleRemains(s: Editable?) {
             remainsText.visibility = View.GONE
+            finishProj.visibility = View.GONE
+            finishCheck.isChecked = false
+            isFinish = false
             dialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = true
             val newCrossEdit = s.toString().toIntOrNull()
             var newRemains: Int?
             if (remains != null && newCrossEdit != null) {
                 newRemains = remains - newCrossEdit + diaryEntry.diary.crossQuantity
+                dialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
                 if (newRemains < 0) {
                     remainsText.visibility = View.VISIBLE
-                    dialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
+                } else if (newRemains == 0) {
+                    finishProj.visibility = View.VISIBLE
+                } else {
+                    dialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = true
                 }
             }
         }
@@ -114,26 +120,16 @@ class ProjDiaryAdapter(
         builder.setPositiveButton("Сохранить") { _, _ ->
             // Получаем новые значения
             val newCross = editCross.text.toString().toIntOrNull() ?: return@setPositiveButton
-
-
-            // Обновляем данные
-            lifecycleOwner.lifecycleScope.launch {
-                val updatedEntry = diaryEntry.diary.copy(crossQuantity = newCross)
-                diaryDao.updateProjDiary(updatedEntry) // предполагаем, что есть такой метод
-
-
-                // Обновляем список в адаптере
-                diaryNotes = diaryNotes.toMutableList().apply {
-                    set(position, ProjDiaryEntry(updatedEntry, diaryEntry.done, diaryEntry.remains))
-                }
-                notifyItemChanged(position)
-                onChange()
-                Toast.makeText(lifecycleOwner as Context, "Запись обновлена!", Toast.LENGTH_SHORT).show()
-            }
+            val updatedEntry = diaryEntry.diary.copy(crossQuantity = newCross)
+            onUpdate(updatedEntry, isFinish)
         }
 
         builder.setNegativeButton("Отмена", null)
         dialog = builder.create()
+        finishCheck.setOnCheckedChangeListener {_, isChecked ->
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = isChecked
+            isFinish = isChecked
+        }
         dialog.show()
     }
 
