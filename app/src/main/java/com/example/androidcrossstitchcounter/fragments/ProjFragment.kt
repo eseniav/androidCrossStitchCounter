@@ -2,6 +2,7 @@ package com.example.androidcrossstitchcounter.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,9 @@ import com.example.androidcrossstitchcounter.models.DataBaseProvider
 import com.example.androidcrossstitchcounter.models.ProjDao
 import com.example.androidcrossstitchcounter.services.Animation
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,6 +49,7 @@ class ProjFragment : Fragment() {
     private lateinit var futureAdapter: ProjectAdapter
     private lateinit var finishedAdapter: ProjectAdapter
     private lateinit var projectDao: ProjDao
+    var avgSpeed = 0
 
     private val app: App by lazy {
         requireActivity().application as App
@@ -56,6 +61,13 @@ class ProjFragment : Fragment() {
             currentAdapter.updateProjects(projects.filter { it.projStatusId == 2 })
             futureAdapter.updateProjects(projects.filter { it.projStatusId == 1 })
             finishedAdapter.updateProjects(projects.filter { it.projStatusId == 3 })
+
+            val days = ChronoUnit.DAYS.between(LocalDate.parse(app.user!!.regDate, DateTimeFormatter.ofPattern("dd.MM.yyyy")),
+                LocalDate.now()).toInt()
+            val totalSum = projectDao.getTotalCrossStitchedByUserId(app.user!!.id)
+            if (days != 0 && totalSum != null)
+                avgSpeed = totalSum / days
+            binding.avgSpeedVal.text = avgSpeed.toString() + " кр./день"
         }
     }
 
