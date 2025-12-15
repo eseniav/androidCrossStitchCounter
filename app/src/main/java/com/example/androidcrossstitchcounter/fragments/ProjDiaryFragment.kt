@@ -401,24 +401,28 @@ class ProjDiaryFragment : Fragment() {
         }
 
         binding.diaryList.layoutManager = LinearLayoutManager(requireContext())
-        diaryAdapter = ProjDiaryAdapter(emptyList(), diaryDao,
-            requireContext() as LifecycleOwner, binding.diaryList,
-        {
-            loadEntries()
-        }, { diaryEntry: ProjDiary, isFinished: Boolean ->
-                runTransaction(diaryEntry, isFinished)
-            }
-        )
-        binding.diaryList.adapter = diaryAdapter
+
+
 
         lifecycleScope.launch {
             project = getLoadProject()
+            diaryAdapter = ProjDiaryAdapter(emptyList(), diaryDao,
+                requireContext() as LifecycleOwner, binding.diaryList, project.projStatusId == 3,
+                {
+                    loadEntries()
+                }, { diaryEntry: ProjDiary, isFinished: Boolean ->
+                    runTransaction(diaryEntry, isFinished)
+                }
+            )
+            binding.diaryList.adapter = diaryAdapter
             if (project.projStatusId == 2) {
                 val swipeCallback = SwipeToDeleteCallback(diaryAdapter)
                 val itemTouchHelper = ItemTouchHelper(swipeCallback)
                 itemTouchHelper.attachToRecyclerView(binding.diaryList)
             }
+
         }
+
     }
 
     companion object {
