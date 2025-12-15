@@ -1,6 +1,8 @@
 package com.example.androidcrossstitchcounter.fragments
 
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -71,6 +73,20 @@ class ProjFragment : Fragment() {
         }
     }
 
+    private fun loadUserAvatar() {
+        val userId = app.user!!.id
+        val prefs = requireActivity().getSharedPreferences("user_$userId", MODE_PRIVATE)
+
+        val imageUriString = prefs.getString("image_uri", null)
+        if (imageUriString != null) {
+            val uri = Uri.parse(imageUriString)
+            binding.imgAvatar.setImageURI(uri)
+        } else {
+            // Если изображение не найдено — ставим дефолтный аватар
+            binding.imgAvatar.setImageResource(R.drawable.test)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -127,6 +143,7 @@ class ProjFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setValues()
+        loadUserAvatar()
         val db = AppDataBase.getInstance(requireContext())
         projectDao = db.projDao()
         binding.logProj.setOnClickListener {
