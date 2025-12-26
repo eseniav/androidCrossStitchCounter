@@ -1,19 +1,36 @@
 package com.example.androidcrossstitchcounter.adapters
 
+import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.view.menu.MenuView
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidcrossstitchcounter.R
+import com.example.androidcrossstitchcounter.listeners.SwipeableAdapter
+import com.example.androidcrossstitchcounter.models.ProjDao
+import com.example.androidcrossstitchcounter.models.ProjDiary
 import com.example.androidcrossstitchcounter.models.Project
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.format.DateTimeFormatter
 
 class ProjectAdapter(private var projects: List<Project>,
+                     private var projDao: ProjDao,
+                     private val lifecycleOwner: LifecycleOwner,
+                     private val view: RecyclerView,
+                     private val onChange: () -> Unit,
+                     private val getProjectList: () -> List<Project>,
                      private val onItemClick: (Project) -> Unit):
-    RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder>() {
-    override fun onCreateViewHolder(
+    RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder>(), SwipeableAdapter<ProjectAdapter> {
+        override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ProjectViewHolder {
@@ -22,6 +39,23 @@ class ProjectAdapter(private var projects: List<Project>,
         return ProjectViewHolder(view)
     }
 
+    private var deletedItem: Project? = null
+
+    fun showUndoDialog() {
+        Snackbar.make(view, "Проект удален!", Snackbar.LENGTH_LONG)
+            .setAction("Отмена"){undoDel()}.show()
+    }
+    fun undoDel() {
+        deletedItem?.let { item ->
+            CoroutineScope(Dispatchers.IO).launch {
+                projDao.insertProject(item)
+                withContext(Dispatchers.Main) {
+                    onChange()
+                    Toast.makeText(view.context, "Проект восстановлен!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
     override fun onBindViewHolder(
         holder: ProjectViewHolder,
         position: Int
@@ -46,6 +80,26 @@ class ProjectAdapter(private var projects: List<Project>,
         return projects.size
     }
 
+    override fun removeItem(position: Int) {
+        synchronized(this) {
+            var notes = projects.toMutableList()
+            if (position < 0 || position >= projects.size) {
+                notes = getProjectList().toMutableList()
+            }
+
+            deletedItem = notes[position]
+            CoroutineScope(Dispatchers.IO).launch {
+                projDao.deleteProject(deletedItem!!)
+                withContext(Dispatchers.Main) {
+                    notes.removeAt(position)
+                    projects = notes
+                    notifyItemRemoved(position)
+                    onChange()
+                    showUndoDialog()
+                }
+            }
+        }
+    }
     inner class ProjectViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val sizeView: TextView = itemView.findViewById<TextView>(R.id.size)
         val startDateView: TextView = itemView.findViewById<TextView>(R.id.startDate)
@@ -55,7 +109,9 @@ class ProjectAdapter(private var projects: List<Project>,
     }
 
     fun updateProjects(newProjects: List<Project>) {
-        projects = newProjects
-        notifyDataSetChanged()
+        synchronized(this) {
+            projects = newProjects
+            notifyDataSetChanged()
+        }
     }
 }
