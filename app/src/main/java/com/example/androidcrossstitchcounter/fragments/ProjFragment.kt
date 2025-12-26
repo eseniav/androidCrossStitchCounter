@@ -13,16 +13,20 @@ import android.widget.Adapter
 import android.widget.LinearLayout
 import android.widget.TableLayout
 import android.widget.TextView
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.activities.MainActivity
 import com.example.androidcrossstitchcounter.adapters.ProjectAdapter
 import com.example.androidcrossstitchcounter.databinding.ProjFragmentBinding
+import com.example.androidcrossstitchcounter.listeners.SwipeToDeleteCallback
 import com.example.androidcrossstitchcounter.models.AppDataBase
 import com.example.androidcrossstitchcounter.models.DataBaseProvider
 import com.example.androidcrossstitchcounter.models.ProjDao
+import com.example.androidcrossstitchcounter.models.Project
 import com.example.androidcrossstitchcounter.services.Animation
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -51,6 +55,8 @@ class ProjFragment : Fragment() {
     private lateinit var futureAdapter: ProjectAdapter
     private lateinit var finishedAdapter: ProjectAdapter
     private lateinit var projectDao: ProjDao
+
+    private lateinit var projects: List<Project>
     var avgSpeed = 0
 
     private val app: App by lazy {
@@ -59,11 +65,10 @@ class ProjFragment : Fragment() {
 
     fun loadProjects() {
         lifecycleScope.launch {
-            val projects = projectDao.getProjectByUserId(app.user!!.id)
+            projects = projectDao.getProjectByUserId(app.user!!.id)
             currentAdapter.updateProjects(projects.filter { it.projStatusId == 2 })
             futureAdapter.updateProjects(projects.filter { it.projStatusId == 1 })
             finishedAdapter.updateProjects(projects.filter { it.projStatusId == 3 })
-
             val days = ChronoUnit.DAYS.between(LocalDate.parse(app.user!!.regDate, DateTimeFormatter.ofPattern("dd.MM.yyyy")),
                 LocalDate.now()).toInt()
             val totalSum = projectDao.getTotalCrossStitchedByUserId(app.user!!.id)
@@ -139,6 +144,8 @@ class ProjFragment : Fragment() {
         binding.regDate.text = app.user!!.regDate
     }
 
+    fun getProjectlist(projStatusId: Int) = projects.filter { it.projStatusId == projStatusId }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -163,21 +170,48 @@ class ProjFragment : Fragment() {
 
         Animation()
 
+        // Инициализация LayoutManager
         binding.currentList.layoutManager = LinearLayoutManager(requireContext())
         binding.futureList.layoutManager = LinearLayoutManager(requireContext())
         binding.finishedList.layoutManager = LinearLayoutManager(requireContext())
-        currentAdapter = ProjectAdapter(emptyList()) { project ->
-            goToFragment(project.id)
-        }
+
+        // Создаём адаптеры (без ItemTouchHelper внутри!)
+        currentAdapter = ProjectAdapter(
+            emptyList(), projectDao, viewLifecycleOwner,
+            binding.currentList, { loadProjects() }, { getProjectlist(2) }
+        ) { project -> goToFragment(project.id) }
+
+        futureAdapter = ProjectAdapter(
+            emptyList(), projectDao, viewLifecycleOwner,
+            binding.futureList, { loadProjects() }, { getProjectlist(1) }
+        ) { project -> goToFragment(project.id) }
+
+        finishedAdapter = ProjectAdapter(
+            emptyList(), projectDao, viewLifecycleOwner,
+            binding.finishedList, { loadProjects() }, { getProjectlist(3) }
+        ) { project -> goToFragment(project.id) }
+
+        // Устанавливаем адаптеры
         binding.currentList.adapter = currentAdapter
-        futureAdapter = ProjectAdapter(emptyList()) { project ->
-            goToFragment(project.id)
-        }
         binding.futureList.adapter = futureAdapter
-        finishedAdapter = ProjectAdapter(emptyList()) { project ->
-            goToFragment(project.id)
-        }
         binding.finishedList.adapter = finishedAdapter
+
+
+        // Создаём и привязываем ItemTouchHelper ПОСЛЕ установки адаптеров
+        val swipeCallbackCurrent = SwipeToDeleteCallback(currentAdapter)
+        val itemTouchHelperCurrent = ItemTouchHelper(swipeCallbackCurrent)
+        itemTouchHelperCurrent.attachToRecyclerView(binding.currentList)
+
+
+        val swipeCallbackFuture = SwipeToDeleteCallback(futureAdapter)
+        val itemTouchHelperFuture = ItemTouchHelper(swipeCallbackFuture)
+        itemTouchHelperFuture.attachToRecyclerView(binding.futureList)
+
+        val swipeCallbackFinished = SwipeToDeleteCallback(finishedAdapter)
+        val itemTouchHelperFinished = ItemTouchHelper(swipeCallbackFinished)
+        itemTouchHelperFinished.attachToRecyclerView(binding.finishedList)
+
+        // Загружаем данные (это обновит адаптеры)
         loadProjects()
     }
 

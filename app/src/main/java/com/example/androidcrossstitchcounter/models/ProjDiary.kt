@@ -17,7 +17,8 @@ import java.time.LocalDate
         ForeignKey(
             entity = Project::class,
             parentColumns = ["id"],
-            childColumns = ["projId"]
+            childColumns = ["projId"],
+            onDelete = ForeignKey.CASCADE
         )
     ]
 )

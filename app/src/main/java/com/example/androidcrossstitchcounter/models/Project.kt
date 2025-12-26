@@ -1,6 +1,7 @@
 package com.example.androidcrossstitchcounter.models
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Insert
@@ -60,4 +61,6 @@ interface ProjDao {
     suspend fun getTotalCrossStitchedByUserId(userId: Int): Int?
     @Update
     suspend fun updateProject(project: Project)
+    @Delete
+    suspend fun deleteProject(project: Project)
 }
