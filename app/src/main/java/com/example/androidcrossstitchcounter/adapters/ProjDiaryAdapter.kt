@@ -30,6 +30,7 @@ import com.example.androidcrossstitchcounter.models.ProjDiaryEntry
 import com.example.androidcrossstitchcounter.models.Project
 import java.time.format.DateTimeFormatter
 import com.example.androidcrossstitchcounter.listeners.DoubleTapListener
+import com.example.androidcrossstitchcounter.listeners.SwipeableAdapter
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -43,7 +44,7 @@ class ProjDiaryAdapter(
     private val isReadOnly: Boolean,
     private val onChange: () -> Unit,
     private val onUpdate: (diaryEntry: ProjDiary, isFinished: Boolean) -> Unit
-): RecyclerView.Adapter<ProjDiaryAdapter.DiaryViewHolder>()  {
+): RecyclerView.Adapter<ProjDiaryAdapter.DiaryViewHolder>(), SwipeableAdapter<ProjDiaryAdapter> {
 
     private var deletedItem: ProjDiary? = null
     var isFinish= false
@@ -181,7 +182,7 @@ class ProjDiaryAdapter(
             .setAction("Отмена"){undoDel()}.show()
     }
 
-    fun removeItem(position: Int) {
+    override fun removeItem(position: Int) {
         val notes = diaryNotes.toMutableList()
         deletedItem = notes[position].diary
         CoroutineScope(Dispatchers.IO).launch {
