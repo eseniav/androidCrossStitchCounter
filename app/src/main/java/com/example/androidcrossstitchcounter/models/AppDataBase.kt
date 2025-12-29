@@ -15,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.example.androidcrossstitchcounter.models.ProjStatusDao
 
-@Database(entities = [User::class, ProjStatus::class, Project::class, ProjDiary::class], version = 12)
+@Database(entities = [User::class, ProjStatus::class, Project::class, ProjDiary::class], version = 13)
 @TypeConverters(LocalDateConverter::class)
 abstract class AppDataBase: RoomDatabase() {
     abstract fun userDao(): UserDao

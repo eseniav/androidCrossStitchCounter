@@ -26,8 +26,7 @@ data class ProjDiary(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val date: LocalDate = LocalDate.now(),
     var crossQuantity: Int = 0,
-    val projId: Int,
-    var isArchived: Boolean = false
+    val projId: Int
 )
 
 data class ProjDiaryEntry(val diary: ProjDiary, var done: Int, var remains: Int?)
