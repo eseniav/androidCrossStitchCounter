@@ -40,7 +40,8 @@ data class Project(
     var width: Int = 0,
     var height: Int = 0,
     val userId: Int,
-    var projStatusId: Int
+    var projStatusId: Int,
+    var isArchived: Boolean = false
 )
 
 @Dao
@@ -63,4 +64,8 @@ interface ProjDao {
     suspend fun updateProject(project: Project)
     @Delete
     suspend fun deleteProject(project: Project)
+    @Query ("UPDATE projects SET isArchived = 1 WHERE id = :id")
+    suspend fun archiveProject(id: Int)
+    @Query ("UPDATE projects SET isArchived = 0 WHERE id = :id")
+    suspend fun restoreProject(id: Int)
 }

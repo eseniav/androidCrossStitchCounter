@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.activities.MainActivity
+import com.example.androidcrossstitchcounter.adapters.ArchivedProjectAdapter
 import com.example.androidcrossstitchcounter.adapters.ProjectAdapter
 import com.example.androidcrossstitchcounter.databinding.ProjFragmentBinding
 import com.example.androidcrossstitchcounter.listeners.SwipeToDeleteCallback
@@ -54,6 +55,9 @@ class ProjFragment : Fragment() {
     private lateinit var currentAdapter: ProjectAdapter
     private lateinit var futureAdapter: ProjectAdapter
     private lateinit var finishedAdapter: ProjectAdapter
+    private lateinit var archivedAdapter: ArchivedProjectAdapter
+    private lateinit var notArchivedProject: List<Project>
+    private lateinit var archivedProject: List<Project>
     private lateinit var projectDao: ProjDao
 
     private lateinit var projects: List<Project>
@@ -66,9 +70,12 @@ class ProjFragment : Fragment() {
     fun loadProjects() {
         lifecycleScope.launch {
             projects = projectDao.getProjectByUserId(app.user!!.id)
-            currentAdapter.updateProjects(projects.filter { it.projStatusId == 2 })
-            futureAdapter.updateProjects(projects.filter { it.projStatusId == 1 })
-            finishedAdapter.updateProjects(projects.filter { it.projStatusId == 3 })
+            notArchivedProject = projects.filter { !it.isArchived }
+            archivedProject = projects.filter { it.isArchived }
+            currentAdapter.updateProjects(notArchivedProject.filter { it.projStatusId == 2 })
+            futureAdapter.updateProjects(notArchivedProject.filter { it.projStatusId == 1 })
+            finishedAdapter.updateProjects(notArchivedProject.filter { it.projStatusId == 3 })
+            archivedAdapter.updateProjects(archivedProject)
             val days = ChronoUnit.DAYS.between(LocalDate.parse(app.user!!.regDate, DateTimeFormatter.ofPattern("dd.MM.yyyy")),
                 LocalDate.now()).toInt()
             val totalSum = projectDao.getTotalCrossStitchedByUserId(app.user!!.id)
@@ -144,7 +151,7 @@ class ProjFragment : Fragment() {
         binding.regDate.text = app.user!!.regDate
     }
 
-    fun getProjectlist(projStatusId: Int) = projects.filter { it.projStatusId == projStatusId }
+    fun getProjectlist(projStatusId: Int) = notArchivedProject.filter { it.projStatusId == projStatusId }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -174,6 +181,7 @@ class ProjFragment : Fragment() {
         binding.currentList.layoutManager = LinearLayoutManager(requireContext())
         binding.futureList.layoutManager = LinearLayoutManager(requireContext())
         binding.finishedList.layoutManager = LinearLayoutManager(requireContext())
+        binding.archivedList.layoutManager = LinearLayoutManager(requireContext())
 
         // Создаём адаптеры (без ItemTouchHelper внутри!)
         currentAdapter = ProjectAdapter(
@@ -191,10 +199,16 @@ class ProjFragment : Fragment() {
             binding.finishedList, { loadProjects() }, { getProjectlist(3) }
         ) { project -> goToFragment(project.id) }
 
+        archivedAdapter = ArchivedProjectAdapter(
+            emptyList(), projectDao, viewLifecycleOwner,
+            binding.archivedList, { loadProjects() }, { archivedProject }
+        ) { project -> goToFragment(project.id) }
+
         // Устанавливаем адаптеры
         binding.currentList.adapter = currentAdapter
         binding.futureList.adapter = futureAdapter
         binding.finishedList.adapter = finishedAdapter
+        binding.archivedList.adapter = archivedAdapter
 
 
         // Создаём и привязываем ItemTouchHelper ПОСЛЕ установки адаптеров
@@ -211,6 +225,9 @@ class ProjFragment : Fragment() {
         val itemTouchHelperFinished = ItemTouchHelper(swipeCallbackFinished)
         itemTouchHelperFinished.attachToRecyclerView(binding.finishedList)
 
+        val swipeCallbackArchived = SwipeToDeleteCallback(archivedAdapter)
+        val itemTouchHelperArchived = ItemTouchHelper(swipeCallbackArchived)
+        itemTouchHelperArchived.attachToRecyclerView(binding.archivedList)
         // Загружаем данные (это обновит адаптеры)
         loadProjects()
     }

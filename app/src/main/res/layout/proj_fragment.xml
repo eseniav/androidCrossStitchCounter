@@ -340,6 +340,12 @@
                     android:contentDescription="Добавить"
                     android:src="@drawable/add" />
             </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/archivedList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/archiveLayout"
+                />
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>
