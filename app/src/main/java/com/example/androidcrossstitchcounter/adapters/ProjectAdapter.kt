@@ -22,13 +22,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.format.DateTimeFormatter
 
-class ProjectAdapter(private var projects: List<Project>,
-                     private var projDao: ProjDao,
-                     private val lifecycleOwner: LifecycleOwner,
-                     private val view: RecyclerView,
-                     private val onChange: () -> Unit,
-                     private val getProjectList: () -> List<Project>,
-                     private val onItemClick: (Project) -> Unit):
+open class ProjectAdapter(private var projects: List<Project>,
+                          private var projDao: ProjDao,
+                          private val lifecycleOwner: LifecycleOwner,
+                          private val view: RecyclerView,
+                          private val onChange: () -> Unit,
+                          private val getProjectList: () -> List<Project>,
+                          private val onItemClick: (Project) -> Unit):
     RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder>(), SwipeableAdapter<ProjectAdapter> {
         override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -39,14 +39,14 @@ class ProjectAdapter(private var projects: List<Project>,
         return ProjectViewHolder(view)
     }
 
-    private var archivedItem: Project? = null
+    protected var savedItem: Project? = null
 
-    fun showUndoDialog() {
+    open fun showUndoDialog() {
         Snackbar.make(view, "Проект заархивирован!", Snackbar.LENGTH_LONG)
             .setAction("Отмена"){undoDel()}.show()
     }
-    fun undoDel() {
-        archivedItem?.let { item ->
+    open fun undoDel() {
+        savedItem?.let { item ->
             CoroutineScope(Dispatchers.IO).launch {
                 projDao.restoreProject(item.id)
                 withContext(Dispatchers.Main) {
@@ -87,9 +87,9 @@ class ProjectAdapter(private var projects: List<Project>,
                 notes = getProjectList().toMutableList()
             }
 
-            archivedItem = notes[position]
+            savedItem = notes[position]
             CoroutineScope(Dispatchers.IO).launch {
-                projDao.archiveProject(archivedItem?.id!!)
+                projDao.archiveProject(savedItem?.id!!)
                 withContext(Dispatchers.Main) {
                     notes.removeAt(position)
                     projects = notes

@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidcrossstitchcounter.App
 import com.example.androidcrossstitchcounter.R
 import com.example.androidcrossstitchcounter.activities.MainActivity
+import com.example.androidcrossstitchcounter.adapters.ArchivedProjectAdapter
 import com.example.androidcrossstitchcounter.adapters.ProjectAdapter
 import com.example.androidcrossstitchcounter.databinding.ProjFragmentBinding
 import com.example.androidcrossstitchcounter.listeners.SwipeToDeleteCallback
@@ -54,7 +55,7 @@ class ProjFragment : Fragment() {
     private lateinit var currentAdapter: ProjectAdapter
     private lateinit var futureAdapter: ProjectAdapter
     private lateinit var finishedAdapter: ProjectAdapter
-    private lateinit var archivedAdapter: ProjectAdapter
+    private lateinit var archivedAdapter: ArchivedProjectAdapter
     private lateinit var notArchivedProject: List<Project>
     private lateinit var archivedProject: List<Project>
     private lateinit var projectDao: ProjDao
@@ -198,7 +199,7 @@ class ProjFragment : Fragment() {
             binding.finishedList, { loadProjects() }, { getProjectlist(3) }
         ) { project -> goToFragment(project.id) }
 
-        archivedAdapter = ProjectAdapter(
+        archivedAdapter = ArchivedProjectAdapter(
             emptyList(), projectDao, viewLifecycleOwner,
             binding.archivedList, { loadProjects() }, { archivedProject }
         ) { project -> goToFragment(project.id) }
@@ -224,6 +225,9 @@ class ProjFragment : Fragment() {
         val itemTouchHelperFinished = ItemTouchHelper(swipeCallbackFinished)
         itemTouchHelperFinished.attachToRecyclerView(binding.finishedList)
 
+        val swipeCallbackArchived = SwipeToDeleteCallback(archivedAdapter)
+        val itemTouchHelperArchived = ItemTouchHelper(swipeCallbackArchived)
+        itemTouchHelperArchived.attachToRecyclerView(binding.archivedList)
         // Загружаем данные (это обновит адаптеры)
         loadProjects()
     }
