@@ -41,7 +41,7 @@ open class ProjectAdapter(private var projects: List<Project>,
 
     protected var savedItem: Project? = null
 
-    open fun showUndoDialog() {
+    fun showUndoDialog() {
         Snackbar.make(view, "Проект заархивирован!", Snackbar.LENGTH_LONG)
             .setAction("Отмена"){undoDel()}.show()
     }

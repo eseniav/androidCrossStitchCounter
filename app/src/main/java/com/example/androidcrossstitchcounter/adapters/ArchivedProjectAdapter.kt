@@ -20,20 +20,8 @@ class ArchivedProjectAdapter(private var projects: List<Project>,
                              private val onItemClick: (Project) -> Unit) : ProjectAdapter(projects, projDao, lifecycleOwner,
     view, onChange, getProjectList, onItemClick) {
 
-    override fun showUndoDialog() {
-        Snackbar.make(view, "Проект удалён!", Snackbar.LENGTH_LONG)
-            .setAction("Отмена"){undoDel()}.show()
-    }
-    override fun undoDel() {
-        savedItem?.let { item ->
-            CoroutineScope(Dispatchers.IO).launch {
-                projDao.insertProject(item)
-                withContext(Dispatchers.Main) {
-                    onChange()
-                    Toast.makeText(view.context, "Проект восстановлен!", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
+    fun showDeleteConfirm() {
+        Snackbar.make(view, "Проект удалён!", Snackbar.LENGTH_LONG).show()
     }
     override fun removeItem(position: Int) {
         synchronized(this) {
@@ -50,7 +38,7 @@ class ArchivedProjectAdapter(private var projects: List<Project>,
                     projects = notes
                     notifyItemRemoved(position)
                     onChange()
-                    showUndoDialog()
+                    showDeleteConfirm()
                 }
             }
         }
