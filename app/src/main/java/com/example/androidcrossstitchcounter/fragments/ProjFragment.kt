@@ -66,9 +66,11 @@ class ProjFragment : Fragment() {
     fun loadProjects() {
         lifecycleScope.launch {
             projects = projectDao.getProjectByUserId(app.user!!.id)
-            currentAdapter.updateProjects(projects.filter { it.projStatusId == 2 })
-            futureAdapter.updateProjects(projects.filter { it.projStatusId == 1 })
-            finishedAdapter.updateProjects(projects.filter { it.projStatusId == 3 })
+            val notArchivedProject = projects.filter { !it.isArchived }
+            val archivedProject = projects.filter { it.isArchived }
+            currentAdapter.updateProjects(notArchivedProject.filter { it.projStatusId == 2 })
+            futureAdapter.updateProjects(notArchivedProject.filter { it.projStatusId == 1 })
+            finishedAdapter.updateProjects(notArchivedProject.filter { it.projStatusId == 3 })
             val days = ChronoUnit.DAYS.between(LocalDate.parse(app.user!!.regDate, DateTimeFormatter.ofPattern("dd.MM.yyyy")),
                 LocalDate.now()).toInt()
             val totalSum = projectDao.getTotalCrossStitchedByUserId(app.user!!.id)

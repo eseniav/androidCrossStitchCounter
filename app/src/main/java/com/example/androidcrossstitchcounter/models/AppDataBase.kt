@@ -15,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.example.androidcrossstitchcounter.models.ProjStatusDao
 
-@Database(entities = [User::class, ProjStatus::class, Project::class, ProjDiary::class], version = 11)
+@Database(entities = [User::class, ProjStatus::class, Project::class, ProjDiary::class], version = 12)
 @TypeConverters(LocalDateConverter::class)
 abstract class AppDataBase: RoomDatabase() {
     abstract fun userDao(): UserDao
@@ -54,8 +54,7 @@ abstract class AppDataBase: RoomDatabase() {
                 val initialStatuses = listOf(
                     ProjStatus(statusName = "Будущий"),
                     ProjStatus(statusName = "Текущий"),
-                    ProjStatus(statusName = "Завершенный"),
-                    ProjStatus(statusName = "Архив")
+                    ProjStatus(statusName = "Завершенный")
                 )
                 statusDao.insertAll(initialStatuses)
                 Log.d("AppDataBase", "Inserted ${initialStatuses.size} initial statuses")

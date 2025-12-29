@@ -39,16 +39,16 @@ class ProjectAdapter(private var projects: List<Project>,
         return ProjectViewHolder(view)
     }
 
-    private var deletedItem: Project? = null
+    private var archivedItem: Project? = null
 
     fun showUndoDialog() {
         Snackbar.make(view, "Проект удален!", Snackbar.LENGTH_LONG)
             .setAction("Отмена"){undoDel()}.show()
     }
     fun undoDel() {
-        deletedItem?.let { item ->
+        archivedItem?.let { item ->
             CoroutineScope(Dispatchers.IO).launch {
-                projDao.insertProject(item)
+                projDao.restoreProject(item.id)
                 withContext(Dispatchers.Main) {
                     onChange()
                     Toast.makeText(view.context, "Проект восстановлен!", Toast.LENGTH_SHORT).show()
@@ -87,9 +87,9 @@ class ProjectAdapter(private var projects: List<Project>,
                 notes = getProjectList().toMutableList()
             }
 
-            deletedItem = notes[position]
+            archivedItem = notes[position]
             CoroutineScope(Dispatchers.IO).launch {
-                projDao.deleteProject(deletedItem!!)
+                projDao.archiveProject(archivedItem?.id!!)
                 withContext(Dispatchers.Main) {
                     notes.removeAt(position)
                     projects = notes
