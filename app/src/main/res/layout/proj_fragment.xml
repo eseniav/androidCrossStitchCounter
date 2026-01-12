@@ -333,12 +333,6 @@
                     android:text="Архив"
                     style="@style/projNames"
                     android:layout_marginEnd="10dp" />
-                <ImageView
-                    android:id="@+id/imageAddArchive"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:contentDescription="Добавить"
-                    android:src="@drawable/add" />
             </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/archivedList"
